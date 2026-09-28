@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="image/favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="image/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="image/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" href="image/favicon/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>WEBLING Life | 위블인사이드</title>
+  <style>
+        :root {
+      /* Color Tokens (5-C) */
+      --n-0: #FFFFFF;
+      --n-50: #F7F9FA;
+      --n-100: #EEF1F3;
+      --n-200: #DDE2E6;
+      --n-400: #8A9096;
+      --n-600: #5C6368;
+      --n-900: #191C1E;
+      --accent-color: #33A6DF;
+      --accent-soft: #F0F8FC;
+      --accent-line: #CFE7F4;
+      --yellow-hl: #FFE372;
+
+      --bg-color: var(--n-0);
+      --text-main: var(--n-900);
+      --text-sub: var(--n-600);
+      --border-color: var(--n-200);
+      --border-scrolled: var(--n-400);
+      --placeholder-bg: var(--n-50);
+      --max-width: 1120px;
+
+      /* Spacing Tokens (5-B) */
+      --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px;
+      --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px; --sp-10: 128px;
+
+      /* Typography Tokens (5-A) */
+      --fs-display: 40px; --lh-display: 1.30; --ls-display: -0.035em;
+      --fs-h1: 32px; --lh-h1: 1.35; --ls-h1: -0.03em;
+      --fs-h2: 24px; --lh-h2: 1.40; --ls-h2: -0.025em;
+      --fs-h3: 19px; --lh-h3: 1.50; --ls-h3: -0.02em;
+      --fs-h4: 16px; --lh-h4: 1.55; --ls-h4: -0.015em;
+      --fs-body: 15.5px; --lh-body: 1.75; --ls-body: -0.01em;
+      --fs-sm: 13.5px; --lh-sm: 1.60; --ls-sm: 0;
+      --fs-label: 11.5px; --lh-label: 1.40; --ls-label: 0.12em;
+
+      /* Component Tokens (5-D) */
+      --rad-sm: 6px;
+      --rad-md: 14px;
+      --rad-pill: 999px;
+      --shadow-hover: 0 8px 24px rgba(25,28,30,.08);
+
+      /* Motion Tokens (5-F) */
+      --t-color: 150ms ease-out;
+      --t-transform: 250ms cubic-bezier(.4,0,.2,1);
+      --t-reveal: 700ms ease-out;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+    /* Section Divider */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border-color);
+      margin: 80px 0;
+    }
+
+    /* Header */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background-color: var(--bg-color);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-color);
+      transition: border-color 0.2s ease;
+    }
+    .site-header.scrolled { border-bottom-color: var(--border-scrolled); }
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .logo-img {
+      height: 20px;
+      width: auto;
+      display: block;
+    }
+    .logo-inside {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: #6E6E73;
+      line-height: 1;
+    }
+    .nav-list {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 28px;
+      margin: 0; padding: 0;
+    }
+    .nav-link {
+      font-size: 14px;
+      color: var(--text-sub);
+      transition: color 0.15s ease;
+      white-space: nowrap;
+    }
+    .nav-link.active,
+    .nav-link:hover { color: var(--accent-color); }
+
+    /* Page Header */
+    .page-title-area {
+      padding: 152px 0 32px;
+    }
+    .page-title {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+    .page-subtitle {
+      font-size: 16px;
+      color: var(--text-sub);
+    }
+    .page-credit { margin-top: 8px; font-size: 12px; color: var(--text-sub); line-height: 1.5; }
+
+    /* Common Section */
+    .life-section { padding: 80px 0; }
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+    .section-sub-hint {
+      font-size: 15px;
+      color: var(--text-sub);
+      margin-bottom: 40px;
+    }
+    .section-sub-hint a {
+      color: #1C77A6;
+      text-decoration: underline;
+    }
+
+    /* Item Common Form */
+    .life-items-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+    .life-item {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      scroll-margin-top: 88px; /* Fixed Header Height 64px + 24px offset */
+    }
+    .life-item.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .life-photo-box {
+      flex: 1;
+      height: 260px;
+      background-color: var(--placeholder-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-sub);
+      font-size: 14px;
+    }
+
+    /* 실제 사진이 있는 항목 — 가로 슬라이드 */
+    .life-slider {
+      flex: 1;
+      position: relative;
+      height: 260px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      background-color: var(--placeholder-bg);
+    }
+    .life-slides {
+      display: flex;
+      height: 100%;
+      transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .life-slides img {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.82);
+      color: var(--text-main);
+      font-size: 18px;
+      line-height: 1;
+      font-family: inherit;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s ease, background-color 0.2s ease;
+    }
+    .life-slider:hover .slider-arrow,
+    .slider-arrow:focus-visible { opacity: 1; }
+    .slider-arrow:hover { background-color: #fff; }
+    .slider-arrow.prev { left: 10px; }
+    .slider-arrow.next { right: 10px; }
+    .slider-dots {
+      position: absolute;
+      left: 0; right: 0; bottom: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+    }
+    .slider-dot {
+      width: 7px; height: 7px;
+      padding: 0;
+      border: none;
+      border-radius: 999px;
+      background-color: rgba(255, 255, 255, 0.55);
+      cursor: pointer;
+      transition: background-color 0.2s ease, width 0.2s ease;
+    }
+    .slider-dot.active { background-color: #fff; width: 18px; }
+    .life-slider.single .slider-arrow,
+    .life-slider.single .slider-dots { display: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .life-slides { transition: none; }
+    }
+
+    .life-text-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .life-item-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .life-item-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .cycle-badge {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent-color);
+      border: 1px solid var(--accent-color);
+      padding: 2px 8px;
+      border-radius: 2px;
+      background-color: var(--bg-color);
+    }
+
+    .life-item-desc {
+      font-size: 15px;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    /* Brand Links */
+    .brand-links-section { padding: 80px 0; }
+    .brand-links-top { margin-bottom: 32px; }
+    .brand-links-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .brand-link-group-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .brand-link-ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .brand-url-item {
+      font-size: 14px;
+      color: var(--text-sub);
+      transition: color 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .brand-url-item:hover { color: var(--accent-color); }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 0;
+      background-color: var(--bg-color);
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .back-to-main {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      transition: color 0.15s ease;
+    }
+    .back-to-main:hover { color: var(--accent-color); }
+    .copyright { font-size: 13px; color: var(--text-sub); }
+
+    /* Responsive */
+    /* 모바일 햄버거 메뉴 (768px 이하에서만 표시) */
+    .nav-toggle { display: none; }
+    .nav-dim { display: none; }
+
+    @media (max-width: 1024px) {
+
+      /* 1024px Responsive added */
+
+    }
+
+    @media (max-width: 768px) {
+      .header-inner { padding: 0 16px; gap: 16px; }
+      /* --- 모바일 헤더 : 햄버거 메뉴 --- */
+      .nav-toggle {
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 5px; width: 44px; height: 44px; margin-right: -10px; padding: 0;
+        border: none; background: none; cursor: pointer; flex-shrink: 0;
+      }
+      .nav-toggle span {
+        display: block; width: 20px; height: 2px; border-radius: 2px;
+        background-color: var(--text-main);
+        transition: transform .25s ease, opacity .2s ease;
+      }
+      .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+      .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      .site-nav {
+        position: absolute; top: 100%; left: 0; right: 0;
+        background-color: var(--bg-color);
+        border-bottom: 1px solid var(--border-color);
+        opacity: 0; visibility: hidden; transform: translateY(-8px);
+        transition: opacity .22s ease, transform .22s ease, visibility .22s;
+      }
+      .site-nav.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
+      .nav-list { display: block; gap: 0; overflow: visible; white-space: normal; }
+      .nav-list li + li { border-top: 1px solid #F0F0F2; }
+      .nav-link {
+        display: block; padding: 15px 20px;
+        font-size: 15.5px; letter-spacing: -.02em; color: var(--text-main);
+      }
+      .nav-link.active { color: var(--accent-color); font-weight: 700; }
+      .nav-dim {
+        display: block; position: fixed; left: 0; right: 0; top: 64px; bottom: 0;
+        z-index: 900; background-color: rgba(29, 29, 31, .32);
+        opacity: 0; visibility: hidden;
+        transition: opacity .22s ease, visibility .22s;
+      }
+      .nav-dim.is-open { opacity: 1; visibility: visible; }
+      body.nav-open { overflow: hidden; }
+      @media (prefers-reduced-motion: reduce) {
+        .site-nav, .nav-dim, .nav-toggle span { transition: none; }
+      }
+      .page-title-area { padding: 104px 0 24px; }
+      .page-title { font-size: 26px; }
+      .life-section { padding: 50px 0; }
+      .brand-links-section { padding: 50px 0; }
+      .brand-links-grid { grid-template-columns: 1fr; gap: 24px; }
+      .section-divider { margin: 48px 0; }
+      .life-items-wrapper { gap: 40px; }
+      .life-item, .life-item.reverse {
+        flex-direction: column;
+        gap: 20px;
+      }
+      .life-slider {
+        order: 1;
+        flex: 0 0 auto;
+        width: 100%;
+        height: 220px;
+      }
+      .slider-arrow { opacity: 1; }
+      .life-photo-box {
+        order: 1;
+        flex: 0 0 auto;
+        width: 100%;
+        height: 180px;
+      }
+      .life-text-box {
+        order: 2;
+      }
+      .life-item-title { font-size: 18px; }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+    }
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease-out, transform .7s ease-out; will-change:opacity,transform; }
+    .reveal.is-visible { opacity:1; transform:translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity:1; transform:none; transition:none; } }
+  </style>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
+</head>
+<body>
+
+  <!-- SECTION: 헤더 -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="image/logo/webling-logo-x.png" alt="WEBLING" class="logo-img">
+        <span class="logo-inside">INSIDE</span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <ul class="nav-list">
+          <li><a href="about.html" class="nav-link">About WEBLING</a></li>
+          <li><a href="culture.html" class="nav-link">WEBLING's Culture</a></li>
+          <li><a href="life.html" class="nav-link active">WEBLING Life</a></li>
+          <li><a href="benefit.html" class="nav-link">WEBLING's Benefit</a></li>
+          <li><a href="careers.html" class="nav-link">WEBLING Career</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="nav-toggle" id="navToggle"
+              aria-label="메뉴 열기" aria-expanded="false" aria-controls="siteNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <div class="nav-dim" id="navDim"></div>
+
+  <!-- Page Title Area -->
+  <div class="page-title-area">
+    <div class="container">
+      <h1 class="page-title">WEBLING Life</h1>
+      <p class="page-subtitle">위블링 사람들이 실제로 어떤 하루를 보내는지 담았어요.</p>
+      <p class="page-credit">※ 사진은 실제 모습을 바탕으로 AI를 활용해 제작한 이미지입니다.</p>
+    </div>
+  </div>
+
+  <!-- SECTION: 일하는 문화 속 행사 -->
+  <section class="life-section">
+    <div class="container">
+      <h2 class="section-title">일하는 문화 속 행사</h2>
+      <p class="section-sub-hint"><a href="culture.html">WEBLING's Culture</a> 에서 소개한 행사들의 자세한 이야기예요.</p>
+
+      <div class="life-items-wrapper">
+        <!-- 5. AI 활용 세미나 (Odd: Photo Left / Text Right) -->
+        <div class="life-item reveal" id="ai-seminar">
+          <!-- TODO: 실제 진행 사진 교체 - AI 활용 세미나 -->
+          <div class="life-slider">
+            <div class="life-slides">
+              <img src="image/life/ai-semina-1.jpg" alt="AI 활용 세미나 현장 1" loading="lazy">
+              <img src="image/life/ai-semina-2.jpg" alt="AI 활용 세미나 현장 2" loading="lazy">
+            </div>
+            <button type="button" class="slider-arrow prev" aria-label="이전 사진">&#8249;</button>
+            <button type="button" class="slider-arrow next" aria-label="다음 사진">&#8250;</button>
+            <div class="slider-dots">
+              <button type="button" class="slider-dot active" aria-label="1번째 사진"></button>
+              <button type="button" class="slider-dot" aria-label="2번째 사진"></button>
+            </div>
+          </div>
+          <div class="life-text-box">
+            <div class="life-item-header">
+              <h3 class="life-item-title">AI 활용 세미나</h3>
+            </div>
+            <!-- TODO: 설명 문구 -->
+            <p class="life-item-desc">부서별 AI 활용 사례를 서로 공유하는 사내 세미나예요.</p>
+          </div>
+        </div>
+
+        <!-- 6. 매달 AI 카드뉴스 발행 (Even: Text Left / Photo Right) -->
+        <div class="life-item reverse reveal" id="ai-cardnews">
+          <div class="life-slider single">
+            <div class="life-slides">
+              <img src="image/life/ai-cardnews.jpg" alt="매달 발행하는 AI 카드뉴스" loading="lazy">
+            </div>
+          </div>
+          <div class="life-text-box">
+            <div class="life-item-header">
+              <h3 class="life-item-title">매달 AI 카드뉴스 발행</h3>
+            </div>
+            <!-- TODO: 설명 문구 -->
+            <p class="life-item-desc">매달 최신 AI 소식과 활용 팁을 카드뉴스로 정리해 전 구성원에게 공유해요.</p>
+          </div>
+        </div>
+
+        <!-- 7. 1on1 진행 (Odd: Photo Left / Text Right) -->
+        <div class="life-item reveal" id="one-on-one">
+          <div class="life-slider single">
+            <div class="life-slides">
+              <img src="image/life/1on1.jpg" alt="1on1 진행 현장" loading="lazy">
+            </div>
+          </div>
+          <div class="life-text-box">
+            <div class="life-item-header">
+              <h3 class="life-item-title">1on1 진행</h3>
+            </div>
+            <!-- TODO: 설명 문구 -->
+            <p class="life-item-desc">부담 없이 편하게 이야기 나누는 리더와의 면담이에요.</p>
+          </div>
+        </div>
+
+        <!-- 8. 타운홀 미팅 (=소프트데이) (Even: Text Left / Photo Right) -->
+        <div class="life-item reverse reveal" id="townhall">
+          <!-- TODO: 실제 진행 사진 교체 - 타운홀 미팅 (=소프트데이) -->
+          <div class="life-slider">
+            <div class="life-slides">
+              <img src="image/life/softday-1.jpg" alt="타운홀 미팅(소프트데이) 현장 1" loading="lazy">
+              <img src="image/life/softday-2.jpg" alt="타운홀 미팅(소프트데이) 현장 2" loading="lazy">
+              <img src="image/life/softday-3.jpg" alt="타운홀 미팅(소프트데이) 현장 3" loading="lazy">
+            </div>
+            <button type="button" class="slider-arrow prev" aria-label="이전 사진">&#8249;</button>
+            <button type="button" class="slider-arrow next" aria-label="다음 사진">&#8250;</button>
+            <div class="slider-dots">
+              <button type="button" class="slider-dot active" aria-label="1번째 사진"></button>
+              <button type="button" class="slider-dot" aria-label="2번째 사진"></button>
+              <button type="button" class="slider-dot" aria-label="3번째 사진"></button>
+            </div>
+          </div>
+          <div class="life-text-box">
+            <div class="life-item-header">
+              <h3 class="life-item-title">소프트데이</h3>
+              <span class="cycle-badge">월 1회</span>
+            </div>
+            <!-- TODO: 설명 문구 -->
+            <p class="life-item-desc">월 1회 전사를 대상으로 사내 매출 현황과 회사 목표, 목표 달성률을 공유하는 자리예요. 다른 회사의 <strong>타운홀 미팅</strong>과 같아요.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><hr class="section-divider"></div>
+
+  <!-- SECTION: 업무 밖의 위블링 -->
+  <section class="life-section">
+    <div class="container">
+      <h2 class="section-title">업무 밖의 위블링</h2>
+      <p class="section-sub-hint">일 이야기만 하기엔 아쉬우니까요.</p>
+
+      <div class="life-items-wrapper">
+        <!-- 1. 마니또 이벤트 (Odd: Photo Left / Text Right) -->
+        <div class="life-item reveal" id="maniddo">
+          <div class="life-slider">
+            <div class="life-slides">
+              <img src="image/life/maniddo-1.jpg" alt="마니또 이벤트 현장 1" loading="lazy">
+              <img src="image/life/maniddo-2.jpg" alt="마니또 이벤트 현장 2" loading="lazy">
+            </div>
+            <button type="button" class="slider-arrow prev" aria-label="이전 사진">&#8249;</button>
+            <button type="button" class="slider-arrow next" aria-label="다음 사진">&#8250;</button>
+            <div class="slider-dots">
+              <button type="button" class="slider-dot active" aria-label="1번째 사진"></button>
+              <button type="button" class="slider-dot" aria-label="2번째 사진"></button>
+            </div>
+          </div>
+          <div class="life-text-box">
+            <div class="life-item-header">
+              <h3 class="life-item-title">마니또 이벤트</h3>
+            </div>
+            <!-- TODO: 설명 문구 -->
+            <p class="life-item-desc">제비뽑기로 정한 짝을 2주 동안 몰래 챙겨주는 마니또 이벤트예요.</p>
+          </div>
+        </div>
+
+        <!-- 2. 아이스크림 이벤트 (Even: Text Left / Photo Right) -->
+        <div class="life-item reverse reveal" id="icecream">
+          <div class="life-slider single">
+            <div class="life-slides">
+              <img src="image/life/icecream.jpg" alt="아이스크림 이벤트 현장" loading="lazy">
+            </div>
+          </div>
+          <div class="life-text-box">
+            <div class="life-item-header">
+              <h3 class="life-item-title">아이스크림 이벤트</h3>
+            </div>
+            <!-- TODO: 설명 문구 -->
+            <p class="life-item-desc">무더운 여름, 전 구성원에게 깜짝 선물처럼 아이스크림을 나눠 준 이벤트예요.</p>
+          </div>
+        </div>
+
+        <!-- 3. 비전미팅 (Odd: Photo Left / Text Right) -->
+        <div class="life-item reveal" id="vision-meeting">
+          <div class="life-slider">
+            <div class="life-slides">
+              <img src="image/life/vision-1.jpg" alt="비전미팅 현장 1" loading="lazy">
+              <img src="image/life/vision-2.jpg" alt="비전미팅 현장 2" loading="lazy">
+              <img src="image/life/vision-3.jpg" alt="비전미팅 현장 3" loading="lazy">
+            </div>
+            <button type="button" class="slider-arrow prev" aria-label="이전 사진">&#8249;</button>
+            <button type="button" class="slider-arrow next" aria-label="다음 사진">&#8250;</button>
+            <div class="slider-dots">
+              <button type="button" class="slider-dot active" aria-label="1번째 사진"></button>
+              <button type="button" class="slider-dot" aria-label="2번째 사진"></button>
+              <button type="button" class="slider-dot" aria-label="3번째 사진"></button>
+            </div>
+          </div>
+          <div class="life-text-box">
+            <div class="life-item-header">
+              <h3 class="life-item-title">비전미팅</h3>
+              <span class="cycle-badge">연 1회</span>
+            </div>
+            <!-- TODO: 설명 문구 -->
+            <p class="life-item-desc">연말에 전사를 대상으로 한 해 매출과 목표 달성을 돌아보고 다음 해 목표를 공유하는 자리예요.</p>
+          </div>
+        </div>
+
+        <!-- 4. POD SHOP 사업설명회 (Even: Text Left / Photo Right) -->
+        <div class="life-item reverse reveal" id="podshop-briefing">
+          <div class="life-slider">
+            <div class="life-slides">
+              <img src="image/life/podshop-2.jpg" alt="POD SHOP 사업설명회 현장" loading="lazy">
+              <img src="image/life/podshop-1.jpg" alt="POD SHOP 사업설명회 발표" loading="lazy">
+              <img src="image/life/podshop-3.jpg" alt="POD SHOP 사업설명회 참석자" loading="lazy">
+            </div>
+            <button type="button" class="slider-arrow prev" aria-label="이전 사진">&#8249;</button>
+            <button type="button" class="slider-arrow next" aria-label="다음 사진">&#8250;</button>
+            <div class="slider-dots">
+              <button type="button" class="slider-dot active" aria-label="1번째 사진"></button>
+              <button type="button" class="slider-dot" aria-label="2번째 사진"></button>
+              <button type="button" class="slider-dot" aria-label="3번째 사진"></button>
+            </div>
+          </div>
+          <div class="life-text-box">
+            <div class="life-item-header">
+              <h3 class="life-item-title">POD SHOP 사업설명회</h3>
+            </div>
+            <!-- TODO: 설명 문구 -->
+            <p class="life-item-desc">신규 런칭한 POD SHOP 브랜드를 소개하는 사업 설명회로, 전 직원과 외부 관심 참석자 등 500명 이상이 함께했어요.</p>
+          </div>
+        </div>
+
+        <!-- 5. 인쇄강의 (교육) (Odd: Photo Left / Text Right) -->
+        <div class="life-item reveal" id="printing-class">
+          <div class="life-slider">
+            <div class="life-slides">
+              <img src="image/life/print-1.jpg" alt="인쇄강의(교육) 현장 1" loading="lazy">
+              <img src="image/life/print-2.jpg" alt="인쇄강의(교육) 현장 2" loading="lazy">
+            </div>
+            <button type="button" class="slider-arrow prev" aria-label="이전 사진">&#8249;</button>
+            <button type="button" class="slider-arrow next" aria-label="다음 사진">&#8250;</button>
+            <div class="slider-dots">
+              <button type="button" class="slider-dot active" aria-label="1번째 사진"></button>
+              <button type="button" class="slider-dot" aria-label="2번째 사진"></button>
+            </div>
+          </div>
+          <div class="life-text-box">
+            <div class="life-item-header">
+              <h3 class="life-item-title">인쇄강의 (교육)</h3>
+            </div>
+            <!-- TODO: 설명 문구 -->
+            <p class="life-item-desc">위블링 상품이 어떻게 만들어지는지, 아날로그 인쇄의 종류와 생산 장비·생산 체계를 함께 배우는 교육이에요.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><hr class="section-divider"></div>
+
+  <!-- SECTION: 브랜드 바로가기 -->
+  <section class="brand-links-section">
+    <div class="container">
+      <div class="brand-links-top">
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">WEBLING</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.webling.kr/" target="_blank" class="brand-url-item">WEBLING 바로가기 ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="brand-links-grid">
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">POD SHOP</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://pod.shop/" target="_blank" class="brand-url-item">POD SHOP ↗</a></li>
+            <li><a href="https://www.instagram.com/podshop_official/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/podshop_official" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">SNAPS</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.snaps.com/" target="_blank" class="brand-url-item">SNAPS ↗</a></li>
+            <li><a href="https://www.facebook.com/snaps.official" target="_blank" class="brand-url-item">Facebook ↗</a></li>
+            <li><a href="https://www.instagram.com/snaps_com/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/snaps1" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">OH PRINT.ME</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.ohprint.me/" target="_blank" class="brand-url-item">OH PRINT.ME ↗</a></li>
+            <li><a href="https://www.facebook.com/ohprintme" target="_blank" class="brand-url-item">Facebook ↗</a></li>
+            <li><a href="https://www.instagram.com/ohprint.me/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/ohprintme" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 푸터 -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="back-to-main">← 메인으로</a>
+      <p class="copyright">(c) WEBLING</p>
+    </div>
+  </footer>
+
+  <!-- Minimal Scroll JS -->
+  <script>
+    // 사진 가로 슬라이드 (화면에 들어오면 자동 재생)
+    (function () {
+      var INTERVAL = 3500;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      Array.prototype.forEach.call(document.querySelectorAll('.life-slider'), function (root) {
+        var track = root.querySelector('.life-slides');
+        var slides = root.querySelectorAll('.life-slides img');
+        var dots = root.querySelectorAll('.slider-dot');
+        var total = slides.length;
+        if (total < 2) { root.classList.add('single'); return; }
+
+        var idx = 0, timer = null;
+
+        function go(next) {
+          idx = (next + total) % total;
+          track.style.transform = 'translateX(' + (-idx * 100) + '%)';
+          Array.prototype.forEach.call(dots, function (d, k) {
+            if (k === idx) d.classList.add('active'); else d.classList.remove('active');
+          });
+        }
+        function play() {
+          if (reduce || timer) return;
+          timer = setInterval(function () { go(idx + 1); }, INTERVAL);
+        }
+        function stop() {
+          if (timer) { clearInterval(timer); timer = null; }
+        }
+        function restart() { stop(); play(); }
+
+        root.querySelector('.slider-arrow.prev').addEventListener('click', function () { go(idx - 1); restart(); });
+        root.querySelector('.slider-arrow.next').addEventListener('click', function () { go(idx + 1); restart(); });
+        Array.prototype.forEach.call(dots, function (d, k) {
+          d.addEventListener('click', function () { go(k); restart(); });
+        });
+        root.addEventListener('mouseenter', stop);
+        root.addEventListener('mouseleave', play);
+
+        // 화면에 들어올 때만 자동 재생
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) { if (e.isIntersecting) play(); else stop(); });
+          }, { threshold: 0.35 }).observe(root);
+        } else {
+          play();
+        }
+      });
+    })();
+
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+  </script>
+  <script>
+    // 모바일 헤더 : 햄버거 메뉴 토글 (768px 이하에서만 노출)
+    (function () {
+      var btn = document.getElementById('navToggle');
+      var nav = document.getElementById('siteNav');
+      var dim = document.getElementById('navDim');
+      if (!btn || !nav) return;
+      function setOpen(open) {
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+        nav.classList.toggle('is-open', open);
+        if (dim) dim.classList.toggle('is-open', open);
+        document.body.classList.toggle('nav-open', open);
+      }
+      btn.addEventListener('click', function () {
+        setOpen(btn.getAttribute('aria-expanded') !== 'true');
+      });
+      if (dim) dim.addEventListener('click', function () { setOpen(false); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.keyCode === 27) setOpen(false);
+      });
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) setOpen(false);
+      });
+    })();
+  </script>
+  <script>
+    (function () {
+      var items = document.querySelectorAll('.reveal');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || !('IntersectionObserver' in window)) {
+        items.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function(entries, obs) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -10% 0px' });
+      items.forEach(function(el) { observer.observe(el); });
+    })();
+  </script>
+</body>
+</html>

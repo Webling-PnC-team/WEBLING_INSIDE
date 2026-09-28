@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="image/favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="image/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="image/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" href="image/favicon/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>면접 예정자 안내 | 위블인사이드</title>
+  <style>
+        :root {
+      /* Color Tokens (5-C) */
+      --n-0: #FFFFFF;
+      --n-50: #F7F9FA;
+      --n-100: #EEF1F3;
+      --n-200: #DDE2E6;
+      --n-400: #8A9096;
+      --n-600: #5C6368;
+      --n-900: #191C1E;
+      --accent-color: #33A6DF;
+      --accent-soft: #F0F8FC;
+      --accent-line: #CFE7F4;
+      --yellow-hl: #FFE372;
+
+      --bg-color: var(--n-0);
+      --text-main: var(--n-900);
+      --text-sub: var(--n-600);
+      --border-color: var(--n-200);
+      --border-scrolled: var(--n-400);
+      --placeholder-bg: var(--n-50);
+      --max-width: 1120px;
+
+      /* Spacing Tokens (5-B) */
+      --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px;
+      --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px; --sp-10: 128px;
+
+      /* Typography Tokens (5-A) */
+      --fs-display: 40px; --lh-display: 1.30; --ls-display: -0.035em;
+      --fs-h1: 32px; --lh-h1: 1.35; --ls-h1: -0.03em;
+      --fs-h2: 24px; --lh-h2: 1.40; --ls-h2: -0.025em;
+      --fs-h3: 19px; --lh-h3: 1.50; --ls-h3: -0.02em;
+      --fs-h4: 16px; --lh-h4: 1.55; --ls-h4: -0.015em;
+      --fs-body: 15.5px; --lh-body: 1.75; --ls-body: -0.01em;
+      --fs-sm: 13.5px; --lh-sm: 1.60; --ls-sm: 0;
+      --fs-label: 11.5px; --lh-label: 1.40; --ls-label: 0.12em;
+
+      /* Component Tokens (5-D) */
+      --rad-sm: 6px;
+      --rad-md: 14px;
+      --rad-pill: 999px;
+      --shadow-hover: 0 8px 24px rgba(25,28,30,.08);
+
+      /* Motion Tokens (5-F) */
+      --t-color: 150ms ease-out;
+      --t-transform: 250ms cubic-bezier(.4,0,.2,1);
+      --t-reveal: 700ms ease-out;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body {
+      font-family: 'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background-color:var(--bg-color); color:var(--text-main);
+      line-height:1.6; -webkit-font-smoothing:antialiased; word-break:keep-all;
+    }
+    a { color:inherit; text-decoration:none; }
+    .container { max-width:var(--max-width); margin:0 auto; padding:0 24px; }
+    .narrow { max-width:820px; }
+
+    .site-header {
+      position:fixed; top:0; left:0; right:0; background-color:var(--bg-color);
+      z-index:1000; border-bottom:1px solid var(--border-color); transition:border-color .2s ease;
+    }
+    .site-header.scrolled { border-bottom-color:var(--border-scrolled); }
+    .header-inner {
+      max-width:var(--max-width); margin:0 auto; padding:0 24px; height:64px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .logo { display:inline-flex; align-items:center; gap:10px; white-space:nowrap; flex-shrink:0; }
+    .logo-img { height:20px; width:auto; display:block; }
+    .logo-inside { font-size:13px; letter-spacing:.08em; color:#6E6E73; line-height:1; }
+    /* 공통 헤더 메뉴 (index.html 과 동일) */
+    .nav-list { display:flex; align-items:center; list-style:none; gap:28px; margin:0; padding:0; }
+    .nav-link { font-size:14px; color:var(--text-sub); transition:color .15s ease; white-space:nowrap; }
+    .nav-link:hover { color:var(--accent-color); }
+
+    /* 좌측 목차 (페이지 내 탭) */
+    .page-grid { display:grid; grid-template-columns:220px 1fr; gap:56px; align-items:start; }
+    .page-toc { position:sticky; top:96px; }
+    .page-toc-label { font-size:11px; font-weight:700; letter-spacing:.12em; color:var(--text-sub); margin-bottom:14px; }
+    .page-nav { display:flex; flex-direction:column; gap:2px; border-left:1px solid var(--border-color); }
+    .page-nav-link {
+      position:relative; display:block; width:100%; text-align:left;
+      font-size:14px; font-family:inherit; color:var(--text-sub); line-height:1.45;
+      background:none; border:none; padding:9px 0 9px 16px; cursor:pointer;
+      transition:color .15s ease;
+    }
+    .page-nav-link:hover { color:var(--accent-color); }
+    .page-nav-link.active { color:var(--accent-color); font-weight:700; }
+    .page-nav-link.active::after {
+      content:''; position:absolute; left:-1px; top:0; bottom:0;
+      width:2px; background:var(--accent-color);
+    }
+    .page-main { min-width:0; }
+    .page-main .container { max-width:none; margin:0; padding:0; }
+
+    .page-title-area { padding:152px 0 48px; }
+    .page-title { font-size:32px; font-weight:700; letter-spacing:-.03em; }
+    .page-lead { font-size:16px; color:var(--text-sub); margin-top:10px; }
+
+    .sec { padding-bottom:96px; min-height:520px; }
+    .sec[hidden] { display:none; }
+    .sec-head { display:flex; align-items:baseline; gap:14px; padding-bottom:16px; margin-bottom:32px; border-bottom:2px solid var(--text-main); }
+    .sec-title { font-size:24px; font-weight:700; letter-spacing:-.02em; line-height:1.4; }
+
+    .h3 { font-size:19px; font-weight:700; letter-spacing:-.02em; margin-bottom:12px; }
+    .h4 { font-size:16px; font-weight:700; margin-bottom:8px; }
+    .p  { font-size:15px; line-height:1.75; color:#424245; }
+    .p + .p { margin-top:14px; }
+    .muted { color:var(--text-sub); }
+    .blk { margin-bottom:44px; }
+    .blk:last-child { margin-bottom:0; }
+
+    .ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .ul li { position:relative; padding-left:16px; font-size:15px; line-height:1.7; color:#424245; }
+    .ul li::before { content:''; position:absolute; left:0; top:10px; width:5px; height:5px; border-radius:50%; background-color:var(--border-color); }
+
+    .img { width:100%; height:auto; display:block; border-radius:8px; }
+    .img-wrap { margin:24px 0; }
+    .img-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin:24px 0; }
+
+    /* 면접 후기 슬라이드 */
+    .rv-slider { position:relative; max-width:640px; margin:28px auto 0; }
+    .rv-viewport { overflow:hidden; transition:height .45s cubic-bezier(.4,0,.2,1); }
+    .rv-slides { display:flex; align-items:flex-start; transition:transform .65s cubic-bezier(.4,0,.2,1); }
+    .rv-slide { flex:0 0 100%; width:100%; }
+    .rv-card { background-color:#F8F8FA; border-radius:14px; padding:32px 30px 34px; }
+    .rv-face { width:96px; height:96px; display:block; border-radius:50%; margin-bottom:18px; }
+    .rv-meta { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+    .rv-chip {
+      display:inline-flex; align-items:center; gap:7px;
+      border:1px solid var(--border-color); border-radius:999px;
+      padding:6px 14px; font-size:13px; background-color:#FFFFFF;
+    }
+    .rv-chip .k { color:var(--text-sub); }
+    .rv-chip .v { font-weight:700; color:var(--text-main); }
+    .rv-body { font-size:15px; line-height:1.85; color:#1D1D1F; }
+    .rv-body mark { background-color:#E9E9ED; color:inherit; padding:2px 0; border-radius:2px; }
+    .rv-arrow {
+      position:absolute; top:50%; transform:translateY(-50%);
+      width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+      border:1px solid var(--border-color); border-radius:50%;
+      background-color:#FFFFFF; color:var(--text-sub);
+      font-size:18px; line-height:1; font-family:inherit; cursor:pointer;
+      transition:color .2s ease, border-color .2s ease;
+    }
+    .rv-arrow:hover { color:var(--accent-color); border-color:var(--accent-color); }
+    .rv-arrow.prev { left:-46px; }
+    .rv-arrow.next { right:-46px; }
+    .rv-dots { display:flex; justify-content:center; align-items:center; gap:7px; margin-top:20px; }
+    .rv-dot {
+      width:7px; height:7px; padding:0; border:none; border-radius:999px;
+      background-color:var(--border-color); cursor:pointer;
+      transition:background-color .2s ease, width .2s ease;
+    }
+    .rv-dot.active { background-color:var(--accent-color); width:18px; }
+    .rv-slider.single .rv-arrow, .rv-slider.single .rv-dots { display:none; }
+    @media (prefers-reduced-motion: reduce) { .rv-slides, .rv-viewport { transition:none; } }
+
+    table.tbl { width:100%; border-collapse:collapse; margin:18px 0; font-size:15px; }
+    table.tbl th, table.tbl td { padding:12px 14px; border-bottom:1px solid var(--border-color); text-align:left; }
+    table.tbl th { background-color: var(--bg-color); font-weight:700; font-size:14px; }
+    table.tbl td { color:#424245; }
+
+    .note { background-color: var(--bg-color); border-radius: var(--rad-md); padding:24px; margin:20px 0; }
+    .note .h4 { margin-bottom:12px; }
+    .callout {
+      background-color: #FFF7D6;
+      color: var(--text-main);
+      display: block;
+      width: fit-content;
+      max-width: min(680px, 100%);
+      margin: 30px auto 12px;
+      padding: 20px 28px;
+      border-radius: 4px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+      font-size: 15px;
+      line-height: 1.75;
+      text-align: center;
+      transform: rotate(-1deg);
+    }
+    .pending { display:inline-block; font-size:13px; color:var(--text-sub); background-color: var(--bg-color); border-radius:6px; padding:10px 14px; }
+
+    .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+    .cards-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+    .card { padding:26px 24px; background-color: var(--bg-color); border-radius: var(--rad-md); border:1px solid transparent; transition:border-color .2s ease, background-color .2s ease; }
+    
+    .card .h4 { margin-bottom:8px; }
+    .card .p { font-size:14px; }
+    .card-icon { width:56px; height:auto; display:block; margin-bottom:14px; }
+
+    /* 강조 하이라이팅 */
+    .hl {
+      color:#1E7FB0; font-weight:700;
+      background-color:#E6F4FB; padding:2px 0; border-radius:3px;
+      box-shadow:5px 0 0 #E6F4FB, -5px 0 0 #E6F4FB;
+    }
+    .hl-y { background-color:#FFF1B8; padding:2px 8px; border-radius:5px; }
+
+    /* 슬로건 : 가볍게, 여백 넉넉히 */
+    .lead-slogan { margin:6px 0 78px; padding-left:20px; border-left:2px solid #CFE7F4; }
+    .slogan-line {
+      font-size:19.5px; font-weight:400; letter-spacing:-.01em; line-height:1.95; color:#3A3A3E;
+      opacity:0; transform:translateY(14px);
+      transition:opacity .7s ease-out, transform .7s ease-out;
+    }
+    .slogan-line.is-in { opacity:1; transform:translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .slogan-line { opacity:1; transform:none; transition:none; }
+    }
+
+    /* 소제목 : 눈에 들어오게 */
+    #company .blk { margin-bottom:76px; }
+    #company .blk:last-child { margin-bottom:0; }
+    .sec-sub {
+      position:relative; padding-left:16px; margin-bottom:10px;
+      font-size:22px; font-weight:800; letter-spacing:-.03em; line-height:1.4;
+    }
+    .sec-sub::before {
+      content:''; position:absolute; left:0; top:.22em; bottom:.22em;
+      width:4px; border-radius:99px; background-color:var(--accent-color);
+    }
+    #company .sec-sub + .p { font-size:15px; color:var(--text-sub); margin-bottom:6px; }
+
+    /* 우리의 브랜드 */
+    .brand-tiles { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:26px; }
+    .brand-tile {
+      display:block; min-width:0; padding:24px 24px 26px; color:inherit;
+      background-color:var(--bg-color); border:1px solid #E7E7EC; border-radius:14px;
+      transition:border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+    }
+    .brand-tile:hover { transform:translateY(-3px); }
+    .brand-stage { position:relative; }
+    .brand-shape {
+      display:flex; align-items:center; justify-content:center;
+      aspect-ratio:4/3; background-color:var(--bg-color); border-radius:0;
+    }
+    .brand-logo { width:56%; max-width:136px; height:auto; display:block; }
+    .brand-tag {
+      display:block; margin-top:16px; text-align:right;
+      font-size:13.5px; font-weight:800; letter-spacing:-.01em; color:var(--text-main);
+    }
+    .brand-go { color:#A8A8AE; font-weight:600; transition:color .2s ease; }
+    .brand-tile:hover .brand-go { color:var(--accent-color); }
+    .brand-h { margin-top:18px; font-size:16px; line-height:1.5; }
+    .brand-tile .p { font-size:14px; color:#5A5A60; }
+
+    /* 위블링의 강점 : 2 x 2 */
+    .strength-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+    .strength-grid .card {
+      background-color:var(--bg-color); border:1px solid #E7E7EC; border-radius:14px;
+      padding:28px 26px;
+      display:grid; grid-template-columns:52px 1fr; column-gap:18px; row-gap:8px;
+      align-items:start;
+      transition:border-color .25s ease, box-shadow .25s ease;
+    }
+    .strength-grid .card-icon { grid-row:1 / span 2; width:52px; margin-bottom:0; border-radius:12px; }
+    .strength-grid .card .h4 { font-size:16px; margin-bottom:8px; }
+    .strength-grid .card .p { font-size:14px; color:#5A5A60; }
+
+    /* 팀 소개 : 조직도 겸 본부 탭 */
+    .org { margin:26px 0 0; }
+    .org-top { position:relative; display:flex; justify-content:center; padding-bottom:26px; }
+    .org-top::after {
+      content:''; position:absolute; left:50%; bottom:0; margin-left:-1px;
+      width:2px; height:26px; background-color:var(--border-color);
+    }
+    .org-ceo {
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width:140px; padding:13px 26px; border-radius:12px;
+      background-color:var(--text-main); color:#FFFFFF;
+      font-size:14px; font-weight:800; letter-spacing:.08em;
+    }
+    .org-branches {
+      position:relative; display:grid; grid-template-columns:repeat(5,1fr);
+      gap:12px; padding-top:26px; align-items:start;
+    }
+    .org-branches::before {
+      content:''; position:absolute; top:0; height:2px;
+      left:calc(10% - 4.8px); right:calc(10% - 4.8px);
+      background-color:var(--border-color);
+    }
+            .org-node {
+      position:relative; display:flex; flex-direction:column; gap:12px;
+      padding:0 0 24px; cursor:pointer; font-family:inherit; text-align:left;
+      background-color:var(--bg-color); border:1px solid var(--border-color);
+      border-radius:14px;
+      transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+    .org-node::before {
+      content:''; position:absolute; left:50%; top:-26px; margin-left:-1px;
+      width:2px; height:26px; background-color:var(--border-color);
+    }
+    .org-node::after {
+      content:''; position:absolute; left:50%; bottom:8px; margin-left:-6px;
+      width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent;
+      border-top:6px solid var(--border-color); transition:border-top-color .2s ease;
+    }
+    .org-head {
+      display:flex; align-items:center; gap:9px; padding:13px 14px;
+      border-radius:13px 13px 0 0;
+      background-color:var(--cf); transition:box-shadow .2s ease;
+    }
+    .org-ic { font-size:15px; line-height:1; }
+    .org-nm { font-size:13.5px; font-weight:700; letter-spacing:-.02em; color:#FFFFFF; }
+    .org-teams { display:flex; flex-direction:column; gap:7px; padding:0 12px; }
+    .org-team {
+      display:block; padding:7px 10px; border-radius:8px;
+      font-size:12.5px; line-height:1.35; color:#424245;
+      background-color:#FAFAFB; border:1px solid #E7E7EC;
+      transition:background-color .2s ease, border-color .2s ease, color .2s ease;
+    }
+    .org-node:hover { border-color:var(--c); transform:translateY(-2px); box-shadow:0 8px 20px rgba(29,29,31,.07); }
+    .org-node.active { border-color:var(--cf); box-shadow:0 0 0 1px var(--cf), 0 10px 24px rgba(29,29,31,.12); }
+    .org-node.active .org-head { box-shadow:inset 0 -3px 0 rgba(255,255,255,.55); }
+    .org-node.active::after { border-top-color:var(--cf); }
+    .org-node.active .org-team { background-color:var(--bg-color); border-color:var(--cf); color:var(--text-main); }
+.dept-panels { margin-top:30px; }
+    .dept-panel[hidden] { display:none; }
+    .dept-panel .card { background-color: var(--n-50); border: 1px solid var(--border-color); }
+
+    /* 자주 묻는 질문 */
+    .faq-list { display:flex; flex-direction:column; }
+    .faq-item { border-top:1px solid var(--border-color); }
+    .faq-list .faq-item:last-child { border-bottom:1px solid var(--border-color); }
+    .faq-q {
+      list-style:none; cursor:pointer; padding:22px 40px 22px 4px;
+      font-size:17px; font-weight:700; position:relative; transition:color .15s ease;
+    }
+    .faq-q::-webkit-details-marker { display:none; }
+    .faq-q::after {
+      content:'+'; position:absolute; right:8px; top:50%;
+      transform:translateY(-50%); font-size:22px; font-weight:400;
+      color:var(--text-sub); transition:color .15s ease;
+    }
+    .faq-item[open] .faq-q { color:#1C77A6; }
+    .faq-item[open] .faq-q::after { content:'\2212'; color:#1C77A6; }
+    .faq-q:hover { color:#1C77A6; }
+    .faq-a { padding:0 40px 26px 4px; }
+    .faq-a .p + .p, .faq-a .p + .ul, .faq-a .ul + .p { margin-top:14px; }
+    .faq-a .note { margin:16px 0 0; }
+
+    /* 합류 여정 */
+    .note-title { font-size:19px; margin-bottom:16px; }
+    #journey .note { padding:28px 30px; }
+    #journey .note .ul li { font-size:15.5px; line-height:1.8; }
+    #journey .note .ul li strong { font-weight:800; }
+
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease-out, transform .7s ease-out; will-change:opacity,transform; }
+    .reveal.is-visible { opacity:1; transform:translateY(0); }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity:1; transform:none; transition:none; } }
+
+    .brand-links-section { padding-bottom:96px; }
+    .brand-links-top { margin-bottom:32px; }
+    .brand-links-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
+    .brand-link-group-title { font-size:16px; font-weight:700; margin-bottom:16px; padding-bottom:8px; border-bottom:1px solid var(--border-color); }
+    .brand-link-ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .brand-url-item { font-size:14px; color:var(--text-sub); transition:color .15s ease; }
+    .brand-url-item:hover { color:var(--accent-color); }
+
+    .site-footer { border-top:1px solid var(--border-color); padding:40px 0; }
+    .footer-inner { display:flex; justify-content:space-between; align-items:center; }
+    .back-to-main { font-size:14px; font-weight:600; transition:color .15s ease; }
+    .back-to-main:hover { color:var(--accent-color); }
+    .copyright { font-size:13px; color:var(--text-sub); }
+
+    @media (max-width:1024px) { .cards-4 { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:1024px) {
+      .org-branches { grid-template-columns:repeat(3,1fr); row-gap:18px; padding-top:0; }
+      .org-branches::before, .org-node::before { display:none; }
+      .org-top { padding-bottom:20px; }
+      .org-top::after { display:none; }
+    }
+    /* 모바일 햄버거 메뉴 (768px 이하에서만 표시) */
+    .nav-toggle { display: none; }
+    .nav-dim { display: none; }
+
+    @media (max-width:768px) {
+      .header-inner { padding:0 16px; gap:16px; }
+      /* --- 모바일 헤더 : 햄버거 메뉴 --- */
+      .nav-toggle {
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 5px; width: 44px; height: 44px; margin-right: -10px; padding: 0;
+        border: none; background: none; cursor: pointer; flex-shrink: 0;
+      }
+      .nav-toggle span {
+        display: block; width: 20px; height: 2px; border-radius: 2px;
+        background-color: var(--text-main);
+        transition: transform .25s ease, opacity .2s ease;
+      }
+      .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+      .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      .site-nav {
+        position: absolute; top: 100%; left: 0; right: 0;
+        background-color: var(--bg-color);
+        border-bottom: 1px solid var(--border-color);
+        opacity: 0; visibility: hidden; transform: translateY(-8px);
+        transition: opacity .22s ease, transform .22s ease, visibility .22s;
+      }
+      .site-nav.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
+      .nav-list { display: block; gap: 0; overflow: visible; white-space: normal; }
+      .nav-list li + li { border-top: 1px solid #F0F0F2; }
+      .nav-link {
+        display: block; padding: 15px 20px;
+        font-size: 15.5px; letter-spacing: -.02em; color: var(--text-main);
+      }
+      .nav-link.active { color: var(--accent-color); font-weight: 700; }
+      .nav-dim {
+        display: block; position: fixed; left: 0; right: 0; top: 64px; bottom: 0;
+        z-index: 900; background-color: rgba(29, 29, 31, .32);
+        opacity: 0; visibility: hidden;
+        transition: opacity .22s ease, visibility .22s;
+      }
+      .nav-dim.is-open { opacity: 1; visibility: visible; }
+      body.nav-open { overflow: hidden; }
+      @media (prefers-reduced-motion: reduce) {
+        .site-nav, .nav-dim, .nav-toggle span { transition: none; }
+      }
+      .page-grid { grid-template-columns:minmax(0,1fr); gap:14px; }
+      .page-grid > * { min-width:0; }
+      /* --- 모바일 : CONTENTS 목차를 가로 줄로 --- */
+      .page-toc { position:static; min-width:0; margin:0 -24px 4px; padding:0 24px;
+                  border-bottom:1px solid var(--border-color); }
+      .page-toc-label { display:none; }
+      .page-nav {
+        flex-direction:row; gap:6px; border-left:none;
+        overflow-x:auto; overflow-y:hidden; min-width:0;
+        padding:2px 0 10px; scrollbar-width:none; -webkit-overflow-scrolling:touch;
+      }
+      .page-nav::-webkit-scrollbar { display:none; }
+      .page-nav-link {
+        flex:0 0 auto; width:auto; white-space:nowrap; font-size:13px;
+        padding:12px 15px; border-radius:999px; background-color: var(--bg-color);
+      }
+      .page-nav-link.active { color:#FFFFFF; background-color:var(--accent-color); }
+      .page-nav-link.active::after { display:none; }
+      .page-title-area { padding:120px 0 32px; }
+      .page-title { font-size:26px; }
+      .sec { padding-bottom:56px; min-height:380px; }
+      .sec-head { flex-direction:column; gap:6px; margin-bottom:24px; }
+      .sec-title { font-size:20px; }
+      .cards, .cards-4, .img-grid { grid-template-columns:1fr; }
+      .brand-tiles { grid-template-columns:1fr; gap:14px; }
+      .strength-grid { grid-template-columns:1fr; }
+      .org-branches { grid-template-columns:1fr; }
+      .faq-q { font-size:15px; padding-right:32px; }
+      .faq-a { padding-right:8px; }
+      .slogan-line { font-size:17px; }
+      .lead-slogan { margin-bottom:48px; }
+      .sec-sub { font-size:19px; }
+      #company .blk { margin-bottom:52px; }
+      .rv-arrow.prev { left:-6px; }
+      .rv-arrow.next { right:-6px; }
+      .rv-card { padding:26px 20px 28px; }
+      .brand-links-section { padding-bottom:56px; }
+      .brand-links-grid { grid-template-columns:1fr; gap:24px; }
+      .footer-inner { flex-direction:column; gap:16px; text-align:center; }
+      table.tbl { font-size:14px; }
+      table.tbl th, table.tbl td { padding:10px; }
+    }
+
+    .gate {
+      position:fixed; inset:0; z-index:2000; background-color:var(--bg-color);
+      display:flex; align-items:center; justify-content:center; padding:24px;
+    }
+    .gate[hidden] { display:none; }
+    .gate-card { width:100%; max-width:420px; text-align:center; }
+    .gate-logo { height:22px; width:auto; margin-bottom:28px; }
+    .gate-title { font-size:22px; font-weight:700; letter-spacing:-.02em; margin-bottom:10px; }
+    .gate-desc { font-size:15px; color:var(--text-sub); line-height:1.7; margin-bottom:28px; }
+    .gate-form { display:flex; flex-direction:column; gap:12px; }
+    .gate-input {
+      width:100%; padding:14px 16px; font-size:15px; font-family:inherit;
+      border:1px solid var(--border-color); border-radius:8px; outline:none;
+      transition:border-color .15s ease;
+    }
+    .gate-input:focus { border-color:var(--accent-color); }
+    .gate-btn {
+      width:100%; padding:14px 16px; font-size:15px; font-weight:700; font-family:inherit;
+      color:#fff; background-color:var(--text-main); border:none; border-radius:8px; cursor:pointer;
+      transition:background-color .15s ease;
+    }
+    .gate-btn:hover { background-color:var(--accent-color); }
+    .gate-error { font-size:14px; color:#D14343; min-height:20px; }
+    .gate-help { font-size:13px; color:var(--text-sub); margin-top:20px; line-height:1.7; }
+    .gate-help a { color:#1C77A6; }
+    .locked { display:none; }
+    .locked.unlocked { display:block; }
+  </style>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
+</head>
+<body>
+
+  <!-- SECTION: 비밀번호 확인 -->
+  <div class="gate" id="gate">
+    <div class="gate-card">
+      <img src="image/logo/webling-logo-x.png" alt="WEBLING" class="gate-logo">
+      <h1 class="gate-title">면접 예정자 안내</h1>
+      <p class="gate-desc">안내 메일에 함께 보내드린 코드를 입력하면<br>면접 준비에 필요한 내용을 보실 수 있어요.</p>
+      <form class="gate-form" id="gateForm">
+        <input type="password" class="gate-input" id="gateInput" placeholder="안내 코드를 입력해 주세요" autocomplete="off" aria-label="안내 코드">
+        <button type="submit" class="gate-btn">확인</button>
+        <p class="gate-error" id="gateError" role="alert"></p>
+      </form>
+      <p class="gate-help">
+        코드를 못 받으셨거나 입력이 되지 않는다면<br>
+        <a href="mailto:recruiter2@snaps.com">recruiter2@snaps.com</a> 으로 문의해 주세요.
+      </p>
+    </div>
+  </div>
+
+  <div id="content" class="locked">
+
+  <!-- SECTION: 헤더 -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="image/logo/webling-logo-x.png" alt="WEBLING" class="logo-img">
+        <span class="logo-inside">INSIDE</span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <ul class="nav-list">
+          <li><a href="about.html" class="nav-link">About WEBLING</a></li>
+          <li><a href="culture.html" class="nav-link">WEBLING's Culture</a></li>
+          <li><a href="life.html" class="nav-link">WEBLING Life</a></li>
+          <li><a href="benefit.html" class="nav-link">WEBLING's Benefit</a></li>
+          <li><a href="careers.html" class="nav-link">WEBLING Career</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="nav-toggle" id="navToggle"
+              aria-label="메뉴 열기" aria-expanded="false" aria-controls="siteNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <div class="nav-dim" id="navDim"></div>
+
+  <!-- SECTION: 페이지 제목 -->
+  <div class="page-title-area">
+    <div class="container">
+      <h1 class="page-title">면접 예정자 안내</h1>
+      <p class="page-lead">✨ Stay With you, WEBLING ✨</p>
+    </div>
+  </div>
+
+  <!-- SECTION: 좌측 목차 + 본문 -->
+  <div class="container page-grid">
+    <aside class="page-toc">
+      <p class="page-toc-label">CONTENTS</p>
+      <nav class="page-nav" aria-label="페이지 목차">
+        <button type="button" class="page-nav-link" data-target="company">회사 소개 · 연혁</button>
+        <button type="button" class="page-nav-link" data-target="team">위블링 팀 소개</button>
+        <button type="button" class="page-nav-link" data-target="journey">합류 여정</button>
+        <button type="button" class="page-nav-link" data-target="review">면접 후기</button>
+        <button type="button" class="page-nav-link" data-target="faq">자주 묻는 질문</button>
+      </nav>
+    </aside>
+    <div class="page-main">
+
+  <!-- SECTION: 회사 소개 · 연혁 -->
+  <section class="sec" id="company">
+    <div class="container">
+      <div class="sec-head">
+        <h2 class="sec-title">회사 소개 · 연혁</h2>
+      </div>
+
+      <div class="lead-slogan" id="leadSlogan">
+        <p class="slogan-line">나를 만들고, 나를 표현하고,</p>
+        <p class="slogan-line">나를 기억하도록 위블링은 고민해요.</p>
+        <p class="slogan-line">오직 나만을 위해 존재하는 그 <span class="hl">'무엇'</span>이</p>
+        <p class="slogan-line">필요하다면 <span class="hl">위블링</span>에 있답니다.</p>
+      </div>
+
+      <div class="blk reveal">
+        <h3 class="h3 sec-sub">위블링 연혁</h3>
+        <p class="p">한 발 앞선 서비스와 상품, 그 도전의 기록</p>
+        <div class="img-wrap"><img src="image/interview/history.jpg" alt="위블링 연혁 타임라인" class="img"></div>
+      </div>
+
+      <div class="blk reveal">
+        <h3 class="h3 sec-sub">우리의 브랜드</h3>
+        <p class="p">위블링은 고객의 다양한 니즈에 맞춰 여러 브랜드를 운영하고 있습니다.</p>
+        <div class="brand-tiles">
+          <a href="https://www.snaps.com/" target="_blank" rel="noopener" class="brand-tile">
+            <div class="brand-stage">
+              <div class="brand-shape"><img src="image/interview/snaps-x.png" alt="SNAPS" class="brand-logo"></div>
+              <span class="brand-tag">SNAPS <span class="brand-go">↗</span></span>
+            </div>
+            <h4 class="h4 brand-h">취미부터 추억까지 내 손안의 포토·굿즈 프린팅</h4>
+            <p class="p">포토북과 사진 인화로 고객들의 사랑을 받아온 업계 1위 브랜드 스냅스는 최근, 굿즈로 MZ 세대에게도 많은 관심과 사랑을 받고 있습니다.</p>
+          </a>
+          <a href="https://www.ohprint.me/" target="_blank" rel="noopener" class="brand-tile">
+            <div class="brand-stage">
+              <div class="brand-shape"><img src="image/interview/ohprintme-logo-x.png" alt="OH PRINT.ME" class="brand-logo"></div>
+              <span class="brand-tag">OH PRINT.ME <span class="brand-go">↗</span></span>
+            </div>
+            <h4 class="h4 brand-h">Small Business를 위한 손쉬운 홍보물 제작</h4>
+            <p class="p">소상공인 · 크리에이터 · 중소기업 등 간편하게 홍보물을 만들 수 있도록 지원합니다. 스티커 · 어패럴 · 판촉물 등 고객이 필요한 모든 홍보물은 기본, 내 사업에 맞는 디자인까지 모두 제공합니다.</p>
+          </a>
+          <a href="https://pod.shop/" target="_blank" rel="noopener" class="brand-tile">
+            <div class="brand-stage">
+              <div class="brand-shape"><img src="image/interview/podshop.png" alt="POD SHOP" class="brand-logo"></div>
+              <span class="brand-tag">POD SHOP <span class="brand-go">↗</span></span>
+            </div>
+            <h4 class="h4 brand-h">더 큰 성장을 위한 비즈니스 파트너</h4>
+            <p class="p">단 한 번의 서비스 연동으로 기업의 상품, 제작, 배송까지 모두 해결해 주는 POD 풀필먼트 서비스입니다.</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="blk reveal">
+        <h3 class="h3 sec-sub">위블링의 강점</h3>
+        <p class="p">국내 최대 규모의 프린팅 생산시설을 기반으로, 빠르고 안정적인 서비스를 제공합니다.</p>
+        <div class="strength-grid" style="margin-top:24px">
+          <div class="card">
+            <img src="image/interview/str-1.jpg" alt="언제 어디서나, 쉽고 빠르게" class="card-icon">
+            <h4 class="h4">언제 어디서나, 쉽고 빠르게</h4>
+            <p class="p">고객이 온라인으로 손쉽게 주문할 수 있는 환경을 갖추고 있습니다.</p>
+          </div>
+          <div class="card">
+            <img src="image/interview/str-2.jpg" alt="주문 즉시 생산, 익일 배송" class="card-icon">
+            <h4 class="h4">주문 즉시 생산, 익일 배송</h4>
+            <p class="p">주문과 동시에 생산에 들어가 다음 날 배송이 가능한 자동화 시스템을 운영합니다.</p>
+          </div>
+          <div class="card">
+            <img src="image/interview/str-3.jpg" alt="100% 주문 생산" class="card-icon">
+            <h4 class="h4">100% 주문 생산</h4>
+            <p class="p">재고 없이, 오직 고객의 주문에 의해서만 생산이 이루어집니다.</p>
+          </div>
+          <div class="card">
+            <img src="image/interview/str-4.jpg" alt="고객만족 100% 품질보증" class="card-icon">
+            <h4 class="h4">고객만족 100% 품질보증</h4>
+            <p class="p">1등의 자부심으로 품질보증제도를 운영합니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 팀 소개 -->
+  <section class="sec" id="team">
+    <div class="container">
+      <div class="sec-head">
+        <h2 class="sec-title">위블링 팀 소개</h2>
+      </div>
+
+      <div class="org reveal">
+        <div class="org-top">
+          <span class="org-ceo">CEO</span>
+        </div>
+        <div class="org-branches" role="tablist">
+          <button type="button" class="org-node active" data-dept="mgmt" role="tab"
+                  aria-selected="true" aria-controls="deptPanel-mgmt" aria-label="경영전략본부 팀 소개 보기"
+                  style="--c:#5271A8;--cf:#5271A8">
+            <span class="org-head"><span class="org-ic">🏢</span><span class="org-nm">경영전략본부</span></span>
+            <span class="org-teams">
+              <span class="org-team">재무팀</span>
+              <span class="org-team">회계팀</span>
+              <span class="org-team">전략팀</span>
+            </span>
+          </button>
+          <button type="button" class="org-node" data-dept="dev" role="tab"
+                  aria-selected="false" aria-controls="deptPanel-dev" aria-label="개발본부 팀 소개 보기"
+                  style="--c:#3D8FC4;--cf:#347AA8">
+            <span class="org-head"><span class="org-ic">💻</span><span class="org-nm">개발본부</span></span>
+            <span class="org-teams">
+              <span class="org-team">AI팀</span>
+              <span class="org-team">CE팀</span>
+              <span class="org-team">SE팀</span>
+              <span class="org-team">프론트엔드팀</span>
+              <span class="org-team">백엔드팀</span>
+              <span class="org-team">P3 백엔드팀</span>
+              <span class="org-team">P3 솔루션팀</span>
+            </span>
+          </button>
+          <button type="button" class="org-node" data-dept="cxm" role="tab"
+                  aria-selected="false" aria-controls="deptPanel-cxm" aria-label="CXM본부 팀 소개 보기"
+                  style="--c:#E0629A;--cf:#BC5281">
+            <span class="org-head"><span class="org-ic">📣</span><span class="org-nm">CXM본부</span></span>
+            <span class="org-teams">
+              <span class="org-team">브랜드마케팅팀</span>
+              <span class="org-team">퍼포먼스마케팅팀</span>
+              <span class="org-team">브랜드제휴팀</span>
+            </span>
+          </button>
+          <button type="button" class="org-node" data-dept="prod" role="tab"
+                  aria-selected="false" aria-controls="deptPanel-prod" aria-label="프로덕트본부 팀 소개 보기"
+                  style="--c:#2E9E8F;--cf:#268478">
+            <span class="org-head"><span class="org-ic">📋</span><span class="org-nm">프로덕트본부</span></span>
+            <span class="org-teams">
+              <span class="org-team">프로덕트디자인팀</span>
+              <span class="org-team">프로덕트기획팀</span>
+              <span class="org-team">상품기획팀</span>
+              <span class="org-team">BX디자인팀</span>
+            </span>
+          </button>
+          <button type="button" class="org-node" data-dept="ceo" role="tab"
+                  aria-selected="false" aria-controls="deptPanel-ceo" aria-label="CEO 직속 팀 소개 보기"
+                  style="--c:#D9903A;--cf:#A06A2A">
+            <span class="org-head"><span class="org-ic">📍</span><span class="org-nm">CEO 직속</span></span>
+            <span class="org-teams">
+              <span class="org-team">People&amp;Culture팀</span>
+              <span class="org-team">제휴사업팀</span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="callout">
+        💡 위블링은 여러 팀이 각자의 전문성으로 협업하며 상품과 서비스를 만들어가요.<br>각 팀이 어떤 일을 하는지 소개할게요.
+      </div>
+
+        <div class="dept-panels">
+          <div class="dept-panel" id="deptPanel-mgmt" role="tabpanel" data-dept="mgmt">
+            <div class="cards">
+            <div class="card">
+              <h4 class="h4">💰 재무팀 · 회계팀</h4>
+              <p class="p">기업 경영에 필요한 주요 정보를 제공하고 회계·재무·자금 업무를 총괄합니다. 생산본부와 유관부서가 원활히 협업할 수 있도록 전반적인 관리 업무도 담당해요.</p>
+            </div>
+            <div class="card">
+              <h4 class="h4">🧭 전략팀</h4>
+              <p class="p">IPO 외형요건 충족을 위한 제반 업무를 비롯해 사업기획, 지식재산권 관리, 주식·주주 관리, 법무 지원을 맡습니다. 경영진과 운영부서의 사업 운영 전반을 뒷받침하는 팀이에요.</p>
+            </div>
+            </div>
+          </div>
+          <div class="dept-panel" id="deptPanel-dev" role="tabpanel" data-dept="dev" hidden>
+            <div class="cards">
+            <div class="card">
+              <h4 class="h4">🧩 CE팀 (Customer Engineering)</h4>
+              <p class="p">유관부서와 고객이 사용하는 아트클라우드·스토어의 편집기를 개발합니다. 고객이 직접 상품을 편집하는 기능이 실제로 작동하도록 만드는 팀이에요.</p>
+            </div>
+            <div class="card">
+              <h4 class="h4">⚙️ 백엔드팀 (Backend)</h4>
+              <p class="p">상품코드를 발급하고 API를 개발해, 서로 다른 시스템이 문제없이 통신하고 데이터가 정확히 오가도록 만드는 백엔드를 담당합니다.</p>
+            </div>
+            <div class="card">
+              <h4 class="h4">🖥️ 프론트엔드팀 (Frontend)</h4>
+              <p class="p">아트클라우드 화면과 스토어 웹페이지(PC·Mobile)를 개발합니다. 고객이 실제로 보고 사용하는 화면을 구현하는 팀이에요.</p>
+            </div>
+            <div class="card">
+              <h4 class="h4">🔗 P3 백엔드팀 · P3 솔루션팀</h4>
+              <p class="p">고객이 편집·주문한 디지털 상품이 생산 출력될 수 있도록, 편집 데이터를 수집·가공하고 오류를 검증해 인쇄용 PDF로 만드는 생산 자동화 솔루션을 개발·유지보수합니다.</p>
+            </div>
+            <div class="card">
+              <h4 class="h4">🛡️ SE팀 (System Engineering)</h4>
+              <p class="p">서버·네트워크·보안 등 인프라 전반을 운영합니다. 인프라 장애를 사전에 예방·점검하고 보안 컴플라이언스에 대비하는 팀이에요.</p>
+            </div>
+            <div class="card">
+              <h4 class="h4">🤖 AI팀</h4>
+              <p class="p">인공지능과 관련된 전반적인 서비스를 연구·개발합니다. AI 기술을 위블링 서비스에 접목하는 역할을 해요.</p>
+            </div>
+            </div>
+          </div>
+          <div class="dept-panel" id="deptPanel-cxm" role="tabpanel" data-dept="cxm" hidden>
+            <div class="cards">
+            <div class="card">
+              <h4 class="h4">📣 브랜드마케팅팀 · 퍼포먼스마케팅팀</h4>
+              <p class="p">내·외부 고객에게 위블링 브랜드를 알리고 제품을 홍보합니다. 마케팅 전략, 광고 운영, 홍보·PR, 데이터 분석, 브랜드 운영, 고객 리텐션까지 담당해요.</p>
+            </div>
+            <div class="card">
+              <h4 class="h4">🌱 브랜드제휴팀</h4>
+              <p class="p">POD SHOP(주문형 제작 서비스)의 B2B 사업을 담당합니다. 클라이언트 발굴과 세일즈, 계약·정산, 제품 포트폴리오 관리부터 마케팅(광고·CRM·콘텐츠)까지 서비스 성장 전반을 이끌어요.</p>
+            </div>
+            </div>
+          </div>
+          <div class="dept-panel" id="deptPanel-prod" role="tabpanel" data-dept="prod" hidden>
+            <div class="cards">
+            <div class="card">
+              <h4 class="h4">🎯 상품기획팀</h4>
+              <p class="p">새로운 상품을 발굴하기 위해 시장조사와 경쟁사 분석을 하고, 상품의 스펙(원단·컬러·금액)과 제작처를 확정합니다. 상품기획서를 작성하고 품질 검수(QC)까지 챙기는, 상품의 출발점이 되는 팀이에요.</p>
+            </div>
+            <div class="card">
+              <h4 class="h4">🗂️ 프로덕트기획팀</h4>
+              <p class="p">자사 스토어와 아트클라우드의 화면·기능(카테고리·옵션·편집기)을 기획합니다. 기획 내용을 유관부서에 공유하고 작업 일정을 관리하며, 서비스가 매끄럽게 굴러가도록 흐름을 설계해요.</p>
+            </div>
+            <div class="card">
+              <h4 class="h4">✨ BX 디자인팀 (Brand Experience)</h4>
+              <p class="p">상품 특성과 고객 니즈, 트렌드를 반영해 디자인을 기획하고 신규 상품 디자인과 작업 가이드를 제작합니다. 촬영용 샘플 디자인·제작까지 맡아 브랜드의 시각적 경험을 완성해요.</p>
+            </div>
+            <div class="card">
+              <h4 class="h4">🖼️ 프로덕트디자인팀</h4>
+              <p class="p">스킨·상세페이지·편집기의 UI를 디자인하고, 개발에 반영된 화면을 검수하며 사용자가 편하게 쓸 수 있는 경험을 설계합니다.</p>
+            </div>
+            </div>
+          </div>
+          <div class="dept-panel" id="deptPanel-ceo" role="tabpanel" data-dept="ceo" hidden>
+            <div class="cards">
+            <div class="card">
+              <h4 class="h4">👥 People&Culture</h4>
+              <p class="p">위블링 구성원의 입사부터 퇴사까지 전 과정을 관리합니다. 채용·인사운영(HRM), 교육·조직문화(HRD), 총무(GA) 업무를 담당하는, 여러분의 온보딩을 준비하는 팀이에요.</p>
+            </div>
+            <div class="card">
+              <h4 class="h4">🤝 제휴사업팀 (영업)</h4>
+              <p class="p">영업 채널을 통한 대량 오프라인 영업으로 시장점유율 확대와 매출에 기여합니다. 기업·기관 고객(출판사·엔터·화장품사·공공기관 등)의 맞춤 굿즈·판촉물을 기획·제작해요.</p>
+            </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION: 합류 여정 -->
+  <section class="sec" id="journey">
+    <div class="container">
+      <div class="sec-head">
+        <h2 class="sec-title">합류 여정</h2>
+      </div>
+
+      <div class="blk reveal">
+        <h3 class="h3">빛나는 순간을 함께 만들어갈 당신을 환영합니다.</h3>
+        <div class="img-wrap"><img src="image/interview/journey.jpg" alt="위블링 채용 절차" class="img"></div>
+      </div>
+
+      <div class="note reveal">
+        <h4 class="h4 note-title">📍 <span class="hl-y">채용 안내</span></h4>
+        <ul class="ul">
+          <li>입사지원시 <strong>본인의 성명, 연락처, 이메일 주소 등을 정확하게 기입</strong>해 주세요.</li>
+          <li>면접대상과 일정은 <strong>서류전형 합격자에 한해 개별 안내</strong>됩니다.</li>
+          <li>모든 면접은 일대일, 혹은 다대일로 진행되며 시간은 <strong>최대 1시간가량 소요</strong>됩니다.</li>
+          <li>모든 채용은 <strong>수시채용</strong>으로, 합격자가 발생할 경우 <strong>공고가 조기 마감</strong>될 수 있습니다.</li>
+          <li>위 채용 절차는 당사 기본 절차로, 내부 상황에 따라 <strong>면접 프로세스가 변경될 수 있습니다</strong>.</li>
+          <li>본 계약은 <strong>3개월의 수습기간</strong>이 있으며, 별도의 계약으로 진행됩니다.</li>
+        </ul>
+      </div>
+
+      <div class="note reveal">
+        <h4 class="h4 note-title">🚨 <span class="hl-y">주의 사항</span></h4>
+        <ul class="ul">
+          <li>당사에서는 <strong>'채용절차 공정화에 관한 법률'</strong>을 준수하며, <strong>합격자 발표 이후 15일 이내</strong> 채용서류 반환 청구 신청이 가능합니다.</li>
+          <li><strong>채용서류 반환 청구서(채용절차법 시행규칙 별지3)</strong> 작성 후 담당자 이메일(<a href="mailto:recruiter2@snaps.com" style="color:#1C77A6">recruiter2@snaps.com</a>)로 제출 부탁드리며, 신청이 확인되면 등기우편 및 사업장 방문을 통해 수령이 가능합니다.</li>
+          <li>청구서 제출이 확인된 날로부터 <strong>14일 이내</strong> 지정한 주소지로 등기우편을 통하여 발송 드릴 예정이며, <strong>등기우편요금은 수신자 부담</strong>으로 진행되오니 유념해 주시기 바랍니다.</li>
+          <li>해당 기간 내 반환 청구가 없거나 홈페이지/전자우편을 통해 지원자가 자발적으로 제출한 경우 <strong>반환 청구 대상에서 제외</strong>됩니다.</li>
+          <li>상기 기간 내 반환되지 않은 서류는 「개인정보보호법」에 따라 <strong>1년간 보관 후 파기</strong>될 예정입니다.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 면접 후기 -->
+  <section class="sec" id="review">
+    <div class="container">
+      <div class="sec-head">
+        <h2 class="sec-title">면접 후기</h2>
+      </div>
+      <p class="p reveal">위블링의 실제 면접 후기를 통해 위블링의 면접 분위기를 체험해 보세요!</p>
+      <div class="rv-slider reveal">
+        <div class="rv-viewport">
+          <div class="rv-slides">
+            <div class="rv-slide">
+              <div class="rv-card">
+                <img src="image/interview/rv-face-1.jpg" alt="면접 후기 작성자 1" class="rv-face">
+                <div class="rv-meta">
+                  <span class="rv-chip"><span class="k">지원 파트</span><span class="v">상품 기획 매니저 (이OO님)</span></span>
+                  <span class="rv-chip"><span class="k">면접 일자</span><span class="v">2024. 07. 14</span></span>
+                  <span class="rv-chip"><span class="k">면접 결과</span><span class="v">최종 합격</span></span>
+                </div>
+                <p class="rv-body">면접 진행과정에 대하여 설명을 해주시는 점이 면접자 입장에서 매우 좋았습니다. <mark>딱딱하지 않은 분위기</mark>이지만 면접자는 긴장이 될 수 있는데, 면접관 분들께서 중간중간 웃으시면서 질문하시는 부분에서 <mark>긴장을 풀 수 있도록 도움</mark>이 되었습니다.</p>
+              </div>
+            </div>
+            <div class="rv-slide">
+              <div class="rv-card">
+                <img src="image/interview/rv-face-2.jpg" alt="면접 후기 작성자 2" class="rv-face">
+                <div class="rv-meta">
+                  <span class="rv-chip"><span class="k">지원 파트</span><span class="v">인사 총무 리더 (박OO님)</span></span>
+                  <span class="rv-chip"><span class="k">면접 일자</span><span class="v">2024. 08. 14</span></span>
+                  <span class="rv-chip"><span class="k">면접 결과</span><span class="v">1차 면접 불합격</span></span>
+                </div>
+                <p class="rv-body">면접을 진행함에 있어 <mark>응시자를 편안하게</mark> 대해 주셨고, 업무적 성향부터 경력까지 체계적으로 진행해 주셨습니다. 면접을 통해 위블링이라는 회사에 대해 더욱더 긍정적인 생각을 가지게 되었습니다</p>
+              </div>
+            </div>
+            <div class="rv-slide">
+              <div class="rv-card">
+                <img src="image/interview/rv-face-3.jpg" alt="면접 후기 작성자 3" class="rv-face">
+                <div class="rv-meta">
+                  <span class="rv-chip"><span class="k">지원 파트</span><span class="v">제휴 사업 매니저 (유OO님)</span></span>
+                  <span class="rv-chip"><span class="k">면접 일자</span><span class="v">2024. 07. 29</span></span>
+                  <span class="rv-chip"><span class="k">면접 결과</span><span class="v">1차 면접 불합격</span></span>
+                </div>
+                <p class="rv-body">답변이 막혀도 차분히 기다려주시고 배려해 주셔서 긴장을 풀고 답변을 마무리할 수 있었습니다. 단순 압박 면접이 아닌 <mark>토론 형식으로 진행</mark>되어 질문에 대해 충분히 고민한 후 답변할 수 있어 유익한 시간이었습니다.</p>
+              </div>
+            </div>
+            <div class="rv-slide">
+              <div class="rv-card">
+                <img src="image/interview/rv-face-4.jpg" alt="면접 후기 작성자 4" class="rv-face">
+                <div class="rv-meta">
+                  <span class="rv-chip"><span class="k">지원 파트</span><span class="v">인사 총무 리더 (정OO님)</span></span>
+                  <span class="rv-chip"><span class="k">면접 일자</span><span class="v">2024. 08. 22</span></span>
+                  <span class="rv-chip"><span class="k">면접 결과</span><span class="v">1차 면접 불합격</span></span>
+                </div>
+                <p class="rv-body">지원 절차와 면접 일정에 대한 안내가 명확하고, <mark>지원자 편의를 고려한 일정 조율 및 회사에 대한 정보 제공</mark>이 이루어졌습니다. 면접관분들의 <mark>편안한 분위기와 회사와 직무에 대해 깊이 있는 이해</mark>를 바탕으로 질문을 주셨고, 피드백 또한 매우 구체적이며 면접 대기 중 아주 짧게 느낀 위블링의 직원들의 대화나 모습 등을 보며 조직문화는 개방적이고, 혁신/변화적인 분위기였습니다. 면접 후 정말 다정하게 추가 안내해 주신 담당자님과 기념품도 정말 좋았습니다.</p>
+              </div>
+            </div>
+            <div class="rv-slide">
+              <div class="rv-card">
+                <img src="image/interview/rv-face-5.jpg" alt="면접 후기 작성자 5" class="rv-face">
+                <div class="rv-meta">
+                  <span class="rv-chip"><span class="k">지원 파트</span><span class="v">브랜드 마케팅 매니저 (김OO님)</span></span>
+                  <span class="rv-chip"><span class="k">면접 일자</span><span class="v">2025. 03. 26</span></span>
+                  <span class="rv-chip"><span class="k">면접 결과</span><span class="v">1차 면접 불합격</span></span>
+                </div>
+                <p class="rv-body">지원 과정 전반에서 각 파트별로 참석해 주신 세 분의 담당자분들의 질문과 답변 등 <mark>안내가 명확할 때는 명확하고 친절하실 땐 따뜻하게 응대</mark>해 주셔서 오히려 회사에 대한 신뢰감을 느낄 수 있었습니다. 특히 면접에서도 <mark>위블링의 브랜드 방향성과 조직 분위기를 직접 체감</mark>할 수 있었고, 함께 일하고 싶은 마음이 더욱 커졌습니다.</p>
+              </div>
+            </div>
+            <div class="rv-slide">
+              <div class="rv-card">
+                <img src="image/interview/rv-face-6.jpg" alt="면접 후기 작성자 6" class="rv-face">
+                <div class="rv-meta">
+                  <span class="rv-chip"><span class="k">지원 파트</span><span class="v">상품 기획 매니저 (이OO님)</span></span>
+                  <span class="rv-chip"><span class="k">면접 일자</span><span class="v">2025. 08. 12</span></span>
+                  <span class="rv-chip"><span class="k">면접 결과</span><span class="v">최종 합격</span></span>
+                </div>
+                <p class="rv-body">첫 안내부터 면접 내내 분위기가 상당히 좋고 면접자를 편하게 해주시려고 하는 것이 느껴졌으며, <mark>질의 중 궁금했던 부분이 해소</mark>되어 만족스러운 인터뷰였습니다</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="rv-arrow prev" aria-label="이전 후기">&#8249;</button>
+        <button type="button" class="rv-arrow next" aria-label="다음 후기">&#8250;</button>
+        <div class="rv-dots">
+          <button type="button" class="rv-dot active" aria-label="1번째 후기"></button>
+          <button type="button" class="rv-dot" aria-label="2번째 후기"></button>
+          <button type="button" class="rv-dot" aria-label="3번째 후기"></button>
+          <button type="button" class="rv-dot" aria-label="4번째 후기"></button>
+          <button type="button" class="rv-dot" aria-label="5번째 후기"></button>
+          <button type="button" class="rv-dot" aria-label="6번째 후기"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: FAQ -->
+  <section class="sec" id="faq">
+    <div class="container">
+      <div class="sec-head">
+        <h2 class="sec-title">자주 묻는 질문</h2>
+      </div>
+      <div class="faq-list">
+
+        <details class="faq-item reveal">
+          <summary class="faq-q">WEBLING은 어떤 회사이고, SNAPS · OH PRINT.ME · POD SHOP은 각각 무엇이 다른가요?</summary>
+          <div class="faq-a">
+            <p class="p">WEBLING은 국내 최대 규모의 프린팅 생산시설을 기반으로, 고객의 다양한 니즈에 맞춰 여러 브랜드를 운영하고 있습니다. 세 브랜드는 &lsquo;누구의 어떤 필요를 채우는가&rsquo;가 서로 달라요.</p>
+            <ul class="ul">
+              <li><strong>SNAPS</strong> · 취미부터 추억까지 내 손안의 포토·굿즈 프린팅. 포토북과 사진 인화로 사랑받아온 업계 1위 브랜드이며, 최근에는 굿즈로 MZ 세대에게도 많은 관심을 받고 있어요.</li>
+              <li><strong>OH PRINT.ME</strong> · Small Business를 위한 손쉬운 홍보물 제작. 소상공인·크리에이터·중소기업이 스티커·어패럴·판촉물 같은 홍보물을 간편하게 만들 수 있도록 지원하고, 사업에 맞는 디자인까지 제공해요.</li>
+              <li><strong>POD SHOP</strong> · 더 큰 성장을 위한 비즈니스 파트너. 단 한 번의 서비스 연동으로 기업의 상품·제작·배송까지 모두 해결해 주는 POD 풀필먼트 서비스로, B2B 사업을 담당해요.</li>
+            </ul>
+            <p class="p">각 브랜드의 자세한 이야기는 위 <strong>우리의 브랜드</strong> 항목에서도 확인하실 수 있어요.</p>
+          </div>
+        </details>
+
+        <details class="faq-item reveal">
+          <summary class="faq-q">WEBLING 본사는 위워크에 위치해 있나요?</summary>
+          <div class="faq-a">
+            <p class="p">네, 맞아요. 본사는 <strong>위워크 홍대점</strong>에 있고, 주소는 <strong>서울특별시 마포구 양화로 147</strong>이에요.</p>
+            <p class="p">생산 시설은 본사와 따로 있어요. 국내 최대 규모의 프린팅 생산 시설이 <strong>경기도 안양시 만안구 안양천서로 65</strong>에 있습니다.</p>
+            <p class="p">면접 장소와 시간은 서류전형 합격자에 한해 개별 안내드리니, 안내받으신 장소를 확인해 주세요.</p>
+          </div>
+        </details>
+
+        <details class="faq-item reveal">
+          <summary class="faq-q">채용 절차는 어떻게 되나요?</summary>
+          <div class="faq-a">
+            <div class="note"><p class="p" style="font-weight:700">서류검토 → 인·적성검사 → 1차면접 → 2차면접 → 처우협의 → 최종합격</p></div>
+            <p class="p">다만 포지션에 따라 채용 절차는 상이하므로, 지원하신 포지션의 공고를 함께 확인해 주세요.</p>
+          </div>
+        </details>
+
+        <details class="faq-item reveal">
+          <summary class="faq-q">면접은 어떤 방식으로 진행되나요?</summary>
+          <div class="faq-a">
+            <ul class="ul">
+              <li>모든 면접은 <strong>일대일, 혹은 다대일</strong>로 진행됩니다.</li>
+              <li>시간은 <strong>최대 1시간</strong>가량 소요됩니다.</li>
+              <li>면접 대상과 일정은 서류전형 합격자에 한해 개별 안내됩니다.</li>
+            </ul>
+            <p class="p">위 채용 절차는 당사 기본 절차로, 내부 상황에 따라 면접 프로세스가 변경될 수 있습니다.</p>
+          </div>
+        </details>
+
+        <details class="faq-item reveal">
+          <summary class="faq-q">면접 결과는 언제쯤 알 수 있나요?</summary>
+          <div class="faq-a">
+            <p class="p">WEBLING은 지원해주신 모든 분들께 결과가 나오는 대로 빠르게 안내 드리고 있어요. <strong>통상 2주일 내외</strong>입니다.</p>
+            <p class="p">다만, 결과 통보가 1주일 이상 경과 시 <a href="mailto:recruiter2@snaps.com" style="color:#1C77A6">recruiter2@snaps.com</a> 으로 성함, 메일, 연락처, 지원포지션을 기재해주시면 빠르게 확인 도와드리겠습니다!</p>
+          </div>
+        </details>
+
+        <details class="faq-item reveal">
+          <summary class="faq-q">입사 후 수습 기간이 있나요?</summary>
+          <div class="faq-a">
+            <p class="p">네, <strong>3개월의 수습기간</strong>이 있으며 별도의 계약으로 진행됩니다.</p>
+          </div>
+        </details>
+
+        <details class="faq-item reveal">
+          <summary class="faq-q">WEBLING은 어떤 분과 함께 일하고 싶어 하나요?</summary>
+          <div class="faq-a">
+            <p class="p">WEBLING이 중요하게 보는 네 가지 키워드예요.</p>
+            <ul class="ul">
+              <li><strong>SMART</strong> · 스마트하고 통합적인 사고</li>
+              <li><strong>PASSION</strong> · 적극적이고 열정적인 마인드</li>
+              <li><strong>HONEST</strong> · 솔직하고 직설적인 소통능력</li>
+              <li><strong>GRIT</strong> · 끈기와 노력을 다할 준비</li>
+            </ul>
+            <p class="p">채용에서는 아래 두 가지를 공통역량 질문으로 두고 있어요.</p>
+            <div class="note">
+              <ul class="ul">
+                <li>성과 창출을 위해 끈기와 열정, 솔직함, 명석함을 갖고 업무에 임하시는 분</li>
+                <li>실패를 두려워하지 않고 오히려 즐기며 그를 통해 성장 포인트를 찾을 수 있는 분</li>
+              </ul>
+            </div>
+            <p class="p">일하는 방식에 대한 더 자세한 이야기는 <a href="culture.html" style="color:#1C77A6">WEBLING&#39;s Culture</a> 페이지에서 확인하실 수 있어요.</p>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+    </div>
+  </div>
+
+  <!-- SECTION: 브랜드 바로가기 -->
+  <section class="brand-links-section">
+    <div class="container">
+      <div class="brand-links-top">
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">WEBLING</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.webling.kr/" target="_blank" class="brand-url-item">WEBLING 바로가기 ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="brand-links-grid">
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">POD SHOP</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://pod.shop/" target="_blank" class="brand-url-item">POD SHOP ↗</a></li>
+            <li><a href="https://www.instagram.com/podshop_official/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/podshop_official" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">SNAPS</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.snaps.com/" target="_blank" class="brand-url-item">SNAPS ↗</a></li>
+            <li><a href="https://www.facebook.com/snaps.official" target="_blank" class="brand-url-item">Facebook ↗</a></li>
+            <li><a href="https://www.instagram.com/snaps_com/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/snaps1" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">OH PRINT.ME</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.ohprint.me/" target="_blank" class="brand-url-item">OH PRINT.ME ↗</a></li>
+            <li><a href="https://www.facebook.com/ohprintme" target="_blank" class="brand-url-item">Facebook ↗</a></li>
+            <li><a href="https://www.instagram.com/ohprint.me/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/ohprintme" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 푸터 -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="back-to-main">← 메인으로</a>
+      <p class="copyright">(c) WEBLING</p>
+    </div>
+  </footer>
+
+  </div>
+
+  <script>
+    var header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 10) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    });
+
+
+    // 페이지 내부 탭 (목차 = 고정 헤더)
+    function initPageTabs() {
+      var links = document.querySelectorAll('.page-nav-link[data-target]');
+      var panels = document.querySelectorAll('section.sec[id]');
+      if (!links.length || !panels.length) return;
+
+      function show(id) {
+        var found = false;
+        Array.prototype.forEach.call(panels, function (p) {
+          var on = (p.id === id);
+          p.hidden = !on;
+          if (on) found = true;
+        });
+        if (!found) return false;
+        Array.prototype.forEach.call(links, function (l) {
+          var on = (l.getAttribute('data-target') === id);
+          if (on) l.classList.add('active'); else l.classList.remove('active');
+          l.setAttribute('aria-current', on ? 'page' : 'false');
+        });
+        return true;
+      }
+
+      var initial = (window.location.hash || '').replace('#', '');
+      if (!show(initial)) show(links[0].getAttribute('data-target'));
+
+      Array.prototype.forEach.call(links, function (l) {
+        l.addEventListener('click', function () {
+          var id = l.getAttribute('data-target');
+          if (!show(id)) return;
+          try { history.replaceState(null, '', '#' + id); } catch (e) {}
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          initReveal();
+          if (window.__rvFit) window.__rvFit();
+          if (id === 'company' && window.__sloganPlay) window.__sloganPlay();
+        });
+      });
+    }
+
+    function initReveal() {
+      var items = document.querySelectorAll('.reveal');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce || !('IntersectionObserver' in window)) {
+        items.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        var shown = entries.filter(function (e) { return e.isIntersecting; });
+        shown.forEach(function (entry, i) {
+          var el = entry.target;
+          setTimeout(function () { el.classList.add('is-visible'); }, i * 120);
+          observer.unobserve(el);
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
+      items.forEach(function (el) { observer.observe(el); });
+    }
+
+    // 면접 후기 슬라이드 (화면에 들어오면 자동 재생)
+    (function () {
+      var INTERVAL = 3500;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var resizers = [];
+
+      Array.prototype.forEach.call(document.querySelectorAll('.rv-slider'), function (root) {
+        var viewport = root.querySelector('.rv-viewport');
+        var track = root.querySelector('.rv-slides');
+        var slides = root.querySelectorAll('.rv-slide');
+        var dots = root.querySelectorAll('.rv-dot');
+        var total = slides.length;
+        if (!total) return;
+
+        var idx = 0, timer = null;
+
+        function fit() {
+          var h = slides[idx].offsetHeight;
+          if (h) viewport.style.height = h + 'px';
+        }
+        resizers.push(fit);
+
+        function go(next) {
+          idx = (next + total) % total;
+          track.style.transform = 'translateX(' + (-idx * 100) + '%)';
+          Array.prototype.forEach.call(dots, function (d, k) {
+            if (k === idx) d.classList.add('active'); else d.classList.remove('active');
+          });
+          fit();
+        }
+        if (total < 2) { root.classList.add('single'); fit(); return; }
+
+        function play() {
+          if (reduce || timer) return;
+          timer = setInterval(function () { go(idx + 1); }, INTERVAL);
+        }
+        function stop() { if (timer) { clearInterval(timer); timer = null; } }
+        function restart() { stop(); play(); }
+
+        root.querySelector('.rv-arrow.prev').addEventListener('click', function () { go(idx - 1); restart(); });
+        root.querySelector('.rv-arrow.next').addEventListener('click', function () { go(idx + 1); restart(); });
+        Array.prototype.forEach.call(dots, function (d, k) {
+          d.addEventListener('click', function () { go(k); restart(); });
+        });
+        root.addEventListener('mouseenter', stop);
+        root.addEventListener('mouseleave', play);
+
+        fit();
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) { if (e.isIntersecting) { fit(); play(); } else stop(); });
+          }, { threshold: 0.35 }).observe(root);
+        } else {
+          play();
+        }
+      });
+
+      window.__rvFit = function () { resizers.forEach(function (f) { f(); }); };
+      window.addEventListener('resize', function () { window.__rvFit(); });
+      window.addEventListener('load', function () { window.__rvFit(); });
+    })();
+
+    // 팀 소개 : 본부 탭
+    (function () {
+      var tabs = document.querySelectorAll('.org-node[data-dept]');
+      var panels = document.querySelectorAll('.dept-panel[data-dept]');
+      if (!tabs.length) return;
+      Array.prototype.forEach.call(tabs, function (tab) {
+        tab.addEventListener('click', function () {
+          var k = tab.getAttribute('data-dept');
+          Array.prototype.forEach.call(panels, function (p) { p.hidden = (p.getAttribute('data-dept') !== k); });
+          Array.prototype.forEach.call(tabs, function (t) {
+            var on = (t.getAttribute('data-dept') === k);
+            if (on) t.classList.add('active'); else t.classList.remove('active');
+            t.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+        });
+      });
+    })();
+
+    // 회사 소개 슬로건 : 줄별 순차 페이드인
+    (function () {
+      var lines = document.querySelectorAll('#leadSlogan .slogan-line');
+      if (!lines.length) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function play() {
+        Array.prototype.forEach.call(lines, function (el, i) {
+          setTimeout(function () { el.classList.add('is-in'); }, reduce ? 0 : i * 150);
+        });
+      }
+      function reset() {
+        Array.prototype.forEach.call(lines, function (el) { el.classList.remove('is-in'); });
+      }
+      window.__sloganPlay = function () { reset(); setTimeout(play, 30); };
+      if (reduce || !('IntersectionObserver' in window)) { play(); return; }
+      new IntersectionObserver(function (entries, ob) {
+        entries.forEach(function (e) { if (e.isIntersecting) { play(); ob.unobserve(e.target); } });
+      }, { threshold: 0.25 }).observe(document.getElementById('leadSlogan'));
+    })();
+
+    initPageTabs();
+
+    // 안내 코드 확인
+    // TODO: 실제 운영 코드로 교체하세요
+    var CODE = 'webling-interview';
+    var gate = document.getElementById('gate');
+    var content = document.getElementById('content');
+    var form = document.getElementById('gateForm');
+    var input = document.getElementById('gateInput');
+    var errorBox = document.getElementById('gateError');
+
+    function unlock() {
+      gate.hidden = true;
+      content.classList.add('unlocked');
+      document.body.style.overflow = '';
+      initReveal();
+    }
+
+    // 페이지에 들어올 때마다 항상 코드 입력을 요구합니다 (저장하지 않음)
+    document.body.style.overflow = 'hidden';
+
+    // 뒤로가기(bfcache)로 복원된 경우에도 다시 잠급니다
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) window.location.reload();
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = input.value.trim();
+      if (v.toLowerCase() === CODE.toLowerCase()) {
+        errorBox.textContent = '';
+        unlock();
+      } else {
+        errorBox.textContent = '안내 코드가 일치하지 않습니다. 메일에 적힌 코드를 다시 확인해 주세요.';
+        input.value = '';
+        input.focus();
+      }
+    });
+  </script>
+  <script>
+    // 모바일 헤더 : 햄버거 메뉴 토글 (768px 이하에서만 노출)
+    (function () {
+      var btn = document.getElementById('navToggle');
+      var nav = document.getElementById('siteNav');
+      var dim = document.getElementById('navDim');
+      if (!btn || !nav) return;
+      function setOpen(open) {
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+        nav.classList.toggle('is-open', open);
+        if (dim) dim.classList.toggle('is-open', open);
+        document.body.classList.toggle('nav-open', open);
+      }
+      btn.addEventListener('click', function () {
+        setOpen(btn.getAttribute('aria-expanded') !== 'true');
+      });
+      if (dim) dim.addEventListener('click', function () { setOpen(false); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.keyCode === 27) setOpen(false);
+      });
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) setOpen(false);
+      });
+    })();
+  </script>
+</body>
+</html>

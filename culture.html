@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="image/favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="image/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="image/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" href="image/favicon/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>WEBLING's Culture | 위블인사이드</title>
+  <style>
+        :root {
+      /* Color Tokens (5-C) */
+      --n-0: #FFFFFF;
+      --n-50: #F7F9FA;
+      --n-100: #EEF1F3;
+      --n-200: #DDE2E6;
+      --n-400: #8A9096;
+      --n-600: #5C6368;
+      --n-900: #191C1E;
+      --accent-color: #33A6DF;
+      --accent-soft: #F0F8FC;
+      --accent-line: #CFE7F4;
+      --yellow-hl: #FFE372;
+
+      --bg-color: var(--n-0);
+      --text-main: var(--n-900);
+      --text-sub: var(--n-600);
+      --border-color: var(--n-200);
+      --border-scrolled: var(--n-400);
+      --placeholder-bg: var(--n-50);
+      --max-width: 1120px;
+
+      /* Spacing Tokens (5-B) */
+      --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px;
+      --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px; --sp-10: 128px;
+
+      /* Typography Tokens (5-A) */
+      --fs-display: 40px; --lh-display: 1.30; --ls-display: -0.035em;
+      --fs-h1: 32px; --lh-h1: 1.35; --ls-h1: -0.03em;
+      --fs-h2: 24px; --lh-h2: 1.40; --ls-h2: -0.025em;
+      --fs-h3: 19px; --lh-h3: 1.50; --ls-h3: -0.02em;
+      --fs-h4: 16px; --lh-h4: 1.55; --ls-h4: -0.015em;
+      --fs-body: 15.5px; --lh-body: 1.75; --ls-body: -0.01em;
+      --fs-sm: 13.5px; --lh-sm: 1.60; --ls-sm: 0;
+      --fs-label: 11.5px; --lh-label: 1.40; --ls-label: 0.12em;
+
+      /* Component Tokens (5-D) */
+      --rad-sm: 6px;
+      --rad-md: 14px;
+      --rad-pill: 999px;
+      --shadow-hover: 0 8px 24px rgba(25,28,30,.08);
+
+      /* Motion Tokens (5-F) */
+      --t-color: 150ms ease-out;
+      --t-transform: 250ms cubic-bezier(.4,0,.2,1);
+      --t-reveal: 700ms ease-out;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background-color: var(--bg-color);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-color);
+      transition: border-color 0.2s ease;
+    }
+    .site-header.scrolled { border-bottom-color: var(--border-scrolled); }
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; flex-shrink: 0; }
+    .logo-img { height: 20px; width: auto; display: block; }
+    .logo-inside { font-size: 13px; letter-spacing: 0.08em; color: #6E6E73; line-height: 1; }
+    .nav-list { display: flex; align-items: center; list-style: none; gap: 28px; }
+    .nav-link { font-size: 14px; color: var(--text-sub); transition: color 0.15s ease; white-space: nowrap; }
+    .nav-link.active, .nav-link:hover { color: var(--accent-color); }
+
+    /* Page Title + Hero */
+    .page-title-area { padding: 152px 0 32px; }
+    .page-title { font-size: 32px; font-weight: 700; letter-spacing: -0.03em; }
+    .hero-area { margin-bottom: 96px; }
+    .hero-img { width: 100%; height: auto; display: block; border-radius: 8px; }
+
+    /* 공통 등장 애니메이션 */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* SECTION 1: 키워드 4종 */
+    .keyword-section { padding-bottom: 96px; }
+    .keyword-list { display: flex; flex-direction: column; gap: 72px; }
+    .keyword-item { display: flex; }
+    .keyword-item.align-right { justify-content: flex-end; }
+    .keyword-box { width: 50%; }
+    .keyword-item.align-right .keyword-box { text-align: right; }
+    .keyword-eng {
+      font-size: 52px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      color: var(--text-main);
+    }
+    .keyword-rule {
+      width: 48px;
+      height: 3px;
+      background-color: var(--accent-color);
+      margin: 20px 0;
+    }
+    .keyword-item.align-right .keyword-rule { margin-left: auto; }
+    .keyword-kor { font-size: 17px; color: var(--text-sub); }
+
+    /* 섹션 구분 이미지 */
+    .band-area { margin-bottom: 96px; }
+    .band-img { width: 100%; height: auto; display: block; border-radius: 8px; }
+
+    /* SECTION 2: 우리는 이렇게 일하고 있습니다 */
+    .work-section { padding-bottom: 96px; }
+    .section-title { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .section-hint { font-size: 15px; color: var(--text-sub); margin-bottom: 56px; }
+    .keyword-section .section-title { margin-bottom: 56px; }
+    .work-list { display: flex; flex-direction: column; gap: 56px; }
+    .work-block { display: flex; gap: 40px; align-items: flex-start; }
+    .work-img-col { flex: 0 0 200px; }
+    .work-img { width: 100%; height: auto; display: block; border-radius: 8px; }
+    .work-text-col { flex: 1; min-width: 0; }
+    .work-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+    .work-title { font-size: 21px; font-weight: 700; letter-spacing: -0.02em; }
+    .work-subtitle { font-size: 15px; color: var(--text-sub); margin-bottom: 18px; }
+    .work-rule { border: none; border-top: 1px solid var(--border-color); margin-bottom: 18px; }
+    .work-ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .work-ul li {
+      position: relative;
+      padding-left: 16px;
+      font-size: 15px;
+      line-height: 1.65;
+      color: #424245;
+    }
+    .work-ul li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 10px;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background-color: var(--border-color);
+    }
+
+    /* SECTION 3: 일하는 문화 속 행사 */
+    .events-section { padding-bottom: 96px; }
+    .events-list { display: flex; flex-direction: column; }
+    .event-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px 4px;
+      border-top: 1px solid var(--border-color);
+      transition: background-color 0.15s ease, padding-left 0.15s ease;
+    }
+    .events-list .event-row:last-child { border-bottom: 1px solid var(--border-color); }
+    .event-row:hover { background-color: var(--surface); padding-left: 12px; }
+    .event-info { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; min-width: 0; }
+    .event-name { font-size: 17px; font-weight: 700; }
+    .event-tag {
+      font-size: 13px;
+      color: var(--text-sub);
+      background-color: var(--surface);
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+    .event-row:hover .event-tag { background-color: var(--bg-color); }
+    .event-arrow { font-size: 13px; font-weight: 600; color: var(--text-sub); white-space: nowrap; }
+    .event-row:hover .event-arrow { color: var(--accent-color); }
+
+    /* Brand Links */
+    .brand-links-section { padding-bottom: 96px; }
+    .brand-links-top { margin-bottom: 32px; }
+    .brand-links-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .brand-link-group-title {
+      font-size: 16px; font-weight: 700; margin-bottom: 16px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border-color);
+    }
+    .brand-link-ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .brand-url-item { font-size: 14px; color: var(--text-sub); transition: color 0.15s ease; }
+    .brand-url-item:hover { color: var(--accent-color); }
+
+    /* Footer */
+    .site-footer { border-top: 1px solid var(--border-color); padding: 40px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+    .back-to-main { font-size: 14px; font-weight: 600; transition: color 0.15s ease; }
+    .back-to-main:hover { color: var(--accent-color); }
+    .copyright { font-size: 13px; color: var(--text-sub); }
+
+    /* Responsive */
+    /* 모바일 햄버거 메뉴 (768px 이하에서만 표시) */
+    .nav-toggle { display: none; }
+    .nav-dim { display: none; }
+
+    @media (max-width: 1024px) {
+
+      /* 1024px Responsive added */
+
+    }
+
+    @media (max-width: 768px) {
+      .header-inner { padding: 0 16px; gap: 16px; }
+      /* --- 모바일 헤더 : 햄버거 메뉴 --- */
+      .nav-toggle {
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 5px; width: 44px; height: 44px; margin-right: -10px; padding: 0;
+        border: none; background: none; cursor: pointer; flex-shrink: 0;
+      }
+      .nav-toggle span {
+        display: block; width: 20px; height: 2px; border-radius: 2px;
+        background-color: var(--text-main);
+        transition: transform .25s ease, opacity .2s ease;
+      }
+      .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+      .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      .site-nav {
+        position: absolute; top: 100%; left: 0; right: 0;
+        background-color: var(--bg-color);
+        border-bottom: 1px solid var(--border-color);
+        opacity: 0; visibility: hidden; transform: translateY(-8px);
+        transition: opacity .22s ease, transform .22s ease, visibility .22s;
+      }
+      .site-nav.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
+      .nav-list { display: block; gap: 0; overflow: visible; white-space: normal; }
+      .nav-list li + li { border-top: 1px solid #F0F0F2; }
+      .nav-link {
+        display: block; padding: 15px 20px;
+        font-size: 15.5px; letter-spacing: -.02em; color: var(--text-main);
+      }
+      .nav-link.active { color: var(--accent-color); font-weight: 700; }
+      .nav-dim {
+        display: block; position: fixed; left: 0; right: 0; top: 64px; bottom: 0;
+        z-index: 900; background-color: rgba(29, 29, 31, .32);
+        opacity: 0; visibility: hidden;
+        transition: opacity .22s ease, visibility .22s;
+      }
+      .nav-dim.is-open { opacity: 1; visibility: visible; }
+      body.nav-open { overflow: hidden; }
+      @media (prefers-reduced-motion: reduce) {
+        .site-nav, .nav-dim, .nav-toggle span { transition: none; }
+      }
+      .page-title-area { padding: 104px 0 24px; }
+      .page-title { font-size: 26px; }
+      .hero-area, .band-area { margin-bottom: 56px; }
+      .keyword-section, .work-section, .events-section, .brand-links-section { padding-bottom: 56px; }
+      .keyword-list { gap: 44px; }
+      .keyword-box { width: 100%; }
+      .keyword-item.align-right .keyword-box { text-align: left; }
+      .keyword-item.align-right .keyword-rule { margin-left: 0; }
+      .keyword-eng { font-size: 36px; }
+      .section-title { font-size: 21px; }
+      .section-hint { margin-bottom: 36px; }
+      .keyword-section .section-title { margin-bottom: 36px; }
+      .work-list { gap: 40px; }
+      .work-block { flex-direction: column; gap: 20px; }
+      .work-img-col { flex: none; width: 140px; }
+      .work-title { font-size: 18px; }
+      .event-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .brand-links-grid { grid-template-columns: 1fr; gap: 24px; }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
+</head>
+<body>
+
+  <!-- SECTION: 헤더 -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="image/logo/webling-logo-x.png" alt="WEBLING" class="logo-img">
+        <span class="logo-inside">INSIDE</span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <ul class="nav-list">
+          <li><a href="about.html" class="nav-link">About WEBLING</a></li>
+          <li><a href="culture.html" class="nav-link active">WEBLING's Culture</a></li>
+          <li><a href="life.html" class="nav-link">WEBLING Life</a></li>
+          <li><a href="benefit.html" class="nav-link">WEBLING's Benefit</a></li>
+          <li><a href="careers.html" class="nav-link">WEBLING Career</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="nav-toggle" id="navToggle"
+              aria-label="메뉴 열기" aria-expanded="false" aria-controls="siteNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <div class="nav-dim" id="navDim"></div>
+
+  <!-- SECTION: 페이지 제목 -->
+  <div class="page-title-area">
+    <div class="container">
+      <h1 class="page-title">WEBLING's Culture</h1>
+    </div>
+  </div>
+
+  <!-- SECTION: 상단 이미지 -->
+  <div class="hero-area">
+    <div class="container">
+      <img src="image/culture/culture-1-notext.jpg" alt="WEBLING's Culture" class="hero-img">
+    </div>
+  </div>
+
+  <!-- SECTION: 키워드 4종 -->
+  <section class="keyword-section">
+    <div class="container">
+      <h2 class="section-title">✏️ 위블링에서는 이런 사람들이 모여서 만들어요.</h2>
+      <div class="keyword-list">
+        <div class="keyword-item reveal">
+          <div class="keyword-box">
+            <h2 class="keyword-eng">SMART</h2>
+            <div class="keyword-rule"></div>
+            <p class="keyword-kor">스마트하고 통합적인 사고</p>
+          </div>
+        </div>
+        <div class="keyword-item align-right reveal">
+          <div class="keyword-box">
+            <h2 class="keyword-eng">PASSION</h2>
+            <div class="keyword-rule"></div>
+            <p class="keyword-kor">적극적이고 열정적인 마인드</p>
+          </div>
+        </div>
+        <div class="keyword-item reveal">
+          <div class="keyword-box">
+            <h2 class="keyword-eng">HONEST</h2>
+            <div class="keyword-rule"></div>
+            <p class="keyword-kor">솔직하고 직설적인 소통능력</p>
+          </div>
+        </div>
+        <div class="keyword-item align-right reveal">
+          <div class="keyword-box">
+            <h2 class="keyword-eng">GRIT</h2>
+            <div class="keyword-rule"></div>
+            <p class="keyword-kor">끈기와 노력을 다할 준비</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 구분 이미지 -->
+  <div class="band-area">
+    <div class="container">
+      <img src="image/culture/culture-2-notext.jpg" alt="위블링에서 일하는 모습" class="band-img">
+    </div>
+  </div>
+
+  <!-- SECTION: 우리는 이렇게 일하고 있습니다 -->
+  <section class="work-section">
+    <div class="container">
+      <h2 class="section-title">✅ 우리는 이렇게 일하고 있습니다</h2>
+      <p class="section-hint">위블링 사람들이 일할 때 지키는 다섯 가지예요.</p>
+
+      <div class="work-list">
+        <div class="work-block reveal">
+          <div class="work-img-col">
+            <img src="image/culture/culture-3.png" alt="고객 덕후" class="work-img">
+          </div>
+          <div class="work-text-col">
+            <div class="work-head">
+              <h3 class="work-title">저희는 자타공인 고객 덕후입니다!</h3>
+            </div>
+            <p class="work-subtitle">위블링의 시작은 바로 고객!</p>
+            <hr class="work-rule">
+            <ul class="work-ul">
+              <li>고객은 위블링이 존재하는 이유 그 자체이자, 모든 것의 시작점입니다.</li>
+              <li>저희가 하는 모든 일의 최우선은 언제나 고객이어야 해요! 고객의 작은 목소리 하나하나 놓치지 않도록 귀 기울이고 있어요.</li>
+              <li>고객 덕후처럼 고객에게 집중할 때, 위블링만의 개성을 더욱 빛낼 수 있다고 믿어요!</li>
+              <li>고객에게 없어서는 안 될, 대체 불가한 서비스를 제공하여 열렬한 지지를 얻는 것이 저희의 목표입니다!</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="work-block reveal">
+          <div class="work-img-col">
+            <img src="image/culture/culture-4.png" alt="건설적인 비판과 치열한 토론" class="work-img">
+          </div>
+          <div class="work-text-col">
+            <div class="work-head">
+              <h3 class="work-title">건설적인 비판과 치열한 토론, 언제든 환영!</h3>
+            </div>
+            <p class="work-subtitle">더 멋진 결과를 만들기 위해!</p>
+            <hr class="work-rule">
+            <ul class="work-ul">
+              <li>위블링은 무조건 "YES!"만 외치는 직원은 원하지 않아요!</li>
+              <li>사람마다 생각이 다를 수 있는 건 당연하잖아요?</li>
+              <li>서로 의견이 다르더라도 솔직하게 이야기하고, 또 다른 의견을 받아들일 수 있어야 더 좋은 결과가 나온다고 믿습니다!</li>
+              <li>특히 회의실에서는 모두가 자유롭게 질문하고, 비판하고, 아이디어를 낼 수 있어야 해요!</li>
+              <li>위블링 회의에서 침묵은 금지! 적극적으로 의견을 나눠주세요!</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="work-block reveal">
+          <div class="work-img-col">
+            <img src="image/culture/culture-5.png" alt="팀플레이어와 협업" class="work-img">
+          </div>
+          <div class="work-text-col">
+            <div class="work-head">
+              <h3 class="work-title">혼자보단 함께!</h3>
+            </div>
+            <p class="work-subtitle">함께 만들어가는 위블링!</p>
+            <hr class="work-rule">
+            <ul class="work-ul">
+              <li>위블링은 혼자서만 빛나는 스타 플레이어보다, 팀워크를 중요하게 생각하는 팀 플레이어를 더 응원합니다!</li>
+              <li>혼자일 때보다 함께일 때 더욱 빛나는 팀원이 필요해요!</li>
+              <li>서로의 부족한 부분을 채워주고, 혼자서는 절대 이룰 수 없는 놀라운 성과를 함께 만들어나가기를 기대합니다!</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="work-block reveal">
+          <div class="work-img-col">
+            <img src="image/culture/culture-6.png" alt="탁월함 추구" class="work-img">
+          </div>
+          <div class="work-text-col">
+            <div class="work-head">
+              <h3 class="work-title">최고를 향해! 탁월함을 추구합니다</h3>
+            </div>
+            <p class="work-subtitle">업무에 임하는 우리의 자세!</p>
+            <hr class="work-rule">
+            <ul class="work-ul">
+              <li>위블링은 언제나 탁월함을 추구합니다!</li>
+              <li>특정 분야의 전문가가 되기 위해서는 끊임없는 배움, 스스로 세운 높은 기준, 그리고 성숙한 자세가 필수겠죠?</li>
+              <li>전문성을 갖춰야 어떤 상황에서도 빠르고 유연하게 대처할 수 있답니다!</li>
+              <li>탁월함을 향한 여러분의 열정을 위해, 위블링이 아낌없이 지원할게요!</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="work-block reveal">
+          <div class="work-img-col">
+            <img src="image/culture/culture-7.png" alt="똑똑한 실패" class="work-img">
+          </div>
+          <div class="work-text-col">
+            <div class="work-head">
+              <h3 class="work-title">똑똑하게 실패해도 괜찮아요</h3>
+            </div>
+            <p class="work-subtitle">창조적인 결과를 만들기 위한 발걸음</p>
+            <hr class="work-rule">
+            <ul class="work-ul">
+              <li>위블링은 똑똑한 실패를 응원합니다!</li>
+              <li>철저한 준비와 계획을 바탕으로 한 똑똑한 실패는, 실패 후 인과관계와 근본적인 원인을 명확하게 파악할 수 있게 해주죠.</li>
+              <li>실패를 통해 배우는 새로운 지식의 가치를 소중하게 생각해요.</li>
+              <li>똑똑한 실패들이 쌓여 또 다른 창조적인 성과를 만들어낼 거예요.</li>
+              <li>실패를 숨기기보단 빠르게 투명하게 공개하여 리스크를 최소화하는 것이 더 큰 피해를 막는 방법이라고 생각합니다.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 일하는 문화 속 행사 -->
+  <section class="events-section">
+    <div class="container">
+      <h2 class="section-title">🎉 일하는 문화 속 행사</h2>
+      <p class="section-hint">각 행사의 자세한 내용과 현장 사진은 WEBLING Life에서 확인하실 수 있어요.</p>
+
+      <div class="events-list">
+        <a href="life.html#ai-seminar" class="event-row">
+          <div class="event-info">
+            <span class="event-name">AI 활용 세미나</span>
+          </div>
+          <span class="event-arrow">WEBLING Life 보기 →</span>
+        </a>
+
+        <a href="life.html#ai-cardnews" class="event-row">
+          <div class="event-info">
+            <span class="event-name">매달 AI 카드뉴스 발행</span>
+          </div>
+          <span class="event-arrow">WEBLING Life 보기 →</span>
+        </a>
+
+        <a href="life.html#one-on-one" class="event-row">
+          <div class="event-info">
+            <span class="event-name">1on1 진행</span>
+          </div>
+          <span class="event-arrow">WEBLING Life 보기 →</span>
+        </a>
+
+        <a href="life.html#townhall" class="event-row">
+          <div class="event-info">
+            <span class="event-name">소프트데이 · 월 1회</span>
+          </div>
+          <span class="event-arrow">WEBLING Life 보기 →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 브랜드 바로가기 -->
+  <section class="brand-links-section">
+    <div class="container">
+      <div class="brand-links-top">
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">WEBLING</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.webling.kr/" target="_blank" class="brand-url-item">WEBLING 바로가기 ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="brand-links-grid">
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">POD SHOP</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://pod.shop/" target="_blank" class="brand-url-item">POD SHOP ↗</a></li>
+            <li><a href="https://www.instagram.com/podshop_official/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/podshop_official" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">SNAPS</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.snaps.com/" target="_blank" class="brand-url-item">SNAPS ↗</a></li>
+            <li><a href="https://www.facebook.com/snaps.official" target="_blank" class="brand-url-item">Facebook ↗</a></li>
+            <li><a href="https://www.instagram.com/snaps_com/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/snaps1" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">OH PRINT.ME</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.ohprint.me/" target="_blank" class="brand-url-item">OH PRINT.ME ↗</a></li>
+            <li><a href="https://www.facebook.com/ohprintme" target="_blank" class="brand-url-item">Facebook ↗</a></li>
+            <li><a href="https://www.instagram.com/ohprint.me/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/ohprintme" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 푸터 -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="back-to-main">← 메인으로</a>
+      <p class="copyright">(c) WEBLING</p>
+    </div>
+  </footer>
+
+  <script>
+    // 헤더 스크롤 시 구분선 강조
+    var header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 10) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    });
+
+    // 스크롤 등장 애니메이션 (순차 표시)
+    (function () {
+      var items = document.querySelectorAll('.reveal');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reduce || !('IntersectionObserver' in window)) {
+        items.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        var shown = entries.filter(function (e) { return e.isIntersecting; });
+        shown.forEach(function (entry, i) {
+          var el = entry.target;
+          setTimeout(function () { el.classList.add('is-visible'); }, i * 160);
+          observer.unobserve(el);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -12% 0px' });
+
+      items.forEach(function (el) { observer.observe(el); });
+    })();
+  </script>
+  <script>
+    // 모바일 헤더 : 햄버거 메뉴 토글 (768px 이하에서만 노출)
+    (function () {
+      var btn = document.getElementById('navToggle');
+      var nav = document.getElementById('siteNav');
+      var dim = document.getElementById('navDim');
+      if (!btn || !nav) return;
+      function setOpen(open) {
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+        nav.classList.toggle('is-open', open);
+        if (dim) dim.classList.toggle('is-open', open);
+        document.body.classList.toggle('nav-open', open);
+      }
+      btn.addEventListener('click', function () {
+        setOpen(btn.getAttribute('aria-expanded') !== 'true');
+      });
+      if (dim) dim.addEventListener('click', function () { setOpen(false); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.keyCode === 27) setOpen(false);
+      });
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) setOpen(false);
+      });
+    })();
+  </script>
+</body>
+</html>

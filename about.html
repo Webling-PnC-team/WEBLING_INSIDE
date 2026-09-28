@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="image/favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="image/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="image/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" href="image/favicon/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>About WEBLING | 위블인사이드</title>
+  <style>
+        :root {
+      /* Color Tokens (5-C) */
+      --n-0: #FFFFFF;
+      --n-50: #F7F9FA;
+      --n-100: #EEF1F3;
+      --n-200: #DDE2E6;
+      --n-400: #8A9096;
+      --n-600: #5C6368;
+      --n-900: #191C1E;
+      --accent-color: #33A6DF;
+      --accent-soft: #F0F8FC;
+      --accent-line: #CFE7F4;
+      --yellow-hl: #FFE372;
+
+      --bg-color: var(--n-0);
+      --text-main: var(--n-900);
+      --text-sub: var(--n-600);
+      --border-color: var(--n-200);
+      --border-scrolled: var(--n-400);
+      --placeholder-bg: var(--n-50);
+      --max-width: 1120px;
+
+      /* Spacing Tokens (5-B) */
+      --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px;
+      --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px; --sp-10: 128px;
+
+      /* Typography Tokens (5-A) */
+      --fs-display: 40px; --lh-display: 1.30; --ls-display: -0.035em;
+      --fs-h1: 32px; --lh-h1: 1.35; --ls-h1: -0.03em;
+      --fs-h2: 24px; --lh-h2: 1.40; --ls-h2: -0.025em;
+      --fs-h3: 19px; --lh-h3: 1.50; --ls-h3: -0.02em;
+      --fs-h4: 16px; --lh-h4: 1.55; --ls-h4: -0.015em;
+      --fs-body: 15.5px; --lh-body: 1.75; --ls-body: -0.01em;
+      --fs-sm: 13.5px; --lh-sm: 1.60; --ls-sm: 0;
+      --fs-label: 11.5px; --lh-label: 1.40; --ls-label: 0.12em;
+
+      /* Component Tokens (5-D) */
+      --rad-sm: 6px;
+      --rad-md: 14px;
+      --rad-pill: 999px;
+      --shadow-hover: 0 8px 24px rgba(25,28,30,.08);
+
+      /* Motion Tokens (5-F) */
+      --t-color: 150ms ease-out;
+      --t-transform: 250ms cubic-bezier(.4,0,.2,1);
+      --t-reveal: 700ms ease-out;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+    /* Section Divider */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border-color);
+      margin: 80px 0;
+    }
+
+    /* Header */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background-color: var(--bg-color);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-color);
+      transition: border-color 0.2s ease;
+    }
+    .site-header.scrolled { border-bottom-color: var(--border-scrolled); }
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .logo-img {
+      height: 20px;
+      width: auto;
+      display: block;
+    }
+    .logo-inside {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: #6E6E73;
+      line-height: 1;
+    }
+    .nav-list {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 28px;
+      margin: 0; padding: 0;
+    }
+    .nav-link {
+      font-size: 14px;
+      color: var(--text-sub);
+      transition: color 0.15s ease;
+      white-space: nowrap;
+    }
+    .nav-link.active,
+    .nav-link:hover { color: var(--accent-color); }
+
+    /* Page Header */
+    .page-title-area {
+      padding: 152px 0 32px;
+    }
+    .page-title {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+    }
+    .about-hero-area { margin-bottom: 88px; }
+    .about-hero-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+
+    /* Section 1: 슬로건 */
+    .slogan-section { padding-bottom: 80px; }
+    .statement-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .statement-item {
+      opacity: 0;
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      min-height: 1.4em;
+    }
+    .statement-item.typing,
+    .statement-item.typed { opacity: 1; }
+    .statement-item.typing::after {
+      content: '';
+      display: inline-block;
+      width: 2px;
+      height: 0.95em;
+      margin-left: 3px;
+      vertical-align: -0.12em;
+      background-color: var(--accent-color);
+      animation: caret 0.8s step-end infinite;
+    }
+    @keyframes caret { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      .statement-item { opacity: 1; }
+      .statement-item.typing::after { display: none; }
+    }
+
+    /* Section 2: 위블링의 역량 (5항목) */
+    .capability-section { padding: 80px 0; }
+    .capability-list {
+      display: flex;
+      flex-direction: column;
+      gap: 72px;
+    }
+    .cap-item {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+      will-change: opacity, transform;
+    }
+    .cap-item.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .cap-item.row-reverse {
+      flex-direction: row-reverse;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cap-item {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+    .cap-img-wrap {
+      flex: 1;
+    }
+    .cap-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .cap-text-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .cap-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+    .cap-list {
+      list-style-type: disc;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .cap-list li {
+      font-size: 16px;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    /* Section 3: 앞으로의 위블링 */
+    .future-section { padding: 80px 0; }
+    .future-block { margin-bottom: 48px; }
+    .future-block:last-child { margin-bottom: 0; }
+    .future-title,
+    .future-subtitle,
+    .future-body {
+      margin-left: 0;
+      padding-left: 0;
+      text-indent: 0;
+      border-left: none;
+      background: none;
+      text-align: left;
+    }
+    .future-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .future-subtitle {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: 700;
+      color: #424245;
+      margin-bottom: 20px;
+      background-color: #FFF1B8;
+      padding: 5px 12px;
+      border-radius: 3px;
+    }
+    .future-body {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #424245;
+    }
+
+    /* Section 4: BLING MOMENT (Timeline) */
+    .timeline-section { padding: 80px 0; }
+    .bling-title {
+      margin-bottom: 12px;
+    }
+    .bling-title span {
+      display: inline-block;
+      font-size: 28px;
+      font-weight: 700;
+      color: #B8860B;
+      letter-spacing: -0.01em;
+    }
+    .timeline-subtitle {
+      font-size: 16px;
+      color: var(--text-sub);
+      margin-bottom: 48px;
+    }
+    .timeline-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .timeline-year-group {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 24px;
+      align-items: start;
+      padding: 24px;
+      border-radius: 8px;
+      background-color: var(--bg-color);
+    }
+    .timeline-year-group:nth-child(odd) { background-color: var(--n-50); }
+    .timeline-year {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+    .timeline-events {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-top: 4px;
+      border-left: 1px solid var(--border-color);
+      padding-left: 24px;
+    }
+    .timeline-event-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .timeline-event-main {
+      font-size: 15px;
+      color: var(--text-main);
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .timeline-month {
+      font-weight: 600;
+      color: var(--text-sub);
+      min-width: 42px;
+    }
+    .timeline-text { font-weight: 500; }
+    .timeline-sub-desc {
+      padding-left: 54px;
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.4;
+    }
+    .timeline-link {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1C77A6;
+      margin-left: 8px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .timeline-link:hover { text-decoration: underline; }
+
+    /* Brand Links */
+    .brand-links-section { padding: 80px 0; }
+    .brand-links-top { margin-bottom: 32px; }
+    .brand-links-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .brand-link-group-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .brand-link-ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .brand-url-item {
+      font-size: 14px;
+      color: var(--text-sub);
+      transition: color 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .brand-url-item:hover { color: var(--accent-color); }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--border-color);
+      padding: 40px 0;
+      background-color: var(--bg-color);
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .back-to-main {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      transition: color 0.15s ease;
+    }
+    .back-to-main:hover { color: var(--accent-color); }
+    .copyright { font-size: 13px; color: var(--text-sub); }
+
+    /* Responsive */
+    /* 모바일 햄버거 메뉴 (768px 이하에서만 표시) */
+    .nav-toggle { display: none; }
+    .nav-dim { display: none; }
+
+    @media (max-width: 1024px) {
+
+      /* 1024px Responsive added */
+
+    }
+
+    @media (max-width: 768px) {
+      .header-inner { padding: 0 16px; gap: 16px; }
+      /* --- 모바일 헤더 : 햄버거 메뉴 --- */
+      .nav-toggle {
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 5px; width: 44px; height: 44px; margin-right: -10px; padding: 0;
+        border: none; background: none; cursor: pointer; flex-shrink: 0;
+      }
+      .nav-toggle span {
+        display: block; width: 20px; height: 2px; border-radius: 2px;
+        background-color: var(--text-main);
+        transition: transform .25s ease, opacity .2s ease;
+      }
+      .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+      .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      .site-nav {
+        position: absolute; top: 100%; left: 0; right: 0;
+        background-color: var(--bg-color);
+        border-bottom: 1px solid var(--border-color);
+        opacity: 0; visibility: hidden; transform: translateY(-8px);
+        transition: opacity .22s ease, transform .22s ease, visibility .22s;
+      }
+      .site-nav.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
+      .nav-list { display: block; gap: 0; overflow: visible; white-space: normal; }
+      .nav-list li + li { border-top: 1px solid #F0F0F2; }
+      .nav-link {
+        display: block; padding: 15px 20px;
+        font-size: 15.5px; letter-spacing: -.02em; color: var(--text-main);
+      }
+      .nav-link.active { color: var(--accent-color); font-weight: 700; }
+      .nav-dim {
+        display: block; position: fixed; left: 0; right: 0; top: 64px; bottom: 0;
+        z-index: 900; background-color: rgba(29, 29, 31, .32);
+        opacity: 0; visibility: hidden;
+        transition: opacity .22s ease, visibility .22s;
+      }
+      .nav-dim.is-open { opacity: 1; visibility: visible; }
+      body.nav-open { overflow: hidden; }
+      @media (prefers-reduced-motion: reduce) {
+        .site-nav, .nav-dim, .nav-toggle span { transition: none; }
+      }
+      .page-title-area { padding: 104px 0 24px; }
+      .page-title { font-size: 26px; }
+      .about-hero-area { margin-bottom: 48px; }
+      .timeline-year-group { padding: 20px 16px; }
+      .statement-item { font-size: 19px; }
+      .slogan-section { padding-bottom: 50px; }
+      .capability-section, .future-section, .timeline-section { padding: 50px 0; }
+      .cap-item, .cap-item.row-reverse { flex-direction: column; gap: 24px; }
+      .cap-title { font-size: 20px; }
+      .brand-links-section { padding: 50px 0; }
+      .brand-links-grid { grid-template-columns: 1fr; gap: 24px; }
+      .section-divider { margin: 48px 0; }
+      .timeline-year-group { grid-template-columns: 1fr; gap: 12px; }
+      .timeline-events { border-left: none; padding-left: 0; }
+      .timeline-sub-desc { padding-left: 0; margin-top: 4px; }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
+</head>
+<body>
+
+  <!-- SECTION: 헤더 -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="image/logo/webling-logo-x.png" alt="WEBLING" class="logo-img">
+        <span class="logo-inside">INSIDE</span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <ul class="nav-list">
+          <li><a href="about.html" class="nav-link active">About WEBLING</a></li>
+          <li><a href="culture.html" class="nav-link">WEBLING's Culture</a></li>
+          <li><a href="life.html" class="nav-link">WEBLING Life</a></li>
+          <li><a href="benefit.html" class="nav-link">WEBLING's Benefit</a></li>
+          <li><a href="careers.html" class="nav-link">WEBLING Career</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="nav-toggle" id="navToggle"
+              aria-label="메뉴 열기" aria-expanded="false" aria-controls="siteNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <div class="nav-dim" id="navDim"></div>
+
+  <!-- Page Title -->
+  <div class="page-title-area">
+    <div class="container">
+      <h1 class="page-title">About WEBLING</h1>
+    </div>
+  </div>
+
+  <div class="about-hero-area">
+    <div class="container">
+      <img src="image/about/about-1.jpg" alt="WEBLING" class="about-hero-img">
+    </div>
+  </div>
+
+  <!-- SECTION: 슬로건 -->
+  <section class="slogan-section">
+    <div class="container">
+      <div class="statement-list">
+        <p class="statement-item">가장 중요한 순간을 더 빛나게</p>
+        <p class="statement-item">일과 삶을 더 즐겁게 만드는 혁신적 플랫폼</p>
+        <p class="statement-item">트렌드를 만들어 가는 브랜드</p>
+        <p class="statement-item">최고의 전문가들이 성장을 멈추지 않는 곳</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SECTION: 위블링의 역량 -->
+  <section class="capability-section">
+    <div class="container">
+      <div class="capability-list">
+        <!-- 1번 -->
+        <div class="cap-item">
+          <div class="cap-img-wrap"><img src="image/about/about-2.jpg" alt="글로벌 No.1 POD 기업" class="cap-img"></div>
+          <div class="cap-text-wrap">
+            <h3 class="cap-title">글로벌 No.1 POD 기업</h3>
+            <ul class="cap-list">
+              <li>국내 최대 생산 시설을 보유하고 있는 업계 1위</li>
+              <li>"STOP" 없는 "START"의 정신으로</li>
+              <li>소중한 기억이 하나의 기록과 추억이 되도록</li>
+            </ul>
+          </div>
+        </div>
+        <!-- 2번 -->
+        <div class="cap-item row-reverse">
+          <div class="cap-img-wrap"><img src="image/about/about-3.jpg" alt="국내 최대의 품목 별 POD 생산 역량" class="cap-img"></div>
+          <div class="cap-text-wrap">
+            <h3 class="cap-title">국내 최대의 품목 별 POD 생산 역량</h3>
+            <ul class="cap-list">
+              <li>자동화 솔루션과 국내 최대 생산 설비 인프라</li>
+              <li>압도적인 POD 상품 생산 역량을 확보</li>
+              <li>300여 개의 POD상품을 간편하게 출시</li>
+            </ul>
+          </div>
+        </div>
+        <!-- 3번 -->
+        <div class="cap-item">
+          <div class="cap-img-wrap"><img src="image/about/about-4.jpg" alt="오직 위블링만을 위한 연구개발 조직" class="cap-img"></div>
+          <div class="cap-text-wrap">
+            <h3 class="cap-title">오직 위블링만을 위한 연구개발 조직</h3>
+            <ul class="cap-list">
+              <li>80여명 이상의 전문 연구 개발 인력</li>
+              <li>자체 R&D 조직을 통해 끊임없는 서비스 고도화</li>
+            </ul>
+          </div>
+        </div>
+        <!-- 4번 -->
+        <div class="cap-item row-reverse">
+          <div class="cap-img-wrap"><img src="image/about/about-5.jpg" alt="노하우로 완성된 자동화 생산 시설" class="cap-img"></div>
+          <div class="cap-text-wrap">
+            <h3 class="cap-title">노하우로 완성된 자동화 생산 시설</h3>
+            <ul class="cap-list">
+              <li>POD 업체 중 국내 최대 생산 시설 보유</li>
+              <li>자동화 된 물류 공정 시스템 확보</li>
+              <li>단 하루만에 30여만개의 제품 생산</li>
+            </ul>
+          </div>
+        </div>
+        <!-- 5번 -->
+        <div class="cap-item">
+          <div class="cap-img-wrap"><img src="image/about/about-6.jpg" alt="개인 취향을 존중하는 인공지능 서비스" class="cap-img"></div>
+          <div class="cap-text-wrap">
+            <h3 class="cap-title">개인 취향을 존중하는 인공지능 서비스</h3>
+            <ul class="cap-list">
+              <li>AI 기반 개인 맞춤형 서비스로 취향을 큐레이션</li>
+              <li>시간이 많이 드는 디자인, AI가 알아서 디자인</li>
+              <li>고객 맞춤 DIY 편집기로 상품을 직접 커스텀</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SECTION: 앞으로의 위블링 -->
+  <section class="future-section">
+    <div class="container">
+      <div class="future-block">
+        <h2 class="future-title">✨ 위블링, 앞으로는 어떤 모습일까요?</h2>
+        <h3 class="future-subtitle">여기서 멈추면 섭섭하죠! 위블링은 절대 안주하지 않아요!</h3>
+        <p class="future-body">
+          더 많은 고객님께 특별한 경험을 선사하기 위해 <strong>사업 다각화에 과감하게 도전</strong>하고, 변화에 발맞춰 끊임없이 투자하고 연구하고 있답니다!<br>
+          그동안 꾸준히 R&D에 힘쓴 결과, <strong>HTML 기반 웹 편집 기술, 생산 자동화 프로세스, AI 이미지 분석 기술</strong> 등 위블링만의 특별한 기술력을 뽐낼 수 있게 되었어요! 덕분에 업계에서도 인정받고 있답니다.<br>
+          고객님을 최우선으로 생각하며 끊임없이 고민한 결과, <strong>B2C는 물론 B2B까지</strong> 다양한 분야에서 많은 분들을 만날 수 있었어요. <strong>10대부터 50대까지</strong>, 정말 많은 분들이 위블링을 사랑해 주셔서 감사할 따름입니다! 하지만 여기서 만족할 위블링이 아니죠! <strong>또 한 번의 혁신</strong>을 꿈꾸며 열심히 연구하고, 멋진 다음 스텝을 준비하고 있으니 기대 많이 해주세요!
+        </p>
+      </div>
+
+      <div class="future-block">
+        <h2 class="future-title">✨ 위블링, 더욱 건강하게 성장할 거예요!</h2>
+        <h3 class="future-subtitle">위블링은 사회적 책임도 잊지 않아요!</h3>
+        <p class="future-body">
+          저희는 건전하고 미래 지향적인 기업 문화를 만들어가면서 <strong>기업의 사회적 역할과 책임</strong>을 다하기 위해 노력하고 있답니다.<br>
+          고객님께 받은 감동을 더욱 가치 있게 돌려드리기 위해 <strong>사회 환원 활동</strong>도 열심히 하고 있어요. 또, 자율과 창의가 넘치는 분위기 속에서 모든 직원이 즐겁게 일할 수 있도록 <strong>복지에도 힘쓰고</strong> 있답니다!<br>
+          저희는 <strong>"직원이 성장해야 회사도 성장한다!"</strong>라는 굳은 믿음을 가지고 있어요. 그래서 직원들의 <strong>역량 개발을 위해 아낌없이 지원</strong>하고 있답니다.<br>
+          최고의 인재에게 최고의 만족을 드리고 싶어, <strong>동종 업계 대비 경쟁력 있는 처우</strong>를 제공하고 있다는 사실!<br>
+          하지만 아직도 저희는 목마릅니다! 아직 해야 할 일, 해보고 싶은 일이 너무나 많거든요!<br>
+          저희와 <strong>함께 성장해 나갈 동반자</strong>를 찾고 있습니다. 함께 꿈을 펼쳐봐요!
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SECTION: BLING MOMENT -->
+  <section class="timeline-section">
+    <div class="container">
+      <h2 class="bling-title"><span>✨ BLING MOMENT</span></h2>
+      <p class="timeline-subtitle">우리는 지금도 빛나는 순간을 만들어 가고 있어요.</p>
+
+      <div class="timeline-container">
+        <!-- 2025 -->
+        <div class="timeline-year-group">
+          <div class="timeline-year">2025</div>
+          <div class="timeline-events">
+            <div class="timeline-event-item">
+              <div class="timeline-event-main">
+                <span class="timeline-month">03월</span>
+                <span class="timeline-text">스냅스 무료 디자인 포토북 출시</span>
+              </div>
+              <div class="timeline-sub-desc">POD 사업 서비스로 월평균 45% 매출 성장</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2024 -->
+        <div class="timeline-year-group">
+          <div class="timeline-year">2024</div>
+          <div class="timeline-events">
+            <div class="timeline-event-item">
+              <div class="timeline-event-main">
+                <span class="timeline-month">10월</span>
+                <span class="timeline-text">NC 다이노스 'POD 사업 활성화' 제휴</span>
+              </div>
+            </div>
+            <div class="timeline-event-item">
+              <div class="timeline-event-main">
+                <span class="timeline-month">03월</span>
+                <span class="timeline-text">POD SHOP 서비스 런칭</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2023 -->
+        <div class="timeline-year-group">
+          <div class="timeline-year">2023</div>
+          <div class="timeline-events">
+            <div class="timeline-event-item">
+              <div class="timeline-event-main">
+                <span class="timeline-month">08월</span>
+                <span class="timeline-text">엔터테인먼트(하이브, JYP, YG) 투자 유치</span>
+              </div>
+            </div>
+            <div class="timeline-event-item">
+              <div class="timeline-event-main">
+                <span class="timeline-month">05월</span>
+                <span class="timeline-text">국내 최초 하이엔드 디지털 프린팅 설비 도입</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2022 -->
+        <div class="timeline-year-group">
+          <div class="timeline-year">2022</div>
+          <div class="timeline-events">
+            <div class="timeline-event-item">
+              <div class="timeline-event-main">
+                <span class="timeline-month">12월</span>
+                <span class="timeline-text">여성가족부 '가족친화 우수기업' 인증</span>
+              </div>
+            </div>
+            <div class="timeline-event-item">
+              <div class="timeline-event-main">
+                <span class="timeline-month">07월</span>
+                <span class="timeline-text">85억원 투자 유치</span>
+              </div>
+            </div>
+            <div class="timeline-event-item">
+              <div class="timeline-event-main">
+                <span class="timeline-month">01월</span>
+                <span class="timeline-text">OROUND 서비스 런칭</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2019 -->
+        <div class="timeline-year-group">
+          <div class="timeline-year">2019</div>
+          <div class="timeline-events">
+            <div class="timeline-event-item">
+              <div class="timeline-event-main">
+                <span class="timeline-month">07월</span>
+                <span class="timeline-text">인공지능 기술 적용 'AI 포토북' 출시</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2018 -->
+        <div class="timeline-year-group">
+          <div class="timeline-year">2018</div>
+          <div class="timeline-events">
+            <div class="timeline-event-item">
+              <div class="timeline-event-main">
+                <span class="timeline-month"></span>
+                <span class="timeline-text">MOBILE 글로벌 서비스 시작</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2017 -->
+        <div class="timeline-year-group">
+          <div class="timeline-year">2017</div>
+          <div class="timeline-events">
+            <div class="timeline-event-item">
+              <div class="timeline-event-main">
+                <span class="timeline-month">09월</span>
+                <span class="timeline-text">OH PRINT.ME 서비스 런칭</span>
+              </div>
+            </div>
+            <div class="timeline-event-item">
+              <div class="timeline-event-main">
+                <span class="timeline-month">07월</span>
+                <span class="timeline-text">
+                  스냅스 편집기 신SW상품대상
+                  <a href="https://www.press9.kr/news/articleView.html?idxno=31025" target="_blank" class="timeline-link">바로가기 ↗</a>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2013 -->
+        <div class="timeline-year-group">
+          <div class="timeline-year">2013</div>
+          <div class="timeline-events">
+            <div class="timeline-event-item">
+              <div class="timeline-event-main">
+                <span class="timeline-month"></span>
+                <span class="timeline-text">국내 최초 모바일 서비스 시작</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2007 -->
+        <div class="timeline-year-group">
+          <div class="timeline-year">2007</div>
+          <div class="timeline-events">
+            <div class="timeline-event-item">
+              <div class="timeline-event-main">
+                <span class="timeline-month"></span>
+                <span class="timeline-text">국내 최초 포토북 서비스 런칭</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SECTION: 브랜드 바로가기 -->
+  <section class="brand-links-section">
+    <div class="container">
+      <div class="brand-links-top">
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">WEBLING</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.webling.kr/" target="_blank" class="brand-url-item">WEBLING 바로가기 ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="brand-links-grid">
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">POD SHOP</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://pod.shop/" target="_blank" class="brand-url-item">POD SHOP ↗</a></li>
+            <li><a href="https://www.instagram.com/podshop_official/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/podshop_official" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">SNAPS</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.snaps.com/" target="_blank" class="brand-url-item">SNAPS ↗</a></li>
+            <li><a href="https://www.facebook.com/snaps.official" target="_blank" class="brand-url-item">Facebook ↗</a></li>
+            <li><a href="https://www.instagram.com/snaps_com/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/snaps1" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">OH PRINT.ME</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.ohprint.me/" target="_blank" class="brand-url-item">OH PRINT.ME ↗</a></li>
+            <li><a href="https://www.facebook.com/ohprintme" target="_blank" class="brand-url-item">Facebook ↗</a></li>
+            <li><a href="https://www.instagram.com/ohprint.me/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/ohprintme" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 푸터 -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="back-to-main">← 메인으로</a>
+      <p class="copyright">(c) WEBLING</p>
+    </div>
+  </footer>
+
+  <!-- Minimal Scroll JS -->
+  <script>
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // 슬로건 타이핑 애니메이션
+    (function () {
+      var items = Array.prototype.slice.call(document.querySelectorAll('.statement-item'));
+      if (!items.length) return;
+      var texts = items.map(function (el) { return el.textContent.trim(); });
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reduce) {
+        items.forEach(function (el, i) { el.textContent = texts[i]; el.classList.add('typed'); });
+        return;
+      }
+
+      items.forEach(function (el) { el.textContent = ''; });
+
+      function typeLine(idx) {
+        if (idx >= items.length) return;
+        var el = items[idx], full = texts[idx], pos = 0;
+        el.classList.add('typing');
+        var timer = setInterval(function () {
+          pos++;
+          el.textContent = full.slice(0, pos);
+          if (pos >= full.length) {
+            clearInterval(timer);
+            el.classList.remove('typing');
+            el.classList.add('typed');
+            setTimeout(function () { typeLine(idx + 1); }, 260);
+          }
+        }, 55);
+      }
+
+      function start() {
+        if (!('IntersectionObserver' in window)) { typeLine(0); return; }
+        var ob = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) { ob.disconnect(); typeLine(0); }
+        }, { threshold: 0.4 });
+        ob.observe(items[0]);
+      }
+      start();
+    })();
+
+    // 위블링의 역량 - 스크롤 등장 애니메이션
+    (function () {
+      var items = document.querySelectorAll('.cap-item');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // 애니메이션을 끈 환경이거나 IntersectionObserver 미지원 시 즉시 모두 표시
+      if (reduce || !('IntersectionObserver' in window)) {
+        items.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        // 한 번에 여러 개가 들어오면 순서대로 시차를 두고 나타나게 한다
+        var shown = entries.filter(function (e) { return e.isIntersecting; });
+        shown.forEach(function (entry, i) {
+          var el = entry.target;
+          setTimeout(function () { el.classList.add('is-visible'); }, i * 160);
+          observer.unobserve(el); // 한 번 나타나면 다시 숨기지 않음
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -12% 0px' });
+
+      items.forEach(function (el) { observer.observe(el); });
+    })();
+  </script>
+  <script>
+    // 모바일 헤더 : 햄버거 메뉴 토글 (768px 이하에서만 노출)
+    (function () {
+      var btn = document.getElementById('navToggle');
+      var nav = document.getElementById('siteNav');
+      var dim = document.getElementById('navDim');
+      if (!btn || !nav) return;
+      function setOpen(open) {
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+        nav.classList.toggle('is-open', open);
+        if (dim) dim.classList.toggle('is-open', open);
+        document.body.classList.toggle('nav-open', open);
+      }
+      btn.addEventListener('click', function () {
+        setOpen(btn.getAttribute('aria-expanded') !== 'true');
+      });
+      if (dim) dim.addEventListener('click', function () { setOpen(false); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.keyCode === 27) setOpen(false);
+      });
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) setOpen(false);
+      });
+    })();
+  </script>
+</body>
+</html>

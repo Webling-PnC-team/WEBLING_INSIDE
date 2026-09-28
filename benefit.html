@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="image/favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="image/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="image/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" href="image/favicon/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>WEBLING's Benefit | 위블인사이드</title>
+  <style>
+        :root {
+      /* Color Tokens (5-C) */
+      --n-0: #FFFFFF;
+      --n-50: #F7F9FA;
+      --n-100: #EEF1F3;
+      --n-200: #DDE2E6;
+      --n-400: #8A9096;
+      --n-600: #5C6368;
+      --n-900: #191C1E;
+      --accent-color: #33A6DF;
+      --accent-soft: #F0F8FC;
+      --accent-line: #CFE7F4;
+      --yellow-hl: #FFE372;
+
+      --bg-color: var(--n-0);
+      --text-main: var(--n-900);
+      --text-sub: var(--n-600);
+      --border-color: var(--n-200);
+      --border-scrolled: var(--n-400);
+      --placeholder-bg: var(--n-50);
+      --max-width: 1120px;
+
+      /* Spacing Tokens (5-B) */
+      --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px;
+      --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px; --sp-10: 128px;
+
+      /* Typography Tokens (5-A) */
+      --fs-display: 40px; --lh-display: 1.30; --ls-display: -0.035em;
+      --fs-h1: 32px; --lh-h1: 1.35; --ls-h1: -0.03em;
+      --fs-h2: 24px; --lh-h2: 1.40; --ls-h2: -0.025em;
+      --fs-h3: 19px; --lh-h3: 1.50; --ls-h3: -0.02em;
+      --fs-h4: 16px; --lh-h4: 1.55; --ls-h4: -0.015em;
+      --fs-body: 15.5px; --lh-body: 1.75; --ls-body: -0.01em;
+      --fs-sm: 13.5px; --lh-sm: 1.60; --ls-sm: 0;
+      --fs-label: 11.5px; --lh-label: 1.40; --ls-label: 0.12em;
+
+      /* Component Tokens (5-D) */
+      --rad-sm: 6px;
+      --rad-md: 14px;
+      --rad-pill: 999px;
+      --shadow-hover: 0 8px 24px rgba(25,28,30,.08);
+
+      /* Motion Tokens (5-F) */
+      --t-color: 150ms ease-out;
+      --t-transform: 250ms cubic-bezier(.4,0,.2,1);
+      --t-reveal: 700ms ease-out;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background-color: var(--bg-color);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-color);
+      transition: border-color 0.2s ease;
+    }
+    .site-header.scrolled { border-bottom-color: var(--border-scrolled); }
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; flex-shrink: 0; }
+    .logo-img { height: 20px; width: auto; display: block; }
+    .logo-inside { font-size: 13px; letter-spacing: 0.08em; color: #6E6E73; line-height: 1; }
+    .nav-list { display: flex; align-items: center; list-style: none; gap: 28px; }
+    .nav-link { font-size: 14px; color: var(--text-sub); transition: color 0.15s ease; white-space: nowrap; }
+    .nav-link.active, .nav-link:hover { color: var(--accent-color); }
+
+    /* Page Title */
+    .page-title-area { padding: 152px 0 32px; }
+    .page-title { font-size: 32px; font-weight: 700; letter-spacing: -0.03em; }
+    .page-lead { font-size: 16px; color: var(--text-sub); margin-top: 10px; }
+
+    /* 공통 등장 애니메이션 */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* 복지 그룹 */
+    .benefit-group { padding-bottom: 88px; scroll-margin-top: 88px; }
+    .group-head {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding-bottom: 16px;
+      margin-bottom: 32px;
+      border-bottom: 2px solid var(--text-main);
+    }
+    .group-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.4;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .b-card {
+      display: flex;
+      flex-direction: column;
+      padding: 26px 24px;
+      background-color: var(--surface);
+      border-radius: var(--rad-md);
+      border: 1px solid var(--border-color);
+    }
+    .b-icon { font-size: 26px; line-height: 1; margin-bottom: 16px; }
+    .b-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+      line-height: 1.45;
+    }
+    .b-desc { font-size: 14px; line-height: 1.65; color: var(--text-sub); }
+
+    /* 그 외 복지 */
+    .etc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .etc-item {
+      padding: 20px 18px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--rad-md);
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* 마무리 */
+
+    /* Brand Links */
+    .brand-links-section { padding-bottom: 96px; }
+    .brand-links-top { margin-bottom: 32px; }
+    .brand-links-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .brand-link-group-title {
+      font-size: 16px; font-weight: 700; margin-bottom: 16px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--border-color);
+    }
+    .brand-link-ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .brand-url-item { font-size: 14px; color: var(--text-sub); transition: color 0.15s ease; }
+    .brand-url-item:hover { color: var(--accent-color); }
+
+    /* Footer */
+    .site-footer { border-top: 1px solid var(--border-color); padding: 40px 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+    .back-to-main { font-size: 14px; font-weight: 600; transition: color 0.15s ease; }
+    .back-to-main:hover { color: var(--accent-color); }
+    .copyright { font-size: 13px; color: var(--text-sub); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .etc-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    /* 모바일 햄버거 메뉴 (768px 이하에서만 표시) */
+    .nav-toggle { display: none; }
+    .nav-dim { display: none; }
+
+        @media (max-width: 768px) {
+      .brand-links-grid { grid-template-columns: 1fr !important; }
+      .header-inner { padding: 0 16px; gap: 16px; }
+      /* --- 모바일 헤더 : 햄버거 메뉴 --- */
+      .nav-toggle {
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 5px; width: 44px; height: 44px; margin-right: -10px; padding: 0;
+        border: none; background: none; cursor: pointer; flex-shrink: 0;
+      }
+      .nav-toggle span {
+        display: block; width: 20px; height: 2px; border-radius: 2px;
+        background-color: var(--text-main);
+        transition: transform .25s ease, opacity .2s ease;
+      }
+      .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+      .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      .site-nav {
+        position: absolute; top: 100%; left: 0; right: 0;
+        background-color: var(--bg-color);
+        border-bottom: 1px solid var(--border-color);
+        opacity: 0; visibility: hidden; transform: translateY(-8px);
+        transition: opacity .22s ease, transform .22s ease, visibility .22s;
+      }
+      .site-nav.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
+      .nav-list { display: block; gap: 0; overflow: visible; white-space: normal; }
+      .nav-list li + li { border-top: 1px solid #F0F0F2; }
+      .nav-link {
+        display: block; padding: 15px 20px;
+        font-size: 15.5px; letter-spacing: -.02em; color: var(--text-main);
+      }
+      .nav-link.active { color: var(--accent-color); font-weight: 700; }
+      .nav-dim {
+        display: block; position: fixed; left: 0; right: 0; top: 64px; bottom: 0;
+        z-index: 900; background-color: rgba(29, 29, 31, .32);
+        opacity: 0; visibility: hidden;
+        transition: opacity .22s ease, visibility .22s;
+      }
+      .nav-dim.is-open { opacity: 1; visibility: visible; }
+      body.nav-open { overflow: hidden; }
+      @media (prefers-reduced-motion: reduce) {
+        .site-nav, .nav-dim, .nav-toggle span { transition: none; }
+      }
+      .page-title-area { padding: 104px 0 24px; }
+      .page-title { font-size: 26px; }
+      .summary-area { padding: 28px 0 48px; }
+      .benefit-group { padding-bottom: 56px; }
+      .group-title { font-size: 18px; }
+      .group-head { flex-direction: column; gap: 6px; margin-bottom: 24px; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .etc-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
+</head>
+<body>
+
+  <!-- SECTION: 헤더 -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="image/logo/webling-logo-x.png" alt="WEBLING" class="logo-img">
+        <span class="logo-inside">INSIDE</span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <ul class="nav-list">
+          <li><a href="about.html" class="nav-link">About WEBLING</a></li>
+          <li><a href="culture.html" class="nav-link">WEBLING's Culture</a></li>
+          <li><a href="life.html" class="nav-link">WEBLING Life</a></li>
+          <li><a href="benefit.html" class="nav-link active">WEBLING's Benefit</a></li>
+          <li><a href="careers.html" class="nav-link">WEBLING Career</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="nav-toggle" id="navToggle"
+              aria-label="메뉴 열기" aria-expanded="false" aria-controls="siteNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <div class="nav-dim" id="navDim"></div>
+
+  <!-- SECTION: 페이지 제목 -->
+  <div class="page-title-area">
+    <div class="container">
+      <h1 class="page-title">WEBLING's Benefit</h1>
+    </div>
+  </div>
+
+  <!-- SECTION: 그룹 1 -->
+  <section class="benefit-group" id="g1">
+    <div class="container">
+      <div class="group-head">
+        <h2 class="group-title">위블링은 자유로운 분위기 조성으로 업무 향상에 도움을 드려요.</h2>
+      </div>
+      <div class="cards-grid">
+        <div class="b-card reveal">
+          <div class="b-icon">🕙</div>
+          <h3 class="b-title">8~10시 자율 출퇴근제</h3>
+          <p class="b-desc">개별 업무 시간의 자율성을 보장해요. 업무의 본질에 집중하기 위해 work &amp; life harmony를 경험해 보세요.</p>
+        </div>
+        <div class="b-card reveal">
+          <div class="b-icon">🎈</div>
+          <h3 class="b-title">자유로운 연차 사용</h3>
+          <p class="b-desc">눈치 보지 않아도 돼요. 연차뿐 아니라 15분 단위 시차 사용도 가능해요.</p>
+        </div>
+        <div class="b-card reveal">
+          <div class="b-icon">💻</div>
+          <h3 class="b-title">공유 라운지</h3>
+          <p class="b-desc">그날 업무나 상황에 맞게 원하는 자리에서 자유롭게 일 할 수 있어요. 위블링 본사는 홍대입구역에서 도보 1분 거리에 위치해 있어요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 그룹 2 -->
+  <section class="benefit-group" id="g2">
+    <div class="container">
+      <div class="group-head">
+        <h2 class="group-title">위블링은 업무에만 몰입할 수 있도록 적극 지원하고 있어요.</h2>
+      </div>
+      <div class="cards-grid">
+        <div class="b-card reveal">
+          <div class="b-icon">🤖</div>
+          <h3 class="b-title">AI 업무 툴 구독료 및 교육 지원</h3>
+          <p class="b-desc">폭 넓은 업무 수행을 위한 AI툴의 구독료와 관련 교육 수강을 지원하고 있어요.</p>
+        </div>
+        <div class="b-card reveal">
+          <div class="b-icon">🍚</div>
+          <h3 class="b-title">석식 지원</h3>
+          <p class="b-desc">연장근무 시 석식비를 지원하고 있어요. 식권대장 앱을 통해 포인트로 지급해드려요.</p>
+        </div>
+        <div class="b-card reveal">
+          <div class="b-icon">🩺</div>
+          <h3 class="b-title">임직원 건강검진 지원</h3>
+          <p class="b-desc">종합 건강 검진 지원을 통해 당신의 더 건강한 삶도 응원해요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 그룹 3 -->
+  <section class="benefit-group" id="g3">
+    <div class="container">
+      <div class="group-head">
+        <h2 class="group-title">위블링과 함께하는 동안 좋은 추억만 가득하실 수 있도록 노력하고 있어요.</h2>
+      </div>
+      <div class="cards-grid">
+        <div class="b-card reveal">
+          <div class="b-icon">🚖</div>
+          <h3 class="b-title">야근 교통비 지원</h3>
+          <p class="b-desc">부득이한 야근 시 교통비를 지원해드려요. 야근은 지양하지만 부득이한 야근 시 택시비를 포함하여 야근 교통비를 지원해드리고 있어요.</p>
+        </div>
+        <div class="b-card reveal">
+          <div class="b-icon">👭</div>
+          <h3 class="b-title">내부 지인추천 포상제도 운영</h3>
+          <p class="b-desc">우수한 인재를 추천해주는 직원들에게는 특별한 포상을 제공해요.</p>
+        </div>
+        <div class="b-card reveal">
+          <div class="b-icon">🎉</div>
+          <h3 class="b-title">생일, 결혼기념일 특별 휴가</h3>
+          <p class="b-desc">특별한 날은 소중한 가족과 함께하세요. 생일을 위한 1일의 유급 휴가와 결혼기념일을 위한 반차를 지원해드려요.</p>
+        </div>
+        <div class="b-card reveal">
+          <div class="b-icon">👶</div>
+          <h3 class="b-title">임신 및 출산 선물</h3>
+          <p class="b-desc">임신 및 출산 시 고급 유모차 등의 선물을 선택해서 드려요.</p>
+        </div>
+        <div class="b-card reveal">
+          <div class="b-icon">🙏</div>
+          <h3 class="b-title">경조사 지원</h3>
+          <p class="b-desc">축하와 위로의 의미로 경조금과 경조휴가를 부여해드려요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 그룹 4 -->
+  <section class="benefit-group" id="g4">
+    <div class="container">
+      <div class="group-head">
+        <h2 class="group-title">위블링만의 특별함을 제공하고 있어요.</h2>
+      </div>
+      <div class="cards-grid">
+        <div class="b-card reveal">
+          <div class="b-icon">🎁</div>
+          <h3 class="b-title">신규 입사자를 위한 웰컴키트</h3>
+          <p class="b-desc">후드집업, 에코백, 다이어리, 볼펜, 메모패드, 칫솔, 위블링 스티커 등등 정성 듬뿍 담은 웰컴키트가 기다리고 있으니 따로 가져오지 않으셔도 돼요.</p>
+        </div>
+        <div class="b-card reveal">
+          <div class="b-icon">🎨</div>
+          <h3 class="b-title">직접 디자인하는 나만의 명함</h3>
+          <p class="b-desc">틀에 박힌 명함이 아닌 세상에 하나뿐인 나만의 명함을 제작할 수 있어요.</p>
+        </div>
+        <div class="b-card reveal">
+          <div class="b-icon">✈</div>
+          <h3 class="b-title">장기 근속 포상제도 운영 (3·6·10·15년)</h3>
+          <p class="b-desc">로열티를 갖고 근속한 직원들을 위한 리프레시 휴가 및 포상금이 준비되어 있어요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 그룹 5 -->
+  <section class="benefit-group" id="g5">
+    <div class="container">
+      <div class="group-head">
+        <h2 class="group-title">그 외 복지</h2>
+      </div>
+      <div class="etc-grid">
+        <div class="etc-item reveal">매월 급여일은 점심 시간 2시간</div>
+        <div class="etc-item reveal">무제한 커피, 차 제공</div>
+        <div class="etc-item reveal">최신 안마 의자 비치</div>
+        <div class="etc-item reveal">자사 제품 직원 할인 (최대 60%)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 브랜드 바로가기 -->
+  <section class="brand-links-section">
+    <div class="container">
+      <div class="brand-links-top">
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">WEBLING</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.webling.kr/" target="_blank" class="brand-url-item">WEBLING 바로가기 ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="brand-links-grid">
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">POD SHOP</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://pod.shop/" target="_blank" class="brand-url-item">POD SHOP ↗</a></li>
+            <li><a href="https://www.instagram.com/podshop_official/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/podshop_official" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">SNAPS</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.snaps.com/" target="_blank" class="brand-url-item">SNAPS ↗</a></li>
+            <li><a href="https://www.facebook.com/snaps.official" target="_blank" class="brand-url-item">Facebook ↗</a></li>
+            <li><a href="https://www.instagram.com/snaps_com/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/snaps1" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">OH PRINT.ME</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.ohprint.me/" target="_blank" class="brand-url-item">OH PRINT.ME ↗</a></li>
+            <li><a href="https://www.facebook.com/ohprintme" target="_blank" class="brand-url-item">Facebook ↗</a></li>
+            <li><a href="https://www.instagram.com/ohprint.me/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/ohprintme" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 푸터 -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="back-to-main">← 메인으로</a>
+      <p class="copyright">(c) WEBLING</p>
+    </div>
+  </footer>
+
+  <script>
+    var header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 10) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    });
+
+    (function () {
+      var items = document.querySelectorAll('.reveal');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reduce || !('IntersectionObserver' in window)) {
+        items.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        var shown = entries.filter(function (e) { return e.isIntersecting; });
+        shown.forEach(function (entry, i) {
+          var el = entry.target;
+          setTimeout(function () { el.classList.add('is-visible'); }, i * 70);
+          observer.unobserve(el);
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+
+      items.forEach(function (el) { observer.observe(el); });
+    })();
+  </script>
+  <script>
+    // 모바일 헤더 : 햄버거 메뉴 토글 (768px 이하에서만 노출)
+    (function () {
+      var btn = document.getElementById('navToggle');
+      var nav = document.getElementById('siteNav');
+      var dim = document.getElementById('navDim');
+      if (!btn || !nav) return;
+      function setOpen(open) {
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+        nav.classList.toggle('is-open', open);
+        if (dim) dim.classList.toggle('is-open', open);
+        document.body.classList.toggle('nav-open', open);
+      }
+      btn.addEventListener('click', function () {
+        setOpen(btn.getAttribute('aria-expanded') !== 'true');
+      });
+      if (dim) dim.addEventListener('click', function () { setOpen(false); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.keyCode === 27) setOpen(false);
+      });
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) setOpen(false);
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="image/favicon/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="image/favicon/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="image/favicon/favicon-16.png">
+  <link rel="apple-touch-icon" href="image/favicon/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>WEBLING INSIDE | 위블링 채용 안내</title>
+  <style>
+        :root {
+      /* Color Tokens (5-C) */
+      --n-0: #FFFFFF;
+      --n-50: #F7F9FA;
+      --n-100: #EEF1F3;
+      --n-200: #DDE2E6;
+      --n-400: #8A9096;
+      --n-600: #5C6368;
+      --n-900: #191C1E;
+      --accent-color: #33A6DF;
+      --accent-soft: #F0F8FC;
+      --accent-line: #CFE7F4;
+      --yellow-hl: #FFE372;
+
+      --bg-color: var(--n-0);
+      --text-main: var(--n-900);
+      --text-sub: var(--n-600);
+      --border-color: var(--n-200);
+      --border-scrolled: var(--n-400);
+      --placeholder-bg: var(--n-50);
+      --max-width: 1120px;
+
+      /* Spacing Tokens (5-B) */
+      --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px;
+      --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px; --sp-10: 128px;
+
+      /* Typography Tokens (5-A) */
+      --fs-display: 40px; --lh-display: 1.30; --ls-display: -0.035em;
+      --fs-h1: 32px; --lh-h1: 1.35; --ls-h1: -0.03em;
+      --fs-h2: 24px; --lh-h2: 1.40; --ls-h2: -0.025em;
+      --fs-h3: 19px; --lh-h3: 1.50; --ls-h3: -0.02em;
+      --fs-h4: 16px; --lh-h4: 1.55; --ls-h4: -0.015em;
+      --fs-body: 15.5px; --lh-body: 1.75; --ls-body: -0.01em;
+      --fs-sm: 13.5px; --lh-sm: 1.60; --ls-sm: 0;
+      --fs-label: 11.5px; --lh-label: 1.40; --ls-label: 0.12em;
+
+      /* Component Tokens (5-D) */
+      --rad-sm: 6px;
+      --rad-md: 14px;
+      --rad-pill: 999px;
+      --shadow-hover: 0 8px 24px rgba(25,28,30,.08);
+
+      /* Motion Tokens (5-F) */
+      --t-color: 150ms ease-out;
+      --t-transform: 250ms cubic-bezier(.4,0,.2,1);
+      --t-reveal: 700ms ease-out;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+    /* Section Divider */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border-color);
+      margin: 80px 0;
+    }
+
+    /* Header */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background-color: var(--bg-color);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-color);
+      transition: border-color 0.2s ease;
+    }
+    .site-header.scrolled { border-bottom-color: var(--border-scrolled); }
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .logo-img {
+      height: 20px;
+      width: auto;
+      display: block;
+    }
+    .logo-inside {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: #6E6E73;
+      line-height: 1;
+    }
+    .nav-list {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 28px;
+      margin: 0; padding: 0;
+    }
+    .nav-link {
+      font-size: 14px;
+      color: var(--text-sub);
+      transition: color 0.15s ease;
+      white-space: nowrap;
+    }
+    .nav-link:hover { color: var(--accent-color); }
+
+    /* Hero : 그리드 사진 벽면 */
+    .hero-section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 120px 0 80px;
+      background-color: var(--bg-color);
+    }
+    .hero-wall {
+      position: absolute; inset: 0; z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 0;
+    }
+    .hero-tile {
+      position: relative; overflow: hidden;
+      opacity: 0;
+      transform: scale(1.08) translateY(-10px);
+      transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .hero-tile.is-in { opacity: 1; transform: none; }
+    .hero-tile img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 2;
+      background: rgba(255,255,255,0.85);
+      -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+      opacity: 0; pointer-events: none;
+      transition: opacity 1.2s ease;
+    }
+    .hero-overlay.is-active { opacity: 1; }
+    .hero-content {
+      position: relative; z-index: 3;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    .hero-content.is-active { opacity: 1; transform: none; }
+    .hero-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--text-sub);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+    .hero-slogan {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.42;
+      letter-spacing: -0.035em;
+      color: var(--text-main);
+      margin-bottom: 44px;
+    }
+    .hero-credit { margin-top: 22px; font-size: 12px; color: var(--text-sub); line-height: 1.5; }
+    .slogan-line {
+      display: block;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .slogan-line.is-in { opacity: 1; transform: none; }
+    .hero-slogan .hl {
+      font-style: normal;
+      font-weight: 800;
+      color: var(--accent-color);
+    }
+
+    .hero-arrow {
+      position: absolute; bottom: 26px; left: 0; right: 0; margin: 0 auto;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 34px;
+      padding: 0;
+      border: none;
+      color: var(--text-sub);
+      font-size: 26px;
+      font-weight: 300;
+      line-height: 1;
+      background: none;
+      cursor: pointer;
+      opacity: 0;
+      transition: color 0.2s ease, opacity 0.6s ease;
+      animation: arrowBob 2.2s ease-in-out infinite;
+    }
+    .hero-arrow.is-active { opacity: 1; }
+    .hero-arrow:hover { color: var(--accent-color); }
+    @keyframes arrowBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-arrow { animation: none; opacity: 1; }
+      .slogan-line { opacity: 1; transform: none; transition: none; }
+      .hero-overlay { opacity: 1; transition: none; }
+      .hero-content { opacity: 1; transform: none; transition: none; }
+      .hero-tile { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* 3-Group Guide */
+    .hero-guide { width: 100%; margin-top: 60px; }
+    .guide-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .guide-lead {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+    .group-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      text-align: left;
+    }
+    .group-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 26px 26px;
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      background-color: var(--bg-color);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(29,29,31,.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .group-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+      background-color: var(--cc);
+    }
+    .group-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 44px rgba(29,29,31,.14);
+      border-color: var(--cc);
+    }
+    .group-card-icon {
+      width: 54px; height: 54px; border-radius: 15px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; background-color: var(--cs);
+      margin-bottom: 18px;
+    }
+    .group-card-title {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+    .group-card-desc {
+      font-size: 14.5px;
+      color: var(--text-sub);
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+    .group-card-arrow {
+      margin-top: auto;
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border-radius: 999px;
+      background-color: var(--cb);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* Brand Section */
+    .brand-section { padding: 76px 0; }
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      margin-bottom: 32px;
+    }
+    .brand-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .brand-card {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border-color);
+      border-radius: var(--rad-md);
+      background-color: var(--bg-color);
+      overflow: hidden;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    }
+    .brand-card:hover { border-color: var(--accent-color); box-shadow: 0 10px 26px rgba(29,29,31,.07); transform: translateY(-3px); }
+    .brand-card:hover .brand-link { color: var(--accent-color); }
+    .brand-card:hover .brand-logo-wrapper { border-radius: var(--rh); }
+    .brand-logo-wrapper {
+      aspect-ratio: 4 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15%;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--bg-color);
+          border-radius: 0;
+      transition: border-radius 0.45s cubic-bezier(.4,0,.2,1);
+    }
+    .brand-logo-img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+    .brand-info {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .brand-category {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+    .brand-desc {
+      font-size: 14px;
+      color: var(--text-main);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+    .brand-link {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.15s ease;
+    }
+
+    /* Brand Links */
+    .brand-links-section { padding: 80px 0; }
+    .brand-links-top { margin-bottom: 32px; }
+    .brand-links-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .brand-link-group-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .brand-link-ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .brand-url-item {
+      font-size: 14px;
+      color: var(--text-sub);
+      transition: color 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .brand-url-item:hover { color: var(--accent-color); }
+
+    /* Contact & Location */
+    .contact-section { padding: 80px 0; }
+    .contact-info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+    .contact-row {
+      font-size: 15px;
+      color: var(--text-sub);
+      line-height: 1.6;
+      display: flex;
+      gap: 12px;
+    }
+    .contact-label {
+      font-weight: 600;
+      color: var(--text-main);
+      min-width: 100px;
+    }
+    .contact-value { color: var(--text-sub); }
+    .contact-value a { color: var(--text-sub); transition: color 0.15s ease; }
+    .contact-value a:hover { color: var(--accent-color); }
+    .map-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .map-card {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      background-color: var(--bg-color);
+    }
+    .map-card iframe {
+      display: block;
+      border-bottom: 1px solid var(--border-color) !important;
+    }
+    .map-caption {
+      padding: 16px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+      background-color: var(--bg-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .map-open-link {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-sub);
+      text-decoration: underline;
+      transition: color 0.15s ease;
+    }
+    .map-open-link:hover { color: var(--accent-color); }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--border-color);
+      padding: 32px 0;
+      text-align: center;
+      background-color: var(--bg-color);
+    }
+    .copyright {
+      font-size: 13px;
+      color: var(--text-sub);
+      letter-spacing: 0.02em;
+    }
+
+    /* Responsive */
+    /* 모바일 햄버거 메뉴 (768px 이하에서만 표시) */
+    .nav-toggle { display: none; }
+    .nav-dim { display: none; }
+
+    @media (max-width: 1024px) {
+
+      /* 1024px Responsive added */
+
+    }
+
+    @media (max-width: 768px) {
+      .header-inner { padding: 0 16px; gap: 16px; }
+      /* --- 모바일 헤더 : 햄버거 메뉴 --- */
+      .nav-toggle {
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: 5px; width: 44px; height: 44px; margin-right: -10px; padding: 0;
+        border: none; background: none; cursor: pointer; flex-shrink: 0;
+      }
+      .nav-toggle span {
+        display: block; width: 20px; height: 2px; border-radius: 2px;
+        background-color: var(--text-main);
+        transition: transform .25s ease, opacity .2s ease;
+      }
+      .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+      .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      .site-nav {
+        position: absolute; top: 100%; left: 0; right: 0;
+        background-color: var(--bg-color);
+        border-bottom: 1px solid var(--border-color);
+        opacity: 0; visibility: hidden; transform: translateY(-8px);
+        transition: opacity .22s ease, transform .22s ease, visibility .22s;
+      }
+      .site-nav.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
+      .nav-list { display: block; gap: 0; overflow: visible; white-space: normal; }
+      .nav-list li + li { border-top: 1px solid #F0F0F2; }
+      .nav-link {
+        display: block; padding: 15px 20px;
+        font-size: 15.5px; letter-spacing: -.02em; color: var(--text-main);
+      }
+      .nav-link.active { color: var(--accent-color); font-weight: 700; }
+      .nav-dim {
+        display: block; position: fixed; left: 0; right: 0; top: 64px; bottom: 0;
+        z-index: 900; background-color: rgba(29, 29, 31, .32);
+        opacity: 0; visibility: hidden;
+        transition: opacity .22s ease, visibility .22s;
+      }
+      .nav-dim.is-open { opacity: 1; visibility: visible; }
+      body.nav-open { overflow: hidden; }
+      @media (prefers-reduced-motion: reduce) {
+        .site-nav, .nav-dim, .nav-toggle span { transition: none; }
+      }
+      .hero-section { min-height: 100vh; padding: 92px 0 56px; }
+      .hero-wall { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 1fr); }
+      .hero-tile:nth-child(9) { display: none; }
+      .guide-section { padding: 52px 0; }
+      .guide-lead { font-size: 19px; }
+      .hero-slogan { font-size: 21px; line-height: 1.55; margin-bottom: 28px; }
+      .brand-section, .brand-links-section, .contact-section { padding: 50px 0; }
+      .section-divider { margin: 48px 0; }
+      .group-cards, .brand-cards, .map-grid { grid-template-columns: 1fr; gap: 16px; }
+      .brand-links-grid { grid-template-columns: 1fr; gap: 24px; }
+      .group-card { min-height: auto; padding: 24px 20px; }
+      .section-title { font-size: 20px; margin-bottom: 24px; }
+      .map-placeholder { height: 180px; }
+      .contact-row { flex-direction: column; gap: 2px; }
+      .contact-label { min-width: auto; }
+    }
+  </style>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
+</head>
+<body>
+
+  <!-- SECTION: 헤더 -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="image/logo/webling-logo-x.png" alt="WEBLING" class="logo-img">
+        <span class="logo-inside">INSIDE</span>
+      </a>
+      <nav class="site-nav" id="siteNav">
+        <ul class="nav-list">
+          <li><a href="about.html" class="nav-link">About WEBLING</a></li>
+          <li><a href="culture.html" class="nav-link">WEBLING's Culture</a></li>
+          <li><a href="life.html" class="nav-link">WEBLING Life</a></li>
+          <li><a href="benefit.html" class="nav-link">WEBLING's Benefit</a></li>
+          <li><a href="careers.html" class="nav-link">WEBLING Career</a></li>
+        </ul>
+      </nav>
+      <button type="button" class="nav-toggle" id="navToggle"
+              aria-label="메뉴 열기" aria-expanded="false" aria-controls="siteNav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <div class="nav-dim" id="navDim"></div>
+
+  <!-- SECTION: 히어로 + 3그룹 안내 -->
+  <section class="hero-section" id="hero">
+    <div class="hero-wall" id="heroWall" aria-hidden="true"></div>
+    <div class="hero-overlay" id="heroOverlay"></div>
+    <div class="hero-content" id="heroContent">
+      <div class="container">
+        <div class="hero-label">SINCE 2000</div>
+        <h1 class="hero-slogan" id="heroSlogan">
+          <span class="slogan-line">나를 만들고, 나를 표현하고,</span>
+          <span class="slogan-line">나를 기억하도록 위블링은 고민해요.</span>
+          <span class="slogan-line">오직 나만을 위해 존재하는 그 <em class="hl">'무엇'</em>이</span>
+          <span class="slogan-line">필요하다면 <em class="hl">위블링</em>에 있답니다.</span>
+        </h1>
+        <div class="hero-guide" id="heroGroups">
+          <p class="guide-label">GUIDE</p>
+          <p class="guide-lead">어떤 단계에 계신가요?</p>
+          <div class="group-cards">
+            <a href="intern.html" class="group-card" style="--cc:#2E9E8F;--cs:#E4F3F0;--cb:#268478">
+              <span class="group-card-icon" aria-hidden="true">🌱</span>
+              <h2 class="group-card-title">미래내일 일경험 인턴</h2>
+              <p class="group-card-desc">일경험 프로그램과 인턴 생활을 확인하세요</p>
+              <span class="group-card-arrow">바로가기 →</span>
+            </a>
+            <a href="interview.html" class="group-card" style="--cc:#33A6DF;--cs:#E6F4FB;--cb:#1C77A6">
+              <span class="group-card-icon" aria-hidden="true">💬</span>
+              <h2 class="group-card-title">면접 예정자</h2>
+              <p class="group-card-desc">면접 전 확인할 내용을 안내합니다</p>
+              <span class="group-card-arrow">바로가기 →</span>
+            </a>
+            <a href="onboarding.html" class="group-card" style="--cc:#E08A2E;--cs:#FBEEDD;--cb:#9A6316">
+              <span class="group-card-icon" aria-hidden="true">🎉</span>
+              <h2 class="group-card-title">입사자 안내</h2>
+              <p class="group-card-desc">첫 출근과 온보딩을 안내합니다</p>
+              <span class="group-card-arrow">바로가기 →</span>
+            </a>
+          </div>
+        </div>
+        <p class="hero-credit">※ 배경 이미지는 실제 사진을 바탕으로 AI를 활용해 제작한 이미지입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 브랜드 -->
+  <section class="brand-section">
+    <div class="container">
+      <h2 class="section-title">위블링의 브랜드를 만나보세요</h2>
+      <div class="brand-cards">
+        <a href="https://www.snaps.com/" target="_blank" class="brand-card" style="--rh:50% 50% 0 0 / 62% 62% 0 0">
+          <div class="brand-logo-wrapper">
+            <img src="image/logo/snaps-x.png" alt="SNAPS" class="brand-logo-img">
+          </div>
+          <div class="brand-info">
+            <span class="brand-category">Personal DIY</span>
+            <p class="brand-desc">단순한 종이 인쇄제품에서 굿즈 등 다양한 제품까지</p>
+            <span class="brand-link">브랜드 바로가기 ↗</span>
+          </div>
+        </a>
+        <a href="https://www.ohprint.me/" target="_blank" class="brand-card" style="--rh:46% 46% 46% 46% / 50% 50% 50% 50%">
+          <div class="brand-logo-wrapper">
+            <img src="image/logo/ohprintme-logo-x.png" alt="OH PRINT.ME" class="brand-logo-img">
+          </div>
+          <div class="brand-info">
+            <span class="brand-category">SMALL BUSINESS</span>
+            <p class="brand-desc">Small Business(스타트업, 소상공인)의 Marketing Material 수요 증가</p>
+            <span class="brand-link">브랜드 바로가기 ↗</span>
+          </div>
+        </a>
+        <a href="https://pod.shop/" target="_blank" class="brand-card" style="--rh:0 42% 0 0 / 0 100% 0 0">
+          <div class="brand-logo-wrapper">
+            <img src="image/logo/podsho-x.png" alt="POD SHOP" class="brand-logo-img">
+          </div>
+          <div class="brand-info">
+            <span class="brand-category">FULFILLMENT</span>
+            <p class="brand-desc">상품, 제작, 배송까지 한 번에 해결하는 무한한 확장의 시작</p>
+            <span class="brand-link">브랜드 바로가기 ↗</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 문의 및 위치 -->
+  <section class="contact-section">
+    <div class="container">
+      <h2 class="section-title">🔔 문의 주소 및 사무실 위치</h2>
+      <div class="contact-info-list">
+        <div class="contact-row">
+          <span class="contact-label">채용 문의</span>
+          <span class="contact-value"><a href="mailto:recruiter2@snaps.com">recruiter2@snaps.com</a></span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">본사 위치</span>
+          <span class="contact-value">서울특별시 마포구 양화로 147, 위워크 홍대</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">생산본부 위치</span>
+          <span class="contact-value">경기도 안양시 만안구 안양천서로 65</span>
+        </div>
+      </div>
+
+      <div class="map-grid">
+        <div class="map-card">
+          <iframe src="https://maps.google.com/maps?q=37.556035,126.922098&z=17&hl=ko&output=embed" width="100%" height="280" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="위블링 본사 지도"></iframe>
+          <div class="map-caption">
+            위블링 본사
+            <a href="https://www.google.com/maps?ll=37.556035,126.922098&z=17&t=m&hl=ko&gl=US&mapclient=embed&cid=739338430190719301" target="_blank" class="map-open-link">지도에서 열기 ↗</a>
+          </div>
+        </div>
+        <div class="map-card">
+          <iframe src="https://maps.google.com/maps?q=37.385913,126.940363&z=15&hl=ko&output=embed" width="100%" height="280" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="위블링 생산본부 지도"></iframe>
+          <div class="map-caption">
+            위블링 생산본부
+            <a href="https://www.google.com/maps?ll=37.385913,126.940363&z=15&t=m&hl=ko&gl=US&mapclient=embed&cid=1716753610996414994" target="_blank" class="map-open-link">지도에서 열기 ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><hr class="section-divider"></div>
+
+  <!-- SECTION: 브랜드 바로가기 -->
+  <section class="brand-links-section">
+    <div class="container">
+      <div class="brand-links-top">
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">WEBLING</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.webling.kr/" target="_blank" class="brand-url-item">WEBLING 바로가기 ↗</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="brand-links-grid">
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">POD SHOP</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://pod.shop/" target="_blank" class="brand-url-item">POD SHOP ↗</a></li>
+            <li><a href="https://www.instagram.com/podshop_official/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/podshop_official" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">SNAPS</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.snaps.com/" target="_blank" class="brand-url-item">SNAPS ↗</a></li>
+            <li><a href="https://www.facebook.com/snaps.official" target="_blank" class="brand-url-item">Facebook ↗</a></li>
+            <li><a href="https://www.instagram.com/snaps_com/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/snaps1" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+        <div class="brand-link-group">
+          <h3 class="brand-link-group-title">OH PRINT.ME</h3>
+          <ul class="brand-link-ul">
+            <li><a href="https://www.ohprint.me/" target="_blank" class="brand-url-item">OH PRINT.ME ↗</a></li>
+            <li><a href="https://www.facebook.com/ohprintme" target="_blank" class="brand-url-item">Facebook ↗</a></li>
+            <li><a href="https://www.instagram.com/ohprint.me/" target="_blank" class="brand-url-item">Instagram ↗</a></li>
+            <li><a href="https://blog.naver.com/ohprintme" target="_blank" class="brand-url-item">Blog ↗</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: 푸터 -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="copyright">(c) WEBLING</p>
+    </div>
+  </footer>
+
+  <!-- Minimal Scroll JS -->
+  <script>
+    // 히어로 화살표 클릭 시 3그룹 영역으로 부드럽게 이동
+    var heroArrow = document.getElementById('heroArrow');
+    var heroGroups = document.getElementById('heroGroups');
+    if (heroArrow && heroGroups) {
+      heroArrow.addEventListener('click', function () {
+        heroGroups.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+
+    // 히어로 그리드 사진 벽면 + 슬로건 시퀀스
+    (function () {
+      var wall    = document.getElementById('heroWall');
+      var overlay = document.getElementById('heroOverlay');
+      var content = document.getElementById('heroContent');
+      var arrow   = document.getElementById('heroArrow');
+      var lines   = document.querySelectorAll('#heroSlogan .slogan-line');
+      if (!wall) return;
+
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var images = [
+        'image/main-ai/main-1.jpg', 'image/main-ai/main-2.jpg', 'image/main-ai/main-3.jpg',
+        'image/main-ai/main-4.jpg', 'image/main-ai/main-5.jpg', 'image/main-ai/main-6.jpg',
+        'image/main-ai/main-7.jpg', 'image/main-ai/main-8.jpg', 'image/main-ai/main-9.jpg'
+      ];
+      var tiles = [];
+      images.forEach(function (src) {
+        var cell = document.createElement('div');
+        cell.className = 'hero-tile';
+        var img = document.createElement('img');
+        img.src = src; img.alt = '';
+        cell.appendChild(img);
+        wall.appendChild(cell);
+        tiles.push(cell);
+      });
+
+      function reveal() {
+        if (overlay) overlay.classList.add('is-active');
+        if (content) content.classList.add('is-active');
+        if (arrow) arrow.classList.add('is-active');
+        Array.prototype.forEach.call(lines, function (el, i) {
+          setTimeout(function () { el.classList.add('is-in'); }, 200 + i * 150);
+        });
+      }
+
+      if (reduce) {
+        tiles.forEach(function (t) { t.classList.add('is-in'); });
+        reveal();
+        return;
+      }
+
+      tiles.forEach(function (t, i) {
+        setTimeout(function () { t.classList.add('is-in'); }, i * 80);
+      });
+      setTimeout(reveal, tiles.length * 80 + 300);
+    })();
+
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+  </script>
+  <script>
+    // 모바일 헤더 : 햄버거 메뉴 토글 (768px 이하에서만 노출)
+    (function () {
+      var btn = document.getElementById('navToggle');
+      var nav = document.getElementById('siteNav');
+      var dim = document.getElementById('navDim');
+      if (!btn || !nav) return;
+      function setOpen(open) {
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+        nav.classList.toggle('is-open', open);
+        if (dim) dim.classList.toggle('is-open', open);
+        document.body.classList.toggle('nav-open', open);
+      }
+      btn.addEventListener('click', function () {
+        setOpen(btn.getAttribute('aria-expanded') !== 'true');
+      });
+      if (dim) dim.addEventListener('click', function () { setOpen(false); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.keyCode === 27) setOpen(false);
+      });
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 768) setOpen(false);
+      });
+    })();
+  </script>
+</body>
+</html>
