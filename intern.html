@@ -328,7 +328,7 @@
       .page-grid { grid-template-columns:minmax(0,1fr); gap:14px; }
       .page-grid > * { min-width:0; }
       /* --- 모바일 : CONTENTS 목차를 가로 줄로 --- */
-      .page-toc { position:static; min-width:0; margin:0 -24px 4px; padding:0 24px;
+      .page-toc { position:relative; min-width:0; margin:0 -24px 4px; padding:0 24px;
                   border-bottom:1px solid var(--border-color); }
       .page-toc-label { display:none; }
       .page-nav {
@@ -337,15 +337,26 @@
         padding:2px 0 10px; scrollbar-width:none; -webkit-overflow-scrolling:touch;
       }
       .page-nav::-webkit-scrollbar { display:none; }
+      /* 모바일 목차 : 좌우 스크롤 가능 표시 (페이드) */
+      .page-toc::before, .page-toc::after {
+        content:''; position:absolute; top:0; bottom:11px; width:32px; z-index:2;
+        pointer-events:none; opacity:0; transition:opacity .18s ease;
+      }
+      .page-toc::before { left:0;  background:linear-gradient(to right, var(--bg-color), rgba(255,255,255,0)); }
+      .page-toc::after  { right:0; background:linear-gradient(to left,  var(--bg-color), rgba(255,255,255,0)); }
+      .page-toc.can-scroll-left::before  { opacity:1; }
+      .page-toc.can-scroll-right::after  { opacity:1; }
       .page-nav-link {
         flex:0 0 auto; width:auto; white-space:nowrap; font-size:13px;
-        padding:12px 15px; border-radius:999px; background-color: var(--bg-color);
+        min-height:44px; display:inline-flex; align-items:center;
+        padding:0 16px; border-radius:999px; background-color: var(--bg-color);
       }
       .page-nav-link.active { color:#FFFFFF; background-color:var(--accent-color); }
       .page-nav-link.active::after { display:none; }
       .who-tabs { grid-template-columns:repeat(2,1fr); gap:10px; }
       .who-tab { padding:13px 12px; gap:10px; }
       .who-job { font-size:13.5px; }
+      .who-job-en { font-size:12px; }
       .day-grid.cols-2, .day-grid.cols-3 { grid-template-columns:1fr; }
       .day-fig img { max-height:480px; }
       .day-row { grid-template-columns:1fr; gap:14px; }
@@ -426,7 +437,7 @@
 
       <div class="blk reveal">
         <h3 class="h3">🌱 어떤 프로그램인가요?</h3>
-        <p class="p">고용노동부 주관 미취업 청년에게 실무 중심의 일경험 기회를 제공하는 프로그램으로, 위블링에서는 실제로 출퇴근하며 <strong>8~10주</strong> 동안 업무를 경험해볼 수 있어요.</p>
+        <p class="p">고용노동부 주관 미취업 청년에게 실무 중심의 일경험 기회를 제공하는 프로그램으로, 위블링에서는 실제로 출퇴근하며 <strong>8~12주</strong> 동안 업무를 경험해볼 수 있어요.</p>
       </div>
 
       <div class="blk reveal">
@@ -530,8 +541,8 @@
           </ul>
         </div>
         <div class="img-grid">
-          <img src="image/intern/intern-2.jpg" alt="위블링 온보딩 현장" class="img">
-          <img src="image/intern/intern-3.jpg" alt="위블링 온보딩 현장" class="img">
+          <img src="image/intern/onboarding-1.jpg" alt="위블링 온보딩 현장" class="img">
+          <img src="image/intern/onboarding-2.jpg" alt="위블링 온보딩 현장" class="img">
         </div>
       </div>
 
@@ -2436,6 +2447,26 @@
       });
       window.addEventListener('resize', function () {
         if (window.innerWidth > 768) setOpen(false);
+      });
+    })();
+  </script>
+  <script>
+    // 모바일 목차(가로 스크롤) : 더 볼 내용이 있으면 좌/우 페이드 표시
+    (function () {
+      var tocs = document.querySelectorAll('.page-toc');
+      Array.prototype.forEach.call(tocs, function (toc) {
+        var nav = toc.querySelector('.page-nav');
+        if (!nav) return;
+        function update() {
+          var max = nav.scrollWidth - nav.clientWidth;
+          toc.classList.toggle('can-scroll-left', nav.scrollLeft > 4);
+          toc.classList.toggle('can-scroll-right', nav.scrollLeft < max - 4);
+        }
+        nav.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+        if (window.ResizeObserver) { new ResizeObserver(update).observe(nav); }
+        setTimeout(update, 400);
+        update();
       });
     })();
   </script>

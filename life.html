@@ -426,6 +426,10 @@
         height: 220px;
       }
       .slider-arrow { opacity: 1; }
+      .slider-arrow::before { content:''; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:44px; height:44px; }
+      .slider-dots { gap: 14px; }
+      .slider-dot { position:relative; }
+      .slider-dot::after { content:''; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:20px; height:40px; }
       .life-photo-box {
         order: 1;
         flex: 0 0 auto;
@@ -508,7 +512,7 @@
               <h3 class="life-item-title">AI 활용 세미나</h3>
             </div>
             <!-- TODO: 설명 문구 -->
-            <p class="life-item-desc">부서별 AI 활용 사례를 서로 공유하는 사내 세미나예요.</p>
+            <p class="life-item-desc">부서별로 실제 업무에 AI를 어떻게 활용하고 있는지 사례와 노하우를 공유하는 사내 세미나예요. 서로의 활용법을 나누며 더 효율적인 업무 방식을 함께 찾아가요.</p>
           </div>
         </div>
 
@@ -524,7 +528,7 @@
               <h3 class="life-item-title">매달 AI 카드뉴스 발행</h3>
             </div>
             <!-- TODO: 설명 문구 -->
-            <p class="life-item-desc">매달 최신 AI 소식과 활용 팁을 카드뉴스로 정리해 전 구성원에게 공유해요.</p>
+            <p class="life-item-desc">빠르게 변화하는 AI 트렌드와 업무에 활용할 수 있는 다양한 팁을 매달 카드뉴스로 정리해 전 구성원에게 공유해요.</p>
           </div>
         </div>
 
@@ -540,7 +544,7 @@
               <h3 class="life-item-title">1on1 진행</h3>
             </div>
             <!-- TODO: 설명 문구 -->
-            <p class="life-item-desc">부담 없이 편하게 이야기 나누는 리더와의 면담이에요.</p>
+            <p class="life-item-desc">리더와 구성원이 부담 없이 이야기를 나누는 1:1 소통 시간이에요. 업무에 대한 고민부터 피드백까지 편안하게 의견을 나눌 수 있어요.</p>
           </div>
         </div>
 
@@ -567,7 +571,7 @@
               <span class="cycle-badge">월 1회</span>
             </div>
             <!-- TODO: 설명 문구 -->
-            <p class="life-item-desc">월 1회 전사를 대상으로 사내 매출 현황과 회사 목표, 목표 달성률을 공유하는 자리예요. 다른 회사의 <strong>타운홀 미팅</strong>과 같아요.</p>
+            <p class="life-item-desc">매월 전 구성원이 모여 회사의 매출 현황과 목표, 달성 과정을 함께 공유하는 위블링의 타운홀 미팅이에요. 회사가 어디를 향해 가고 있는지 함께 이해하는 시간이에요.</p>
           </div>
         </div>
       </div>
@@ -602,7 +606,7 @@
               <h3 class="life-item-title">마니또 이벤트</h3>
             </div>
             <!-- TODO: 설명 문구 -->
-            <p class="life-item-desc">제비뽑기로 정한 짝을 2주 동안 몰래 챙겨주는 마니또 이벤트예요.</p>
+            <p class="life-item-desc">제비뽑기로 정해진 서로의 마니또가 되어 2주 동안 몰래 마음을 전하는 이벤트예요. 작은 선물과 응원을 주고받으며 동료들과 한층 가까워져요.</p>
           </div>
         </div>
 
@@ -618,7 +622,7 @@
               <h3 class="life-item-title">아이스크림 이벤트</h3>
             </div>
             <!-- TODO: 설명 문구 -->
-            <p class="life-item-desc">무더운 여름, 전 구성원에게 깜짝 선물처럼 아이스크림을 나눠 준 이벤트예요.</p>
+            <p class="life-item-desc">무더운 여름날, 전 구성원에게 시원한 아이스크림을 깜짝 선물한 이벤트예요. 바쁜 일상 속 잠시 쉬어갈 수 있는 달콤한 시간을 함께했어요.</p>
           </div>
         </div>
 
@@ -644,7 +648,7 @@
               <span class="cycle-badge">연 1회</span>
             </div>
             <!-- TODO: 설명 문구 -->
-            <p class="life-item-desc">연말에 전사를 대상으로 한 해 매출과 목표 달성을 돌아보고 다음 해 목표를 공유하는 자리예요.</p>
+            <p class="life-item-desc">한 해의 성과와 목표 달성 과정을 함께 돌아보고, 다음 해 위블링이 나아갈 방향과 새로운 목표를 전 구성원과 공유하는 자리예요.</p>
           </div>
         </div>
 
@@ -669,7 +673,7 @@
               <h3 class="life-item-title">POD SHOP 사업설명회</h3>
             </div>
             <!-- TODO: 설명 문구 -->
-            <p class="life-item-desc">신규 런칭한 POD SHOP 브랜드를 소개하는 사업 설명회로, 전 직원과 외부 관심 참석자 등 500명 이상이 함께했어요.</p>
+            <p class="life-item-desc">새롭게 론칭한 POD SHOP 브랜드와 사업의 방향을 소개한 자리예요. 전 구성원은 물론 외부 관심 참석자까지 500명 이상이 함께하며 새로운 시작을 공유했어요.</p>
           </div>
         </div>
 
@@ -689,10 +693,10 @@
           </div>
           <div class="life-text-box">
             <div class="life-item-header">
-              <h3 class="life-item-title">인쇄강의 (교육)</h3>
+              <h3 class="life-item-title">인쇄 교육</h3>
             </div>
             <!-- TODO: 설명 문구 -->
-            <p class="life-item-desc">위블링 상품이 어떻게 만들어지는지, 아날로그 인쇄의 종류와 생산 장비·생산 체계를 함께 배우는 교육이에요.</p>
+            <p class="life-item-desc">위블링의 상품이 실제로 어떻게 만들어지는지 알아보는 교육이에요. 아날로그 인쇄의 종류부터 생산 장비와 전체 생산 체계까지 직접 배우며 비즈니스에 대한 이해를 높여요.</p>
           </div>
         </div>
       </div>

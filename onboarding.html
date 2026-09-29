@@ -146,6 +146,17 @@
     .note .h4 { margin-bottom:12px; }
     .callout { border-left:3px solid var(--accent-color); background-color: var(--bg-color); border-radius:0 8px 8px 0; padding:18px 20px; margin:20px 0; font-size:15px; color:#424245; }
     .pending { display:inline-block; font-size:13px; color:var(--text-sub); background-color: var(--bg-color); border-radius:6px; padding:10px 14px; }
+    .tool-acc { display:flex; flex-direction:column; gap:10px; margin-top:12px; }
+    .tool-cat { border:1px solid var(--line-color,#eaeaea); border-radius:10px; overflow:hidden; background:#fff; }
+    .tool-cat > summary { cursor:pointer; list-style:none; padding:14px 16px; font-size:15px; font-weight:700; color:var(--text-main,#222); display:flex; align-items:center; gap:8px; background:#fafafa; }
+    .tool-cat > summary::-webkit-details-marker { display:none; }
+    .tool-cat > summary .arrow { display:inline-block; transition:transform .2s ease; color:var(--text-sub,#888); font-size:13px; }
+    .tool-cat[open] > summary .arrow { transform:rotate(90deg); }
+    .tool-cat > summary .cnt { margin-left:auto; font-size:12px; font-weight:500; color:var(--text-sub,#888); }
+    .tool-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(116px, 1fr)); gap:12px; padding:16px; }
+    .tool-cell { background:#fff; border:1px solid #f0f0f0; border-radius:8px; height:84px; display:flex; align-items:center; justify-content:center; padding:12px; }
+    .tool-cell img { max-width:100%; max-height:52px; width:auto; height:auto; object-fit:contain; }
+    @media (max-width:768px){ .tool-grid { grid-template-columns:repeat(auto-fill, minmax(92px, 1fr)); gap:10px; padding:12px; } .tool-cell{ height:72px; } .tool-cell img{ max-height:44px; } }
 
     .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
     .cards-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
@@ -345,7 +356,7 @@
       .page-grid { grid-template-columns:minmax(0,1fr); gap:14px; }
       .page-grid > * { min-width:0; }
       /* --- 모바일 : CONTENTS 목차를 가로 줄로 --- */
-      .page-toc { position:static; min-width:0; margin:0 -24px 4px; padding:0 24px;
+      .page-toc { position:relative; min-width:0; margin:0 -24px 4px; padding:0 24px;
                   border-bottom:1px solid var(--border-color); }
       .page-toc-label { display:none; }
       .page-nav {
@@ -354,9 +365,19 @@
         padding:2px 0 10px; scrollbar-width:none; -webkit-overflow-scrolling:touch;
       }
       .page-nav::-webkit-scrollbar { display:none; }
+      /* 모바일 목차 : 좌우 스크롤 가능 표시 (페이드) */
+      .page-toc::before, .page-toc::after {
+        content:''; position:absolute; top:0; bottom:11px; width:32px; z-index:2;
+        pointer-events:none; opacity:0; transition:opacity .18s ease;
+      }
+      .page-toc::before { left:0;  background:linear-gradient(to right, var(--bg-color), rgba(255,255,255,0)); }
+      .page-toc::after  { right:0; background:linear-gradient(to left,  var(--bg-color), rgba(255,255,255,0)); }
+      .page-toc.can-scroll-left::before  { opacity:1; }
+      .page-toc.can-scroll-right::after  { opacity:1; }
       .page-nav-link {
         flex:0 0 auto; width:auto; white-space:nowrap; font-size:13px;
-        padding:12px 15px; border-radius:999px; background-color: var(--bg-color);
+        min-height:44px; display:inline-flex; align-items:center;
+        padding:0 16px; border-radius:999px; background-color: var(--bg-color);
       }
       .page-nav-link.active { color:#FFFFFF; background-color:var(--accent-color); }
       .page-nav-link.active::after { display:none; }
@@ -860,8 +881,8 @@
           <div class="note">
             <h4 class="h4">복합기 IP 주소</h4>
             <ul class="ul">
-              <li>개발본부 쪽 · 192.168.110.201</li>
-              <li>운영본부 쪽 · 192.168.110.202</li>
+              <li>5층 · 192.168.110.201</li>
+              <li>6층 · 192.168.110.202</li>
             </ul>
           </div>
           <div class="note">
@@ -886,8 +907,86 @@
 
       <div class="blk reveal">
         <h3 class="h3">⚙️ 업무 · 개발 환경</h3>
-        <!-- TODO: 협업 / Marketing / Design / DevOps / Database / Language·Framework / AI 툴 목록 -->
-        <p class="pending">사용 툴 목록은 준비 중입니다. (협업 · Marketing · Design · DevOps · Database · Language/Framework · AI)</p>
+        <p class="p">입사 후 사용하는 도구들을 직무별로 정리했어요. 각 항목을 눌러 펼쳐 보세요.</p>
+        <div class="tool-acc">
+        <details class="tool-cat" open>
+          <summary><span class="arrow">▸</span>협업<span class="cnt">4개</span></summary>
+          <div class="tool-grid">
+            <div class="tool-cell"><img src="image/tools/tool-1.jpg" alt="협업 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-2.jpg" alt="협업 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-3.jpg" alt="협업 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-4.jpg" alt="협업 도구" loading="lazy"></div>
+          </div>
+        </details>
+        <details class="tool-cat">
+          <summary><span class="arrow">▸</span>Marketing<span class="cnt">2개</span></summary>
+          <div class="tool-grid">
+            <div class="tool-cell"><img src="image/tools/tool-5.jpg" alt="Marketing 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-6.jpg" alt="Marketing 도구" loading="lazy"></div>
+          </div>
+        </details>
+        <details class="tool-cat">
+          <summary><span class="arrow">▸</span>Design<span class="cnt">4개</span></summary>
+          <div class="tool-grid">
+            <div class="tool-cell"><img src="image/tools/tool-7.jpg" alt="Design 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-8.jpg" alt="Design 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-9.jpg" alt="Design 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-10.jpg" alt="Design 도구" loading="lazy"></div>
+          </div>
+        </details>
+        <details class="tool-cat">
+          <summary><span class="arrow">▸</span>DevOps<span class="cnt">4개</span></summary>
+          <div class="tool-grid">
+            <div class="tool-cell"><img src="image/tools/tool-11.jpg" alt="DevOps 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-12.jpg" alt="DevOps 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-13.jpg" alt="DevOps 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-14.jpg" alt="DevOps 도구" loading="lazy"></div>
+          </div>
+        </details>
+        <details class="tool-cat">
+          <summary><span class="arrow">▸</span>Database<span class="cnt">3개</span></summary>
+          <div class="tool-grid">
+            <div class="tool-cell"><img src="image/tools/tool-15.jpg" alt="Database 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-16.jpg" alt="Database 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-17.jpg" alt="Database 도구" loading="lazy"></div>
+          </div>
+        </details>
+        <details class="tool-cat">
+          <summary><span class="arrow">▸</span>Language · Framework<span class="cnt">21개</span></summary>
+          <div class="tool-grid">
+            <div class="tool-cell"><img src="image/tools/tool-18.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-19.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-20.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-21.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-22.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-23.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-24.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-25.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-26.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-27.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-28.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-29.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-30.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-31.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-32.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-33.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-34.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-35.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-36.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-37.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-38.jpg" alt="Language · Framework 도구" loading="lazy"></div>
+          </div>
+        </details>
+        <details class="tool-cat">
+          <summary><span class="arrow">▸</span>AI<span class="cnt">4개</span></summary>
+          <div class="tool-grid">
+            <div class="tool-cell"><img src="image/tools/tool-39.jpg" alt="AI 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-40.jpg" alt="AI 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-41.jpg" alt="AI 도구" loading="lazy"></div>
+            <div class="tool-cell"><img src="image/tools/tool-42.jpg" alt="AI 도구" loading="lazy"></div>
+          </div>
+        </details>
+        </div>
       </div>
     </div>
   </section>
@@ -1120,6 +1219,26 @@
       });
       window.addEventListener('resize', function () {
         if (window.innerWidth > 768) setOpen(false);
+      });
+    })();
+  </script>
+  <script>
+    // 모바일 목차(가로 스크롤) : 더 볼 내용이 있으면 좌/우 페이드 표시
+    (function () {
+      var tocs = document.querySelectorAll('.page-toc');
+      Array.prototype.forEach.call(tocs, function (toc) {
+        var nav = toc.querySelector('.page-nav');
+        if (!nav) return;
+        function update() {
+          var max = nav.scrollWidth - nav.clientWidth;
+          toc.classList.toggle('can-scroll-left', nav.scrollLeft > 4);
+          toc.classList.toggle('can-scroll-right', nav.scrollLeft < max - 4);
+        }
+        nav.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+        if (window.ResizeObserver) { new ResizeObserver(update).observe(nav); }
+        setTimeout(update, 400);
+        update();
       });
     })();
   </script>

@@ -430,7 +430,7 @@
       .page-grid { grid-template-columns:minmax(0,1fr); gap:14px; }
       .page-grid > * { min-width:0; }
       /* --- 모바일 : CONTENTS 목차를 가로 줄로 --- */
-      .page-toc { position:static; min-width:0; margin:0 -24px 4px; padding:0 24px;
+      .page-toc { position:relative; min-width:0; margin:0 -24px 4px; padding:0 24px;
                   border-bottom:1px solid var(--border-color); }
       .page-toc-label { display:none; }
       .page-nav {
@@ -439,9 +439,19 @@
         padding:2px 0 10px; scrollbar-width:none; -webkit-overflow-scrolling:touch;
       }
       .page-nav::-webkit-scrollbar { display:none; }
+      /* 모바일 목차 : 좌우 스크롤 가능 표시 (페이드) */
+      .page-toc::before, .page-toc::after {
+        content:''; position:absolute; top:0; bottom:11px; width:32px; z-index:2;
+        pointer-events:none; opacity:0; transition:opacity .18s ease;
+      }
+      .page-toc::before { left:0;  background:linear-gradient(to right, var(--bg-color), rgba(255,255,255,0)); }
+      .page-toc::after  { right:0; background:linear-gradient(to left,  var(--bg-color), rgba(255,255,255,0)); }
+      .page-toc.can-scroll-left::before  { opacity:1; }
+      .page-toc.can-scroll-right::after  { opacity:1; }
       .page-nav-link {
         flex:0 0 auto; width:auto; white-space:nowrap; font-size:13px;
-        padding:12px 15px; border-radius:999px; background-color: var(--bg-color);
+        min-height:44px; display:inline-flex; align-items:center;
+        padding:0 16px; border-radius:999px; background-color: var(--bg-color);
       }
       .page-nav-link.active { color:#FFFFFF; background-color:var(--accent-color); }
       .page-nav-link.active::after { display:none; }
@@ -462,6 +472,10 @@
       #company .blk { margin-bottom:52px; }
       .rv-arrow.prev { left:-6px; }
       .rv-arrow.next { right:-6px; }
+      .rv-arrow::before { content:''; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:44px; height:44px; }
+      .rv-dots { gap: 14px; }
+      .rv-dot { position:relative; }
+      .rv-dot::after { content:''; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:20px; height:40px; }
       .rv-card { padding:26px 20px 28px; }
       .brand-links-section { padding-bottom:56px; }
       .brand-links-grid { grid-template-columns:1fr; gap:24px; }
@@ -587,7 +601,7 @@
       <div class="blk reveal">
         <h3 class="h3 sec-sub">위블링 연혁</h3>
         <p class="p">한 발 앞선 서비스와 상품, 그 도전의 기록</p>
-        <div class="img-wrap"><img src="image/interview/history.jpg" alt="위블링 연혁 타임라인" class="img"></div>
+        <div class="img-wrap"><img src="image/interview/timeline-2026.png" alt="위블링 연혁 타임라인" class="img"></div>
       </div>
 
       <div class="blk reveal">
@@ -975,7 +989,7 @@
         <details class="faq-item reveal">
           <summary class="faq-q">채용 절차는 어떻게 되나요?</summary>
           <div class="faq-a">
-            <div class="note"><p class="p" style="font-weight:700">서류검토 → 인·적성검사 → 1차면접 → 2차면접 → 처우협의 → 최종합격</p></div>
+            <div class="note"><p class="p" style="font-weight:700">서류검토 → 1차면접 → 2차면접 → 처우협의 → 최종합격</p></div>
             <p class="p">다만 포지션에 따라 채용 절차는 상이하므로, 지원하신 포지션의 공고를 함께 확인해 주세요.</p>
           </div>
         </details>
@@ -1313,6 +1327,26 @@
       });
       window.addEventListener('resize', function () {
         if (window.innerWidth > 768) setOpen(false);
+      });
+    })();
+  </script>
+  <script>
+    // 모바일 목차(가로 스크롤) : 더 볼 내용이 있으면 좌/우 페이드 표시
+    (function () {
+      var tocs = document.querySelectorAll('.page-toc');
+      Array.prototype.forEach.call(tocs, function (toc) {
+        var nav = toc.querySelector('.page-nav');
+        if (!nav) return;
+        function update() {
+          var max = nav.scrollWidth - nav.clientWidth;
+          toc.classList.toggle('can-scroll-left', nav.scrollLeft > 4);
+          toc.classList.toggle('can-scroll-right', nav.scrollLeft < max - 4);
+        }
+        nav.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+        if (window.ResizeObserver) { new ResizeObserver(update).observe(nav); }
+        setTimeout(update, 400);
+        update();
       });
     })();
   </script>
