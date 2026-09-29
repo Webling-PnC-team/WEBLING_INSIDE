@@ -449,6 +449,31 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
+<style id="mobile-topnav">
+@media (max-width:768px){
+  .nav-toggle{display:none!important;}
+  .nav-dim{display:none!important;}
+  body.nav-open{overflow:auto!important;}
+  .site-nav{
+    position:fixed; top:64px; left:0; right:0; z-index:900;
+    background-color:var(--bg-color);
+    border-bottom:1px solid var(--border-color);
+    opacity:1!important; visibility:visible!important; transform:none!important;
+    overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch;
+  }
+  .site-nav::-webkit-scrollbar{display:none;}
+  .nav-list{display:flex!important; gap:6px; padding:9px 16px; margin:0; list-style:none; white-space:nowrap; width:max-content;}
+  .nav-list li{border:none!important;}
+  .nav-list li + li{border-top:none!important;}
+  .nav-link{
+    display:inline-flex!important; align-items:center; min-height:40px; padding:0 15px;
+    border-radius:999px; background-color:var(--placeholder-bg,#F5F5F7); color:var(--text-main);
+    font-size:13px; white-space:nowrap; letter-spacing:-.01em; border-radius:999px;
+  }
+  .nav-link.active{background-color:var(--accent-color); color:#FFFFFF; font-weight:700;}
+  .page-title-area{padding-top:130px!important;}
+}
+</style>
 </head>
 <body>
 
@@ -858,6 +883,15 @@
         });
       }, { rootMargin: '0px 0px -10% 0px' });
       items.forEach(function(el) { observer.observe(el); });
+    })();
+  </script>
+  <script>
+    // 모바일 상단 네비 : 현재 페이지 알약을 보이도록 스크롤
+    (function () {
+      if (!(window.matchMedia && window.matchMedia('(max-width:768px)').matches)) return;
+      var nav = document.querySelector('.site-nav');
+      var a = nav && nav.querySelector('.nav-link.active');
+      if (nav && a) { nav.scrollLeft = Math.max(a.offsetLeft - 16, 0); }
     })();
   </script>
 </body>
