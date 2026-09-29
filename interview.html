@@ -430,7 +430,9 @@
       .page-grid { grid-template-columns:minmax(0,1fr); gap:14px; }
       .page-grid > * { min-width:0; }
       /* --- 모바일 : CONTENTS 목차를 가로 줄로 --- */
-      .page-toc { position:relative; min-width:0; margin:0 -24px 4px; padding:0 24px;
+      .page-grid { display:block; }
+      .page-toc { position:sticky; top:64px; z-index:50; background-color:var(--bg-color);
+                  min-width:0; margin:0 -24px 18px; padding:0 24px;
                   border-bottom:1px solid var(--border-color); }
       .page-toc-label { display:none; }
       .page-nav {
@@ -463,7 +465,19 @@
       .cards, .cards-4, .img-grid { grid-template-columns:1fr; }
       .brand-tiles { grid-template-columns:1fr; gap:14px; }
       .strength-grid { grid-template-columns:1fr; }
-      .org-branches { grid-template-columns:1fr; }
+      /* 본부 버튼 : 인턴 인터뷰 직무 버튼과 같은 모양 (흰 카드 + 앞쪽 색막대, 선택 시 전체 채움) */
+      .org-branches { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; row-gap:10px; }
+      .org-node { padding:0; border-radius:12px; }
+      .org-node::after { display:none; }
+      .org-node:last-child { grid-column:1 / -1; }
+      .org-teams { display:none; }
+      .org-head { background-color:var(--bg-color); border-radius:11px; min-height:54px; padding:14px 16px; gap:10px; transition:background-color .2s ease; }
+      .org-head::before { content:''; flex:0 0 4px; align-self:stretch; min-height:24px; border-radius:99px; background-color:var(--c); }
+      .org-nm { color:var(--text-main); }
+      .org-node.active { background-color:var(--cf); border-color:var(--cf); box-shadow:none; }
+      .org-node.active .org-head { background-color:var(--cf); box-shadow:none; }
+      .org-node.active .org-head::before { background-color:rgba(255,255,255,.85); }
+      .org-node.active .org-nm { color:#FFFFFF; }
       .faq-q { font-size:15px; padding-right:32px; }
       .faq-a { padding-right:8px; }
       .slogan-line { font-size:17px; }
@@ -511,6 +525,11 @@
     .gate-help a { color:#1C77A6; }
     .locked { display:none; }
     .locked.unlocked { display:block; }
+    /* 아주 좁은 폰(340px 이하) : 본부 버튼 1열 */
+    @media (max-width:340px) {
+      .org-branches { grid-template-columns:minmax(0,1fr); }
+      .org-node:last-child { grid-column:auto; }
+    }
   </style>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" crossorigin="anonymous">
@@ -1139,7 +1158,13 @@
           var id = l.getAttribute('data-target');
           if (!show(id)) return;
           try { history.replaceState(null, '', '#' + id); } catch (e) {}
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (window.matchMedia && window.matchMedia('(max-width:768px)').matches) {
+            var g = document.querySelector('.page-grid');
+            var y = g.getBoundingClientRect().top + window.scrollY - 64;
+            window.scrollTo({ top: Math.max(y, 0), behavior: 'smooth' });
+          } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
           initReveal();
           if (window.__rvFit) window.__rvFit();
           if (id === 'company' && window.__sloganPlay) window.__sloganPlay();

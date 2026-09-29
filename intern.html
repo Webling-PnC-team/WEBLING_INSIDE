@@ -328,7 +328,9 @@
       .page-grid { grid-template-columns:minmax(0,1fr); gap:14px; }
       .page-grid > * { min-width:0; }
       /* --- 모바일 : CONTENTS 목차를 가로 줄로 --- */
-      .page-toc { position:relative; min-width:0; margin:0 -24px 4px; padding:0 24px;
+      .page-grid { display:block; }
+      .page-toc { position:sticky; top:64px; z-index:50; background-color:var(--bg-color);
+                  min-width:0; margin:0 -24px 18px; padding:0 24px;
                   border-bottom:1px solid var(--border-color); }
       .page-toc-label { display:none; }
       .page-nav {
@@ -356,7 +358,7 @@
       .who-tabs { grid-template-columns:repeat(2,1fr); gap:10px; }
       .who-tab { padding:13px 12px; gap:10px; }
       .who-job { font-size:13.5px; }
-      .who-job-en { font-size:12px; }
+      .who-job-en { font-size:11.5px; letter-spacing:.04em; white-space:normal; line-height:1.3; }
       .day-grid.cols-2, .day-grid.cols-3 { grid-template-columns:1fr; }
       .day-fig img { max-height:480px; }
       .day-row { grid-template-columns:1fr; gap:14px; }
@@ -2374,7 +2376,13 @@
           var id = l.getAttribute('data-target');
           if (!show(id)) return;
           try { history.replaceState(null, '', '#' + id); } catch (e) {}
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (window.matchMedia && window.matchMedia('(max-width:768px)').matches) {
+            var g = document.querySelector('.page-grid');
+            var y = g.getBoundingClientRect().top + window.scrollY - 64;
+            window.scrollTo({ top: Math.max(y, 0), behavior: 'smooth' });
+          } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
           initReveal();
         });
       });
