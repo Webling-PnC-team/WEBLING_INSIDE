@@ -513,6 +513,12 @@
     font-size:13px; white-space:nowrap; letter-spacing:-.01em; border-radius:999px;
   }
   .nav-link.active{background-color:var(--accent-color); color:#FFFFFF; font-weight:700;}
+  /* 헤더 + 큰 제목 헤더(네비바) 반투명 (뒤 배경 비침) */
+  .site-header, .site-nav{
+    background-color:rgba(255,255,255,0.68)!important;
+    -webkit-backdrop-filter:saturate(180%) blur(14px); backdrop-filter:saturate(180%) blur(14px);
+    border-bottom-color:rgba(0,0,0,0.06);
+  }
   .page-title-area{padding-top:130px!important;}
 }
 </style>
