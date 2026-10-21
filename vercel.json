@@ -1,0 +1,56 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/protected.js": {
+      "includeFiles": [
+        "onboarding.html",
+        "interview.html"
+      ]
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/onboarding",
+      "destination": "/api/protected?target=onboarding"
+    },
+    {
+      "source": "/onboarding.html",
+      "destination": "/api/protected?target=onboarding"
+    },
+    {
+      "source": "/interview",
+      "destination": "/api/protected?target=interview"
+    },
+    {
+      "source": "/interview.html",
+      "destination": "/api/protected?target=interview"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net data:; img-src 'self' data: https:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; upgrade-insecure-requests"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    }
+  ]
+}
