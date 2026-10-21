@@ -5,13 +5,15 @@ const path = require('path');
 const PAGE_CONFIG = {
   onboarding: {
     envName: 'ONBOARDING_ACCESS_CODE',
-    fileName: 'onboarding.html',
+    templatePath: 'api/_private/onboarding.html',
+    publicPath: '/onboarding.html',
     title: '입사자 안내',
     description: '안내 메일에 함께 보내드린 코드를 입력하면 첫 출근에 필요한 내용을 보실 수 있어요.',
   },
   interview: {
     envName: 'INTERVIEW_ACCESS_CODE',
-    fileName: 'interview.html',
+    templatePath: 'api/_private/interview.html',
+    publicPath: '/interview.html',
     title: '면접 예정자 안내',
     description: '안내 메일에 함께 보내드린 코드를 입력하면 면접 준비에 필요한 내용을 보실 수 있어요.',
   },
@@ -166,7 +168,7 @@ module.exports = async function handler(req, res) {
     const token = createSession(target, accessCode);
     res.setHeader('Set-Cookie', `${cookieName(target)}=${token}; Path=/; Max-Age=${SESSION_SECONDS}; HttpOnly; Secure; SameSite=Lax`);
     res.statusCode = 303;
-    res.setHeader('Location', `/${page.fileName}`);
+    res.setHeader('Location', page.publicPath);
     return res.end();
   }
 
@@ -184,7 +186,7 @@ module.exports = async function handler(req, res) {
     return res.end(req.method === 'HEAD' ? '' : renderLogin(page, target));
   }
 
-  const filePath = path.join(process.cwd(), page.fileName);
+  const filePath = path.join(process.cwd(), page.templatePath);
   const html = fs.readFileSync(filePath, 'utf8');
   setPrivateHeaders(res);
   res.statusCode = 200;
