@@ -2,10 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
     "api/protected.js": {
-      "includeFiles": [
-        "onboarding.html",
-        "interview.html"
-      ]
+      "includeFiles": "*.html"
     }
   },
   "rewrites": [
