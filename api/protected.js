@@ -19,52 +19,6 @@ const PAGE_CONFIG = {
   },
 };
 
-const SESSION_SECONDS = 4 * 60 * 60;
-
-function parseCookies(header) {
-  return String(header || '')
-    .split(';')
-    .reduce((cookies, item) => {
-      const separator = item.indexOf('=');
-      if (separator === -1) return cookies;
-      const name = item.slice(0, separator).trim();
-      const value = item.slice(separator + 1).trim();
-      if (name) cookies[name] = value;
-      return cookies;
-    }, {});
-}
-
-function cookieName(target) {
-  return `webling_${target}_access`;
-}
-
-function signature(target, expires, secret) {
-  return crypto
-    .createHmac('sha256', secret)
-    .update(`webling-access-v2:${target}:${expires}`)
-    .digest('hex');
-}
-
-function createSession(target, secret) {
-  const expires = Math.floor(Date.now() / 1000) + SESSION_SECONDS;
-  return `${expires}.${signature(target, expires, secret)}`;
-}
-
-function hasValidSession(target, token, secret) {
-  if (!token || !secret) return false;
-  const parts = token.split('.');
-  if (parts.length !== 2) return false;
-
-  const expires = Number(parts[0]);
-  if (!Number.isSafeInteger(expires) || expires <= Math.floor(Date.now() / 1000)) return false;
-
-  const expected = signature(target, expires, secret);
-  const suppliedBuffer = Buffer.from(parts[1]);
-  const expectedBuffer = Buffer.from(expected);
-  return suppliedBuffer.length === expectedBuffer.length
-    && crypto.timingSafeEqual(suppliedBuffer, expectedBuffer);
-}
-
 function codesMatch(submitted, expected) {
   const submittedBuffer = Buffer.from(String(submitted || '').trim().toLowerCase());
   const expectedBuffer = Buffer.from(String(expected || '').trim().toLowerCase());
@@ -87,7 +41,7 @@ async function readSubmittedCode(req) {
   return new URLSearchParams(raw).get('code') || '';
 }
 
-function renderLogin(page, target, showError = false) {
+function renderLogin(page, showError = false) {
   const error = showError
     ? '<p class="error" role="alert">안내 코드가 일치하지 않습니다. 메일에 적힌 코드를 다시 확인해 주세요.</p>'
     : '<p class="error" aria-hidden="true"></p>';
@@ -122,7 +76,7 @@ function renderLogin(page, target, showError = false) {
     <p class="logo">WEBLING</p>
     <h1>${page.title}</h1>
     <p class="description">${page.description}</p>
-    <form method="post" action="/api/protected?target=${target}">
+    <form method="post" action="${page.publicPath}">
       <input type="password" name="code" placeholder="안내 코드를 입력해 주세요" autocomplete="current-password" aria-label="안내 코드" required autofocus>
       <button type="submit">확인</button>
       ${error}
@@ -139,6 +93,19 @@ function setPrivateHeaders(res) {
   res.setHeader('X-Robots-Tag', 'noindex, nofollow');
 }
 
+function clearOldSession(res, target) {
+  res.setHeader('Set-Cookie', `webling_${target}_access=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Strict`);
+}
+
+function serveProtectedPage(res, page) {
+  const filePath = path.join(process.cwd(), page.templatePath);
+  const html = fs.readFileSync(filePath, 'utf8');
+  setPrivateHeaders(res);
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  return res.end(html);
+}
+
 module.exports = async function handler(req, res) {
   const target = typeof req.query.target === 'string' ? req.query.target : '';
   const page = PAGE_CONFIG[target];
@@ -151,6 +118,7 @@ module.exports = async function handler(req, res) {
   const accessCode = process.env[page.envName];
   if (!accessCode) {
     setPrivateHeaders(res);
+    clearOldSession(res, target);
     res.statusCode = 503;
     return res.end('Access settings are not ready.');
   }
@@ -160,16 +128,14 @@ module.exports = async function handler(req, res) {
     if (!codesMatch(submittedCode, accessCode)) {
       await new Promise((resolve) => setTimeout(resolve, 500));
       setPrivateHeaders(res);
+      clearOldSession(res, target);
       res.statusCode = 401;
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
-      return res.end(renderLogin(page, target, true));
+      return res.end(renderLogin(page, true));
     }
 
-    const token = createSession(target, accessCode);
-    res.setHeader('Set-Cookie', `${cookieName(target)}=${token}; Path=/; Max-Age=${SESSION_SECONDS}; HttpOnly; Secure; SameSite=Lax`);
-    res.statusCode = 303;
-    res.setHeader('Location', page.publicPath);
-    return res.end();
+    clearOldSession(res, target);
+    return serveProtectedPage(res, page);
   }
 
   if (req.method !== 'GET' && req.method !== 'HEAD') {
@@ -178,18 +144,9 @@ module.exports = async function handler(req, res) {
     return res.end('Method not allowed');
   }
 
-  const cookies = parseCookies(req.headers.cookie);
-  if (!hasValidSession(target, cookies[cookieName(target)], accessCode)) {
-    setPrivateHeaders(res);
-    res.statusCode = 401;
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    return res.end(req.method === 'HEAD' ? '' : renderLogin(page, target));
-  }
-
-  const filePath = path.join(process.cwd(), page.templatePath);
-  const html = fs.readFileSync(filePath, 'utf8');
   setPrivateHeaders(res);
-  res.statusCode = 200;
+  clearOldSession(res, target);
+  res.statusCode = 401;
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  return res.end(req.method === 'HEAD' ? '' : html);
+  return res.end(req.method === 'HEAD' ? '' : renderLogin(page));
 };
