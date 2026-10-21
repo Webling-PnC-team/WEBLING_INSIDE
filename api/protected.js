@@ -53,6 +53,7 @@ function renderLogin(page, showError = false) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <title>${page.title} | WEBLING INSIDE</title>
+  <script>sessionStorage.removeItem(${JSON.stringify(`webling_page_shown:${page.publicPath}`)});</script>
   <style>
     :root { color-scheme: light; font-family: Arial, "Noto Sans KR", sans-serif; }
     * { box-sizing: border-box; }
@@ -99,7 +100,22 @@ function clearOldSession(res, target) {
 
 function serveProtectedPage(res, page) {
   const filePath = path.join(process.cwd(), page.templatePath);
-  const html = fs.readFileSync(filePath, 'utf8');
+  const guardScript = `<script>
+    (() => {
+      const key = ${JSON.stringify(`webling_page_shown:${page.publicPath}`)};
+      const loginPath = ${JSON.stringify(page.publicPath)};
+      if (sessionStorage.getItem(key) === 'yes') {
+        location.replace(loginPath);
+        return;
+      }
+      sessionStorage.setItem(key, 'yes');
+      history.replaceState(null, '', loginPath);
+      addEventListener('pageshow', (event) => {
+        if (event.persisted) location.replace(loginPath);
+      });
+    })();
+  </script>`;
+  const html = fs.readFileSync(filePath, 'utf8').replace('<head>', `<head>${guardScript}`);
   setPrivateHeaders(res);
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
