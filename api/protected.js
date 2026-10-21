@@ -41,7 +41,7 @@ function cookieName(target) {
 function signature(target, expires, secret) {
   return crypto
     .createHmac('sha256', secret)
-    .update(`webling-access-v1:${target}:${expires}`)
+    .update(`webling-access-v2:${target}:${expires}`)
     .digest('hex');
 }
 
