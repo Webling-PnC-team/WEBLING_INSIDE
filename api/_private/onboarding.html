@@ -199,7 +199,9 @@
     }
     .guide-link:hover { text-decoration:underline; }
     .guide-link:focus-visible { outline:2px solid #1C77A6; outline-offset:4px; }
-    .ai-tool { margin-top:24px; }
+    .ai-tool { margin-top:16px; }
+    .ai-guide-body { padding:16px; }
+    .ai-guide-body .guide-link { margin:12px 0 0; }
 
     /* 온보딩 여정 : 세로 타임라인 (STEP 진행형) */
     .flow .container { counter-reset:flowstep; }
@@ -789,88 +791,42 @@
         <p class="p"><strong>입사 첫날부터 매일 사용하는 필수 도구예요.</strong></p>
         <div class="note-grid">
           <div class="note">
-            <h4 class="h4">출퇴근 기록 (flex)</h4>
-            <ul class="ul">
-              <li>출근 · flex 웹/앱에서 [근무 시작] → [지금 출근]. '근무 중' 상태가 되면 완료</li>
-              <li>퇴근 · 바로 끝내기 / 지금 퇴근 → [등록하기]로 완료</li>
-              <li>출퇴근 기록은 <strong>사내 IP(WIFI: SNAPS 또는 랜선)</strong> 에서만 가능해요</li>
-              <li>외근·재택은 Slack [재택근무-출퇴근] 채널에 기록해 주세요</li>
-              <li>시차 사용 시에도 출퇴근 기록은 필수예요</li>
-              <li>기록을 누락하면 flex에서 수정이 안 돼요. 누락 시 P&amp;C팀에 Slack 주세요</li>
-            </ul>
+            <h4 class="h4">출퇴근 기록 (flex) <a class="guide-link" href="https://app.notion.com/p/snaps-corp/flex-bb99b86a591447b0a98f03fba54a7874?source=copy_link" target="_blank" rel="noopener noreferrer" aria-label="출퇴근 기록 flex 가이드 바로가기 (새 창)">가이드 바로가기 ↗</a></h4>
+            <p class="p">flex로 출퇴근을 기록해요. 근무 기록 방법과 이용 시 유의사항은 가이드에서 확인해 주세요.</p>
           </div>
           <div class="note">
             <h4 class="h4">야근 식대 (식권대장) <a class="guide-link" href="https://drive.google.com/file/d/1XlTh96yaZdIlKYqkBhnjI9M6RURgbFV3/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="야근 식대 가이드 바로가기 (새 창)">가이드 바로가기 ↗</a></h4>
-            <ul class="ul">
-              <li>지급 기준 · 점심시간 포함 회사에 11시간 체류 시</li>
-              <li>지급 방법 · P&amp;C팀이 flex 기록 확인 후 익 영업일에 식권대장 포인트로 일괄 지급</li>
-              <li>사용처 · 홍대입구역 부근 약 70개 제휴 업체</li>
-              <li>포인트는 유효기간이 없지만, 퇴사 시 잔여 포인트는 회수돼요</li>
-            </ul>
+            <p class="p">야근 식대는 식권대장 포인트로 지원해요. 지급 기준과 이용 방법은 가이드에서 확인해 주세요.</p>
           </div>
         </div>
       </div>
 
       <div class="blk reveal">
         <h3 class="h3">🤖 AI 툴 사용 가이드</h3>
-        <p class="p">질문부터 문서 작업, 개발까지. 업무 목적에 맞는 AI 툴을 골라 사용해 보세요.</p>
-        <div class="ai-tool">
-        <h4 class="h4">1️⃣ Claude <a class="guide-link" href="https://drive.google.com/file/d/1KervkclCls-dsxUAUv6LBE3YR4ixecwx/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Claude 가이드 바로가기 (새 창)">가이드 바로가기 ↗</a></h4>
-        <p class="p"><strong>Chat · Cowork · Code, 언제 사용하나요?</strong></p>
-        <ul class="ul">
-          <li><strong>Chat</strong> · 웹·모바일에서 대화하며 질문, 문서 작성, 아이디어 정리. 가장 쉽게 시작할 수 있어요</li>
-          <li><strong>Cowork</strong> · 반복 업무를 자동화하는 협업 공간. 플러그인·커넥터·스킬로 워크플로우를 구성해요</li>
-          <li><strong>Code</strong> · 개발자를 위한 코딩 파트너. 터미널 또는 전용 앱에서 사용해요</li>
-        </ul>
-        </div>
-        <div class="ai-tool">
-          <h4 class="h4">2️⃣ ChatGPT <a class="guide-link" href="https://drive.google.com/open?id=1xQc2YfT0FDM-VNF4BniHnIb1NM5QMzbf" target="_blank" rel="noopener noreferrer" aria-label="ChatGPT 가이드 바로가기 (새 창)">가이드 바로가기 ↗</a></h4>
-          <p class="p"><strong>Chat · Work · Codex, 언제 사용하나요?</strong></p>
-          <ul class="ul">
-            <li><strong>Chat</strong> · 간단한 질문, 검색, 요약 등 빠른 답변이 필요할 때 사용해요</li>
-            <li><strong>Work</strong> · 보고서 작성, PPT 제작 등 문서 작업을 요청할 때 사용해요</li>
-            <li><strong>Codex</strong> · 코드 작성·수정, Git 작업, 개발 명령 실행이 필요할 때 사용해요</li>
-          </ul>
-          <div class="callout">Claude와 비교하면 <strong>Work는 Cowork</strong>, <strong>Codex는 Claude Code</strong>와 비슷한 용도로 이해하시면 돼요.</div>
-        </div>
-        <div class="note">
-          <h4 class="h4">시작하기 · 유의사항</h4>
-          <ul class="ul">
-            <li>회사 이메일로 claude.ai에 접속해 팀 플랜으로 로그인하면 바로 사용할 수 있어요</li>
-            <li>고객정보·인사정보 등 민감한 데이터는 입력하지 않기</li>
-            <li>AI 산출물은 참고용이며, 최종 확인은 담당자가 하기</li>
-            <li>사내 정보보안 가이드라인 준수하기</li>
-          </ul>
-        </div>
+        <p class="p">위블링에서는 Claude와 ChatGPT, 두 가지 AI 툴을 사용해요. 각 가이드에서 사용 방법을 확인해 주세요.</p>
+        <details class="ai-tool tool-cat">
+          <summary><span class="arrow" aria-hidden="true">▸</span>Claude</summary>
+          <div class="ai-guide-body">
+            <p class="p">질문, 문서 작업, 개발에 활용하는 AI 툴이에요. 사용 방법은 Claude 가이드에서 확인해 주세요.</p>
+            <a class="guide-link" href="https://drive.google.com/file/d/1KervkclCls-dsxUAUv6LBE3YR4ixecwx/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Claude 가이드 바로가기 (새 창)">가이드 바로가기 ↗</a>
+          </div>
+        </details>
+        <details class="ai-tool tool-cat">
+          <summary><span class="arrow" aria-hidden="true">▸</span>ChatGPT</summary>
+          <div class="ai-guide-body">
+            <p class="p">질문과 요약부터 문서 작성, 코드 작업까지 활용할 수 있어요. 사용 방법은 ChatGPT 가이드에서 확인해 주세요.</p>
+            <a class="guide-link" href="https://drive.google.com/open?id=1xQc2YfT0FDM-VNF4BniHnIb1NM5QMzbf" target="_blank" rel="noopener noreferrer" aria-label="ChatGPT 가이드 바로가기 (새 창)">가이드 바로가기 ↗</a>
+          </div>
+        </details>
       </div>
 
       <div class="blk reveal">
         <h3 class="h3">📊 WEBLINK 사용 가이드 (성과관리 · 1on1) <a class="guide-link" href="https://drive.google.com/file/d/1V3clF4c3b8Jgh_Ufcr9pEMZXyvojOWtw/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="WEBLINK 가이드 바로가기 (새 창)">가이드 바로가기 ↗</a></h3>
         <p class="p"><strong>WEBLINK는 구성원의 성과, 성장, 보상을 AI로 연결해주는 성과관리 시스템이에요.</strong> 입사 후 1on1(면담)을 기록하고 조회할 때 사용해요.</p>
-        <div class="note-grid">
-          <div class="note">
-            <h4 class="h4">공통</h4>
-            <ul class="ul">
-              <li>접속 · <a href="https://pnc-1on1.vercel.app/" target="_blank" style="color:#1C77A6" rel="noopener noreferrer">pnc-1on1.vercel.app ↗</a></li>
-              <li>회사 이메일로 로그인 (최초 비밀번호 · 1111)</li>
-              <li>최초 로그인 시 비밀번호를 변경하게 돼요</li>
-              <li>비밀번호를 잊었다면 P&amp;C팀에 문의하세요</li>
-            </ul>
-          </div>
-          <div class="note">
-            <h4 class="h4">팀원(피평가자)이 쓰는 기능</h4>
-            <ul class="ul">
-              <li>대시보드에서 내가 받은 월별 1on1 점수 추이 확인</li>
-              <li>진행 중·종료된 1on1 조회 (질문 가이드 참고 가능)</li>
-              <li>비공개 메모 · 나만 볼 수 있는 공간. 평가자 포함 누구에게도 공개되지 않아요</li>
-            </ul>
-          </div>
-        </div>
-        <div class="callout">팀장·C-level(평가자)용 기능도 있지만, 입사 초기엔 팀원 기능만 알아두면 충분해요.</div>
       </div>
 
       <div class="blk reveal">
-        <h3 class="h3">직원할인 가이드 <a class="guide-link" href="https://snaps-corp.notion.site/29b0b6867bdb80539d5fda98566d9fe8?pvs=143" target="_blank" rel="noopener noreferrer" aria-label="직원할인 가이드 바로가기 (새 창)">가이드 바로가기 ↗</a></h3>
+        <h3 class="h3">💰 직원할인 가이드 <a class="guide-link" href="https://snaps-corp.notion.site/29b0b6867bdb80539d5fda98566d9fe8?pvs=143" target="_blank" rel="noopener noreferrer" aria-label="직원할인 가이드 바로가기 (새 창)">가이드 바로가기 ↗</a></h3>
         <p class="p">직원할인 이용 방법과 자세한 안내는 가이드에서 확인해 주세요.</p>
       </div>
 
