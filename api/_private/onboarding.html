@@ -192,6 +192,14 @@
     .note-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:14px; margin:18px 0 0; }
     .tidy .callout { margin:18px 0 0; }
     .tidy .blk > .callout:first-child { margin-top:0; }
+    /* About 연혁의 바로가기와 같은 링크 스타일 */
+    .guide-link {
+      font-size:12px; font-weight:600; color:#1C77A6; margin-left:8px;
+      display:inline-flex; align-items:center; white-space:nowrap;
+    }
+    .guide-link:hover { text-decoration:underline; }
+    .guide-link:focus-visible { outline:2px solid #1C77A6; outline-offset:4px; }
+    .ai-tool + .ai-tool { margin-top:24px; }
 
     /* 온보딩 여정 : 세로 타임라인 (STEP 진행형) */
     .flow .container { counter-reset:flowstep; }
@@ -688,7 +696,7 @@
   <section class="sec tidy" id="wework">
     <div class="container">
       <div class="sec-head">
-        <h2 class="sec-title">위워크 안내</h2>
+        <h2 class="sec-title">위워크 안내 <a class="guide-link" href="https://drive.google.com/file/d/1HCLU_EZxh1UYIfFCkhNuxmk4EIXcbTGm/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="위워크 생활가이드 (새 창)">위워크 생활가이드 ↗</a></h2>
       </div>
       <div class="blk lead reveal">
         <p class="p">위블링은 위워크 홍대점에 있어요. 처음엔 공간과 시설이 낯설 수 있으니, 자주 쓰는 것들을 정리해 뒀어요. 편하게 둘러보세요!</p>
@@ -715,7 +723,7 @@
       </div>
 
       <div class="blk reveal">
-        <h3 class="h3">☕ 공용 공간 &amp; 카페테리아</h3>
+        <h3 class="h3">☕ 공용 공간 &amp; 카페테리아 <a class="guide-link" href="https://drive.google.com/file/d/1afU002fTWuKWZmZoz44SIHGIkU-PXDU2/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="위워크 도면 (새 창)">위워크 도면 ↗</a></h3>
         <p class="p">업무도 휴식도 모두 가능한 공간이에요. 자유롭게 이용하되, 공용공간 에티켓은 꼭 지켜주세요!</p>
         <div class="note-grid">
           <div class="note">
@@ -762,7 +770,7 @@
       </div>
 
       <div class="blk reveal">
-        <h3 class="h3">📦 우편 &amp; 택배</h3>
+        <h3 class="h3">📦 우편 &amp; 택배 <a class="guide-link" href="https://krcodver.notion.site/krcodver/9867dc96cda84220a9d7ae489528c966" target="_blank" rel="noopener noreferrer" aria-label="우편/등기 접수 방법 (새 창)">우편/등기 접수 방법 ↗</a></h3>
         <p class="p">운영시간 · 09:00 ~ 18:00</p>
         <ul class="ul">
           <li><strong>우편/등기 · 택배</strong> · 4층 커뮤니티 데스크 왼쪽 메일룸에 회사별로 보관돼요. 알림을 받은 후 메일룸에서 셀프 픽업 해주세요. 택배 상자는 정리해서 계단 안쪽에 적재해 주세요</li>
@@ -802,7 +810,7 @@
             </ul>
           </div>
           <div class="note">
-            <h4 class="h4">야근 식대 (식권대장)</h4>
+            <h4 class="h4">야근 식대 (식권대장) <a class="guide-link" href="https://drive.google.com/file/d/1XlTh96yaZdIlKYqkBhnjI9M6RURgbFV3/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="야근 식대 가이드 바로가기 (새 창)">가이드 바로가기 ↗</a></h4>
             <ul class="ul">
               <li>지급 기준 · 점심시간 포함 회사에 11시간 체류 시</li>
               <li>지급 방법 · P&amp;C팀이 flex 기록 확인 후 익 영업일에 식권대장 포인트로 일괄 지급</li>
@@ -814,13 +822,27 @@
       </div>
 
       <div class="blk reveal">
-        <h3 class="h3">🤖 Claude 사용 가이드 (Chat · Cowork · Code)</h3>
+        <h3 class="h3">🤖 AI 툴 사용 가이드</h3>
+        <p class="p">질문부터 문서 작업, 개발까지. 업무 목적에 맞는 AI 툴을 골라 사용해 보세요.</p>
+        <div class="ai-tool">
+        <h4 class="h4">Claude <a class="guide-link" href="https://drive.google.com/file/d/1KervkclCls-dsxUAUv6LBE3YR4ixecwx/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Claude 가이드 바로가기 (새 창)">가이드 바로가기 ↗</a></h4>
         <p class="p"><strong>위블링은 전 직원에게 Claude 유료 플랜을 제공해요.</strong> 목적에 따라 세 가지 제품을 골라 쓸 수 있어요.</p>
         <ul class="ul">
           <li><strong>Claude Chat</strong> · 웹·모바일에서 대화하며 질문, 문서 작성, 아이디어 정리. 가장 쉽게 시작할 수 있어요</li>
           <li><strong>Claude Cowork</strong> · 반복 업무를 자동화하는 협업 공간. 플러그인·커넥터·스킬로 워크플로우를 구성해요</li>
           <li><strong>Claude Code</strong> · 개발자를 위한 코딩 파트너. 터미널 또는 전용 앱에서 사용해요</li>
         </ul>
+        </div>
+        <div class="ai-tool">
+          <h4 class="h4">ChatGPT <a class="guide-link" href="https://drive.google.com/open?id=1xQc2YfT0FDM-VNF4BniHnIb1NM5QMzbf" target="_blank" rel="noopener noreferrer" aria-label="ChatGPT 가이드 바로가기 (새 창)">가이드 바로가기 ↗</a></h4>
+          <p class="p"><strong>💬 Chat · Work · Codex, 언제 사용하나요?</strong></p>
+          <ul class="ul">
+            <li><strong>Chat</strong> · 간단한 질문, 검색, 요약 등 빠른 답변이 필요할 때 사용해요</li>
+            <li><strong>Work</strong> · 보고서 작성, PPT 제작 등 문서 작업을 요청할 때 사용해요</li>
+            <li><strong>Codex</strong> · 코드 작성·수정, Git 작업, 개발 명령 실행이 필요할 때 사용해요</li>
+          </ul>
+          <div class="callout">Claude와 비교하면 <strong>Work는 Cowork</strong>, <strong>Codex는 Claude Code</strong>와 비슷한 용도로 이해하시면 돼요.</div>
+        </div>
         <div class="note">
           <h4 class="h4">시작하기 · 유의사항</h4>
           <ul class="ul">
@@ -830,11 +852,11 @@
             <li>사내 정보보안 가이드라인 준수하기</li>
           </ul>
         </div>
-        <div class="callout">처음이라면 Claude Chat부터 편하게 시작해 보세요!</div>
+        <div class="callout">처음이라면 Chat에서 간단한 질문부터 편하게 시작해 보세요!</div>
       </div>
 
       <div class="blk reveal">
-        <h3 class="h3">📊 WEBLINK 사용 가이드 (성과관리 · 1on1)</h3>
+        <h3 class="h3">📊 WEBLINK 사용 가이드 (성과관리 · 1on1) <a class="guide-link" href="https://drive.google.com/file/d/1V3clF4c3b8Jgh_Ufcr9pEMZXyvojOWtw/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="WEBLINK 가이드 바로가기 (새 창)">가이드 바로가기 ↗</a></h3>
         <p class="p"><strong>WEBLINK는 구성원의 성과, 성장, 보상을 AI로 연결해주는 성과관리 시스템이에요.</strong> 입사 후 1on1(면담)을 기록하고 조회할 때 사용해요.</p>
         <div class="note-grid">
           <div class="note">
@@ -856,6 +878,11 @@
           </div>
         </div>
         <div class="callout">팀장·C-level(평가자)용 기능도 있지만, 입사 초기엔 팀원 기능만 알아두면 충분해요.</div>
+      </div>
+
+      <div class="blk reveal">
+        <h3 class="h3">직원할인 가이드 <a class="guide-link" href="https://snaps-corp.notion.site/29b0b6867bdb80539d5fda98566d9fe8?pvs=143" target="_blank" rel="noopener noreferrer" aria-label="직원할인 가이드 바로가기 (새 창)">가이드 바로가기 ↗</a></h3>
+        <p class="p">직원할인 이용 방법과 자세한 안내는 가이드에서 확인해 주세요.</p>
       </div>
 
       <div class="blk reveal">
